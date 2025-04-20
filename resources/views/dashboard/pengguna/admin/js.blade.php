@@ -47,14 +47,30 @@
                 serverSide: true,
                 ajax: '{{ route('admin/data') }}',
                 columns: [
-                    { data: 'id', name: 'id', className: 'text-center' },
+                    {
+                        data: null,
+                        name: 'id',
+                        className: 'text-center',
+                        orderable: false,
+                        searchable: false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
                     { data: 'nama', name: 'nama' },
                     { data: 'email', name: 'email' },
                     { data: 'level', name: 'level', className: 'text-center' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center' },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
                 ]
             });
         });
+
 
         $('#saveAdmin').on('submit', function(e) {
             e.preventDefault();
@@ -73,6 +89,7 @@
                             showConfirmButton: false
                         });
 
+                        $('#data').DataTable().ajax.reload();
                         $('#adminModalAdd').modal('hide');
                         $('#saveKelas')[0].reset();
                     }

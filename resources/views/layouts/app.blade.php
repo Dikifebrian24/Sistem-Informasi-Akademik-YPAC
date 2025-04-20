@@ -204,17 +204,7 @@
                         </h6>
                     </a>
                     <p class="mb-0 font-roboto">Human Resources Department</p>
-                    <ul>
-                        <li><span><span class="counter">19.8</span>k</span>
-                            <p>Follow</p>
-                        </li>
-                        <li><span>2 year</span>
-                            <p>Experince</p>
-                        </li>
-                        <li><span><span class="counter">95.2</span>k</span>
-                            <p>Follower </p>
-                        </li>
-                    </ul>
+
                 </div>
                 <nav>
                     <div class="main-navbar">
@@ -252,8 +242,6 @@
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="{{ route('siswa') }}">Siswa</a></li>
                                         <li><a href="{{ route('guru') }}">Guru</a></li>
-                                        <li><a href="#">Kepala
-                                                Sekolah</a></li>
                                         <li><a href="{{ route('admin') }}">Admin</a></li>
                                     </ul>
                                 </li>

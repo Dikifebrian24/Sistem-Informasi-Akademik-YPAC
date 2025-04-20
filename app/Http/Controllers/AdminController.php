@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function add()
     {
         $data['role_level'] = [
-            ['id' => 1, 'name' => 'Kepala Sekolah'],
+            ['id' => 1, 'name' => 'Admin'],
             ['id' => 2, 'name' => 'Guru'],
             ['id' => 3, 'name' => 'Siswa']
         ];
