@@ -6,6 +6,7 @@ use App\Models\Mapel;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class MapelController extends Controller
 {
@@ -22,10 +23,32 @@ class MapelController extends Controller
             ->get();
 
         $params = [
-            'title' => 'Kelas',
-            'guru' => Guru::all(),
+            'title' => 'Mata Pelajaran',
         ];
-        return view('dashboard.master.kelas.index', compact('data'));
+        return view('dashboard.master.mapel.index', compact('data'));
+    }
+
+    public function getDatatables(Request $request) {
+        if ($request->ajax()) {
+            $mapel = Mapel::select(['id', 'kelas.nm_kelas', 'nm_mapel'])->join('kelas', 'mapels.id_kelas', '=', 'kelas.id_kelas');
+
+            return DataTables::of($mapel)
+                ->addIndexColumn()
+//                ->editColumn('level', function ($row) {
+//                    switch ($row->level) {
+//                        case 1: return 'Kepala Sekolah';
+//                        case 2: return 'Guru';
+//                        case 3: return 'Siswa';
+//                        default: return '-';
+//                    }
+//                })
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-sm btn-warning edit" data-id="'.$row->id.'">Edit</button>
+                        <button class="btn btn-sm btn-danger delete" data-id="'.$row->id.'">Delete</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     public function detail($id)

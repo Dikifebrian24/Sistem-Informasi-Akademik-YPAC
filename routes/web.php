@@ -158,6 +158,7 @@ Route::prefix('master')->group(function () {
 
     Route::controller(MapelController::class)->prefix('mapel')->group(function () {
         Route::get('', 'index')->name('mapel');
+        Route::get('data', 'getDatatables')->name('mapel/data');
         Route::get('add', 'add')->name('mapel/add');
         Route::post('save', 'store')->name('mapel/save');
         Route::get('detail/{id}', 'detail')->name('mapel/detail');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 20, 2025 at 03:51 PM
+-- Generation Time: Apr 21, 2025 at 04:37 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -79,6 +79,7 @@ CREATE TABLE `golongans` (
 
 CREATE TABLE `gurus` (
   `id_guru` bigint UNSIGNED NOT NULL,
+  `id_user` int NOT NULL,
   `nip` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `nik` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `nm_guru` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -96,38 +97,19 @@ CREATE TABLE `gurus` (
   `no_hp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `agama` enum('Islam','Kristen','Hindu','Buddha','Katolik','Khonghucu') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `niy_nigk` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nuptk` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_kepegawaian` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_ptk` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pengawas_bidang_studi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tugas_tambahan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `stts_guru` enum('Active','Non Active') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sk_cpns` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tgl_cpns` date NOT NULL,
-  `sk_pengangkatan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tmt_pengangkatan` date NOT NULL,
-  `lembaga_pengangkatan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_golongan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `keahlian_laboratorium` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sumber_gaji` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nm_ibu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `stts_pernikahan` enum('Menikah','Belum Menikah') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nm_suami_istri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nip_suami_istri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pekerjaan_suami_istri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tmt_pns` date NOT NULL,
-  `lisensi_kepsek` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jml_sklh_binaan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `diklat_kepengawasan` enum('Ya','Tidak') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `keahlian_breile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `keahlian_bahasa_isyarat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `npwp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kewarganegaraan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `gurus`
+--
+
+INSERT INTO `gurus` (`id_guru`, `id_user`, `nip`, `nik`, `nm_guru`, `jenkel`, `tmpt_lahir`, `tgl_lahir`, `almt_jalan`, `rt_rw`, `kab_kota`, `kelurahan`, `kecamatan`, `provinsi`, `kd_pos`, `no_telp`, `no_hp`, `email`, `agama`, `stts_guru`, `npwp`, `foto`, `created_at`, `updated_at`) VALUES
+(1, 6, '192783891273', '12738917293817', 'Guru 1', 'Laki - Laki', 'Malang', '2025-04-21', 'Malang', '9', 'Malang', 'Kepanjen', 'Pujon', 'Jawa Timur', '65142', '085649888272', '0961278361723', 'guru@guru.com', 'Islam', 'Active', '1287891729387198237', '', '2025-04-20 17:20:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -158,15 +140,20 @@ CREATE TABLE `jurusans` (
 
 CREATE TABLE `kelas` (
   `id_kelas` bigint UNSIGNED NOT NULL,
+  `id_guru` int NOT NULL,
   `kd_kelas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `nm_kelas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nip` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kd_jurusan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kd_ruangan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `stts_kelas` enum('Active','Non Active') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `kelas`
+--
+
+INSERT INTO `kelas` (`id_kelas`, `id_guru`, `kd_kelas`, `nm_kelas`, `stts_kelas`, `created_at`, `updated_at`) VALUES
+(1, 1, 'KLS01', 'kelas 1', 'Active', '2025-04-21 09:12:03', '2025-04-21 09:12:03');
 
 -- --------------------------------------------------------
 
@@ -195,6 +182,27 @@ CREATE TABLE `kurikulums` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mapels`
+--
+
+CREATE TABLE `mapels` (
+  `id` int NOT NULL,
+  `id_kelas` int NOT NULL,
+  `nm_mapel` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `mapels`
+--
+
+INSERT INTO `mapels` (`id`, `id_kelas`, `nm_mapel`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Matematika', '2025-04-21 16:32:51', '2025-04-21 16:32:51');
 
 -- --------------------------------------------------------
 
@@ -377,6 +385,7 @@ CREATE TABLE `users` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_admin` tinyint(1) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL,
   `level` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -386,8 +395,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `email_verified_at`, `password`, `remember_token`, `is_admin`, `level`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator', '', 'admin@admin.com', '2025-03-12 13:47:04', '$2a$12$98Cz6Qxnx1kOIIZVQjseZOiO/yOvSZnME.kdYRPLxQ8DlYIyr.dLi', NULL, NULL, 1, '2025-03-12 13:47:04', NULL);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `email_verified_at`, `password`, `remember_token`, `is_admin`, `is_active`, `level`, `created_at`, `updated_at`) VALUES
+(1, 'Administrator', '', 'admin@admin.com', '2025-03-12 13:47:04', '$2a$12$98Cz6Qxnx1kOIIZVQjseZOiO/yOvSZnME.kdYRPLxQ8DlYIyr.dLi', NULL, NULL, 0, 1, '2025-03-12 13:47:04', NULL),
+(5, 'cc', 'dd', 'cc@gmail.com', NULL, '$2y$10$SxL6nSYL5nCMQt6IIKcEIOYEA1TMf4ALMfQxcNnc.tD/goy.QSXgK', NULL, 0, 0, 3, '2025-04-20 09:25:57', '2025-04-20 09:25:57'),
+(6, 'aabb', 'bb', 'abab@gmail.com', NULL, '$2y$10$1Fb58bEid.YuSQigHgejKuOoz1zuiLz34Irc21sXpvCK4yu1uu2GS', NULL, 0, 0, 2, '2025-04-20 09:26:37', '2025-04-20 09:26:37'),
+(7, 'diki', 'febrian', 'aaa@gmsail.com', NULL, '$2y$10$INUVoqsV/Fk9ZIr9boTtd.4FesXraUPkWMl5KScVGW5ZJsoX9Q5ra', NULL, 1, 0, 1, '2025-04-20 09:27:53', '2025-04-20 09:27:53');
 
 --
 -- Indexes for dumped tables
@@ -420,9 +432,6 @@ ALTER TABLE `gurus`
   ADD PRIMARY KEY (`id_guru`),
   ADD UNIQUE KEY `gurus_nip_unique` (`nip`),
   ADD UNIQUE KEY `gurus_nik_unique` (`nik`),
-  ADD UNIQUE KEY `gurus_niy_nigk_unique` (`niy_nigk`),
-  ADD UNIQUE KEY `gurus_nuptk_unique` (`nuptk`),
-  ADD UNIQUE KEY `gurus_sk_cpns_unique` (`sk_cpns`),
   ADD UNIQUE KEY `gurus_npwp_unique` (`npwp`);
 
 --
@@ -450,6 +459,12 @@ ALTER TABLE `kepegawaians`
 --
 ALTER TABLE `kurikulums`
   ADD PRIMARY KEY (`id_kurikulum`);
+
+--
+-- Indexes for table `mapels`
+--
+ALTER TABLE `mapels`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -532,7 +547,7 @@ ALTER TABLE `golongans`
 -- AUTO_INCREMENT for table `gurus`
 --
 ALTER TABLE `gurus`
-  MODIFY `id_guru` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_guru` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jurusans`
@@ -544,7 +559,7 @@ ALTER TABLE `jurusans`
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kelas` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kepegawaians`
@@ -557,6 +572,12 @@ ALTER TABLE `kepegawaians`
 --
 ALTER TABLE `kurikulums`
   MODIFY `id_kurikulum` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `mapels`
+--
+ALTER TABLE `mapels`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -598,7 +619,7 @@ ALTER TABLE `thn_akademiks`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
