@@ -249,8 +249,8 @@
                                             data-feather="book"></i><span>Data Akademik</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="#">Kelompok Mapel</a></li>
-                                        <li><a href="#">Mata Pelajaran</a></li>
-                                        <li><a href="{{ route('jadwal') }}">Jadwal Pelajaran</a></li>
+                                        <li><a href="{{ route('mapel') }}">Mata Pelajaran</a></li>
+                                        <li><a href="{{ route('kelas') }}">Jadwal Pelajaran</a></li>
                                         <li><a href="#">Bahan & Tugas</a></li>
                                         <li><a href="#">Kompetensi Dasar</a></li>
                                         <li><a href="#">Penilaian Diri</a></li>

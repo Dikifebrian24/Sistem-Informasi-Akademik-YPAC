@@ -26,9 +26,9 @@
               </div>
               <div class="col-md-6">
                 <label class="form-label">Wali Kelas</label>
-                <select class="js-example-basic-single col-sm-12" id="wali_kelas" name="nip" required="">
+                <select class="js-example-basic-single col-sm-12" id="wali_kelas" name="wali_kelas" required="">
                 </select>
-                @error('nip')
+                @error('wali_kelas')
                   <div class="valid-feedback">{{ $message }}</div>
                 @enderror
               </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Kelas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -60,7 +61,7 @@ class AdminController extends Controller
 
     public function getDatatables(Request $request) {
         if ($request->ajax()) {
-            $users = User::select(['id', 'first_name', 'last_name', 'email', 'level']);
+            $users = Kelas::select(['id', 'first_name', 'last_name', 'email', 'level']);
 
             return DataTables::of($users)
                 ->addIndexColumn()

@@ -35,6 +35,33 @@ class JadwalController extends Controller
         return view('dashboard.master.jadwal.index', compact('params'));
     }
 
+    public function dataKelas(Request $request)
+    {
+        if ($request->ajax()) {
+            $users = User::select(['id', 'first_name', 'last_name', 'email', 'level']);
+
+            return DataTables::of($users)
+                ->addIndexColumn()
+                ->addColumn('nama', function ($row) {
+                    return $row->first_name . ' ' . $row->last_name;
+                })
+                ->editColumn('level', function ($row) {
+                    switch ($row->level) {
+                        case 1: return 'Kepala Sekolah';
+                        case 2: return 'Guru';
+                        case 3: return 'Siswa';
+                        default: return '-';
+                    }
+                })
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-sm btn-warning edit" data-id="'.$row->id.'">Edit</button>
+                        <button class="btn btn-sm btn-danger delete" data-id="'.$row->id.'">Delete</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
     public function add()
     {
         $data['role_level'] = [

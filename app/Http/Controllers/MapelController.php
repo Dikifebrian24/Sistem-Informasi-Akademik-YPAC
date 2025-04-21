@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Guru;
+use App\Models\Mapel;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class KelasController extends Controller
+class MapelController extends Controller
 {
     public function __construct()
     {
@@ -102,7 +102,7 @@ class KelasController extends Controller
     {
         $this->validate($request, [
             'kd_kelas' =>
-            'required|unique:kelas,kd_kelas,' . $id . ',id_kelas',
+                'required|unique:kelas,kd_kelas,' . $id . ',id_kelas',
             'nm_kelas' => 'required',
             'nip' => 'required',
             'kd_jurusan' => 'required',

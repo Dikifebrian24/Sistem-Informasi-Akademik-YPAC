@@ -10,7 +10,7 @@
             $('#data').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('kelas/data') }}',
+                ajax: '{{ route('kelas') }}',
                 columns: [
                     {
                         data: null,

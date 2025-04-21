@@ -146,11 +146,22 @@ Route::prefix('master')->group(function () {
 
     Route::controller(JadwalController::class)->prefix('jadwal')->group(function () {
         Route::get('', 'index')->name('jadwal');
+        Route::get('', 'dataKelas')->name('jadwal/dataKelas');
         Route::get('add', 'add')->name('jadwal/add');
         Route::get('data', 'getDatatables')->name('jadwal/data');
         Route::get('{id}/edit', 'edit')->name('jadwal/edit');
         Route::post('store', 'store')->name('jadwal/store');
         Route::put('update/{id}', 'update')->name('jadwal/update');
         Route::delete('delete/{id}', 'destroy')->name('jadwal/delete');
+    });
+
+    Route::controller(MapelController::class)->prefix('mapel')->group(function () {
+        Route::get('', 'index')->name('mapel');
+        Route::get('add', 'add')->name('mapel/add');
+        Route::post('save', 'store')->name('mapel/save');
+        Route::get('detail/{id}', 'detail')->name('mapel/detail');
+        Route::get('edit/{id}', 'edit')->name('mapel/edit');
+        Route::put('update/{id}', 'update')->name('mapel/update');
+        Route::delete('delete/{id}', 'destroy')->name('mapel/delete');
     });
 });
