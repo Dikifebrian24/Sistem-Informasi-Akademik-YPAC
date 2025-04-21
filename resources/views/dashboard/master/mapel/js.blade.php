@@ -23,18 +23,18 @@
             $(".js-example-basic-single").select2();
             e.preventDefault()
             $.ajax({
-                url: "{{ route('admin/add') }}",
+                url: "{{ route('mapel/add') }}",
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                    $('#role_level').empty(); // Kosongkan dulu
-                    $('#role_level').append('<option value="">-- Pilih Role --</option>'); // Tambah placeholder
+                    $('#kelas').empty(); // Kosongkan dulu
+                    $('#kelas').append('<option value="">-- Pilih Role --</option>'); // Tambah placeholder
 
-                    $.each(data['role_level'], function(i, value) {
-                        $('#role_level').append('<option value="' + value.id + '">' + value.name + '</option>');
+                    $.each(data['kelas'], function(i, value) {
+                        $('#kelas').append('<option value="' + value.id_kelas + '">' + value.nm_kelas + '</option>');
                     });
 
-                    $('#adminModalAdd').modal('show');
+                    $('#mapelModalAdd').modal('show');
                 }
             });
         });
@@ -71,11 +71,11 @@
         });
 
 
-        $('#saveAdmin').on('submit', function(e) {
+        $('#saveMapel').on('submit', function(e) {
             e.preventDefault();
 
             $.ajax({
-                url: '{{ route("admin/store") }}',
+                url: '{{ route("mapel/store") }}',
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
@@ -89,8 +89,8 @@
                         });
 
                         $('#data').DataTable().ajax.reload();
-                        $('#adminModalAdd').modal('hide');
-                        $('#saveKelas')[0].reset();
+                        $('#mapelModalAdd').modal('hide');
+                        $('#saveMapel')[0].reset();
                     }
                 },
                 error: function(xhr) {

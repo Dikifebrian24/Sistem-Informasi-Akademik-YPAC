@@ -161,6 +161,7 @@ Route::prefix('master')->group(function () {
         Route::get('data', 'getDatatables')->name('mapel/data');
         Route::get('add', 'add')->name('mapel/add');
         Route::post('save', 'store')->name('mapel/save');
+        Route::post('store', 'store')->name('mapel/store');
         Route::get('detail/{id}', 'detail')->name('mapel/detail');
         Route::get('edit/{id}', 'edit')->name('mapel/edit');
         Route::put('update/{id}', 'update')->name('mapel/update');

@@ -34,14 +34,6 @@ class MapelController extends Controller
 
             return DataTables::of($mapel)
                 ->addIndexColumn()
-//                ->editColumn('level', function ($row) {
-//                    switch ($row->level) {
-//                        case 1: return 'Kepala Sekolah';
-//                        case 2: return 'Guru';
-//                        case 3: return 'Siswa';
-//                        default: return '-';
-//                    }
-//                })
                 ->addColumn('action', function ($row) {
                     return '<button class="btn btn-sm btn-warning edit" data-id="'.$row->id.'">Edit</button>
                         <button class="btn btn-sm btn-danger delete" data-id="'.$row->id.'">Delete</button>';
@@ -63,10 +55,10 @@ class MapelController extends Controller
 
     public function add()
     {
-        $data['wali_kelas'] =  DB::table('gurus')
+        $data['kelas'] =  DB::table('kelas')
             ->select([
-                'id_guru',
-                'nm_guru'
+                'id_kelas',
+                'nm_kelas'
             ])->get();
         return response()->json($data);
     }
@@ -74,24 +66,18 @@ class MapelController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'kd_kelas' => 'required|unique:kelas,kd_kelas',
-            'wali_kelas' => 'required',
-            'nm_kelas' => 'required',
-            'stts_kelas' => 'required'
+            'nm_mapel' => 'required',
+            'kelas' => 'required',
+
         ], [
-            'kd_kelas.required' => 'Silahkan isi kode kelas terlebih dahulu!',
-            'kd_kelas.unique'   => 'Kode kelas telah digunakan!',
-            'wali_kelas.required'   => 'Guru wajib diisi!',
-            'nm_kelas.required'   => 'Silahkan isi nama kelas terlebih dahulu!',
-            'stts_kelas.required'   => 'Silahkan pilih status terlebih dahulu!',
+            'nm_mapel.required' => 'Silahkan isi Nama Mapel terlebih dahulu!',
+            'kelas.required'   => 'Kode kelas Wajib Di isi!',
         ]);
 
         //create post
-        Kelas::create([
-            'id_guru'     => $request->wali_kelas,
-            'kd_kelas'     => $request->kd_kelas,
-            'nm_kelas'     => $request->nm_kelas,
-            'stts_kelas'      => $request->stts_kelas
+        Mapel::create([
+            'id_kelas'     => $request->kelas,
+            'nm_mapel'     => $request->nm_mapel,
         ]);
 
         //redirect to index
