@@ -9,6 +9,7 @@ use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KepegawaianController;
 use App\Http\Controllers\KurikulumController;
+use App\Http\Controllers\MapelController;
 use App\Http\Controllers\PtkController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SiswaController;
