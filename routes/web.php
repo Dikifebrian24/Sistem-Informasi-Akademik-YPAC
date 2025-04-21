@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\GolonganController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KepegawaianController;
@@ -141,5 +142,15 @@ Route::prefix('master')->group(function () {
         Route::post('save', 'store')->name('admin/save');
         Route::put('update/{id}', 'update')->name('admin/update');
         Route::delete('delete/{id}', 'destroy')->name('admin/delete');
+    });
+
+    Route::controller(JadwalController::class)->prefix('jadwal')->group(function () {
+        Route::get('', 'index')->name('jadwal');
+        Route::get('add', 'add')->name('jadwal/add');
+        Route::get('data', 'getDatatables')->name('jadwal/data');
+        Route::get('{id}/edit', 'edit')->name('jadwal/edit');
+        Route::post('store', 'store')->name('jadwal/store');
+        Route::put('update/{id}', 'update')->name('jadwal/update');
+        Route::delete('delete/{id}', 'destroy')->name('jadwal/delete');
     });
 });

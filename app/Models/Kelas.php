@@ -11,10 +11,8 @@ class Kelas extends Model
     protected $primaryKey = 'id_kelas';
     protected $fillable = [
         'kd_kelas',
+        'id_guru',
         'nm_kelas',
-        'nip',
-        'kd_jurusan',
-        'kd_ruangan',
         'stts_kelas'
     ];
 }

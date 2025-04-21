@@ -33,22 +33,6 @@
                 @enderror
               </div>
               <div class="col-md-6">
-                <label class="form-label">Nama Jurusan</label>
-                <select class="form-select" id="nm_jurusan" name="kd_jurusan" required="">
-                </select>
-                @error('kd_jurusan')
-                  <div class="valid-feedback">{{ $message }}</div>
-                @enderror
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Nama Ruangan</label>
-                <select class="form-select" id="nm_ruangan" name="kd_ruangan" required="">
-                </select>
-                @error('kd_ruangan')
-                  <div class="valid-feedback">{{ $message }}</div>
-                @enderror
-              </div>
-              <div class="col-md-6">
                 <div class="form-group m-t-15 m-checkbox-inline mb-0">
                   <label class="form-label">Status</label>
                   <label class="d-block">

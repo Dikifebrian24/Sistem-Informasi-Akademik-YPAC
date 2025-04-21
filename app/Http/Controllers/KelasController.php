@@ -16,9 +16,8 @@ class KelasController extends Controller
     public function index()
     {
         $data = DB::table('kelas')
-            ->join('gurus', 'kelas.nip', '=', 'gurus.nip')
-            ->join('jurusans', 'kelas.kd_jurusan', '=', 'jurusans.kd_jurusan')
-            ->select('kelas.*', 'gurus.nm_guru', 'jurusans.nm_jurusan')
+            ->join('gurus', 'kelas.id_guru', '=', 'gurus.id_guru')
+            ->select('kelas.*', 'gurus.nm_guru')
             ->get();
         return view('dashboard.master.kelas.index', compact('data'));
     }
@@ -26,12 +25,9 @@ class KelasController extends Controller
     public function detail($id)
     {
         $data = DB::table('kelas')
-            ->join('gurus', 'kelas.nip', '=', 'gurus.nip')
-            ->join('jurusans', 'kelas.kd_jurusan', '=', 'jurusans.kd_jurusan')
-            ->join('ruangans', 'kelas.kd_ruangan', '=', 'ruangans.kd_ruangan')
-            ->join('gedungs', 'ruangans.kd_gedung', '=', 'gedungs.kd_gedung')
+            ->join('gurus', 'kelas.id_guru', '=', 'gurus.id_guru')
             ->where('id_kelas', '=', $id)
-            ->select('kelas.*', 'gurus.nm_guru', 'gurus.nip', 'gurus.foto', 'jurusans.nm_jurusan', 'ruangans.nm_ruangan', 'gedungs.nm_gedung',)
+            ->select('kelas.*', 'gurus.nm_guru', 'gurus.foto', )
             ->get();
         return response()->json($data);
     }
@@ -43,16 +39,6 @@ class KelasController extends Controller
                 'nip',
                 'nm_guru'
             ])->get();
-        $data['nm_jurusan'] = DB::table('jurusans')
-            ->select([
-                'kd_jurusan',
-                'nm_jurusan'
-            ])->get();
-        $data['nm_ruangan'] = DB::table('ruangans')
-            ->select([
-                'kd_ruangan',
-                'nm_ruangan'
-            ])->get();
         return response()->json($data);
     }
 
@@ -61,27 +47,19 @@ class KelasController extends Controller
         $this->validate($request, [
             'kd_kelas' => 'required|unique:kelas,kd_kelas',
             'nm_kelas' => 'required',
-            'nip' => 'required',
-            'kd_jurusan' => 'required',
-            'kd_ruangan' => 'required',
             'stts_kelas' => 'required'
         ], [
             'kd_kelas.required' => 'Silahkan isi kode kelas terlebih dahulu!',
             'kd_kelas.unique'   => 'Kode kelas telah digunakan!',
             'nm_kelas.required'   => 'Silahkan isi nama kelas terlebih dahulu!',
-            'nip.required'   => 'Silahkan isi nama wali kelas terlebih dahulu!',
-            'kd_jurusan.required'   => 'Silahkan pilih nama jurusan terlebih dahulu!',
-            'kd_ruangan.required'   => 'Silahkan pilih nama ruangan terlebih dahulu!',
             'stts_kelas.required'   => 'Silahkan pilih status terlebih dahulu!',
         ]);
 
         //create post
         Kelas::create([
+            'id_guru'     => $request->id_guru,
             'kd_kelas'     => $request->kd_kelas,
             'nm_kelas'     => $request->nm_kelas,
-            'nip'    => $request->nip,
-            'kd_jurusan'      => $request->kd_jurusan,
-            'kd_ruangan'      => $request->kd_ruangan,
             'stts_kelas'      => $request->stts_kelas
         ]);
 
@@ -93,7 +71,6 @@ class KelasController extends Controller
     {
         $data['item'] = DB::table('kelas')
             ->join('gurus', 'kelas.nip', '=', 'gurus.nip')
-            ->join('jurusans', 'kelas.kd_jurusan', '=', 'jurusans.kd_jurusan')
             ->join('ruangans', 'kelas.kd_ruangan', '=', 'ruangans.kd_ruangan')
             ->join('gedungs', 'ruangans.kd_gedung', '=', 'gedungs.kd_gedung')
             ->where('id_kelas', '=', $id)
@@ -104,11 +81,7 @@ class KelasController extends Controller
                 'nip',
                 'nm_guru'
             ])->get();
-        $data['nm_jurusan'] = DB::table('jurusans')
-            ->select([
-                'kd_jurusan',
-                'nm_jurusan'
-            ])->get();
+
         $data['nm_ruangan'] = DB::table('ruangans')
             ->select([
                 'kd_ruangan',
@@ -131,9 +104,6 @@ class KelasController extends Controller
             'kd_kelas.required' => 'Silahkan isi kode kelas terlebih dahulu!',
             'kd_kelas.unique'   => 'Kode kelas telah digunakan!',
             'nm_kelas.required'   => 'Silahkan isi nama kelas terlebih dahulu!',
-            'nip.required'   => 'Silahkan isi nama wali kelas terlebih dahulu!',
-            'kd_jurusan.required'   => 'Silahkan pilih nama jurusan terlebih dahulu!',
-            'kd_ruangan.required'   => 'Silahkan pilih nama ruangan terlebih dahulu!',
             'stts_kelas.required'   => 'Silahkan pilih status terlebih dahulu!',
         ]);
 
@@ -141,8 +111,6 @@ class KelasController extends Controller
         $data->kd_kelas = $request->kd_kelas;
         $data->nm_kelas = $request->nm_kelas;
         $data->nip = $request->nip;
-        $data->kd_jurusan = $request->kd_jurusan;
-        $data->kd_ruangan = $request->kd_ruangan;
         $data->stts_kelas = $request->stts_kelas;
         $data->update();
         return response()->json(['success' => 'Kelas successfully updated!']);

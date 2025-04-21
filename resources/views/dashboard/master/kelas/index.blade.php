@@ -58,7 +58,6 @@
                     <th>Kode Kelas</th>
                     <th>Nama Kelas</th>
                     <th>Wali Kelas</th>
-                    <th>Jurusan</th>
                     <th>Status</th>
                     <th style="width: 120px;">Action</th>
                   </tr>
@@ -69,8 +68,6 @@
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $a->kd_kelas }}</td>
                       <td>{{ $a->nm_kelas }}</td>
-                      <td>{{ $a->nm_guru }}</td>
-                      <td>{{ $a->nm_jurusan }}</td>
                       @if ($a->stts_kelas == 'Active')
                         <td>
                           <span class="span badge rounded badge-success">
@@ -170,14 +167,7 @@
                 $('#wali_kelas').append('<option value=' + value.nip + '>' + value.nm_guru +
                   '</option>');
               });
-              $.each(data['nm_jurusan'], function(i, value) {
-                $('#nm_jurusan').append('<option value=' + value.kd_jurusan + '>' + value.nm_jurusan +
-                  '</option>');
-              });
-              $.each(data['nm_ruangan'], function(i, value) {
-                $('#nm_ruangan').append('<option value=' + value.kd_ruangan + '>' + value.nm_ruangan +
-                  '</option>');
-              });
+
               $('#addKelas').modal('show');
             }
           });
@@ -240,22 +230,7 @@
                     '" selected>' + value.nm_guru + '</option>').trigger('change');
                 }
               });
-              $.each(data['nm_jurusan'], function(key, value) {
-                $('#kd_jurusan').append('<option value=' + value.kd_jurusan + '>' + value.nm_jurusan +
-                  '</option>');
-                if (data['item'][0].kd_jurusan == value.kd_jurusan) {
-                  $('#kd_jurusan').append('<option value="' + value.kd_jurusan +
-                    '" selected>' + value.nm_jurusan + '</option>').trigger('change');
-                }
-              });
-              $.each(data['nm_ruangan'], function(key, value) {
-                $('#kd_ruangan').append('<option value=' + value.kd_ruangan + '>' + value.nm_ruangan +
-                  '</option>');
-                if (data['item'][0].kd_ruangan == value.kd_ruangan) {
-                  $('#kd_ruangan').append('<option value="' + value.kd_ruangan +
-                    '" selected>' + value.nm_ruangan + '</option>').trigger('change');
-                }
-              });
+
               $('input[id="stts_kelas"][value="' + data['item'][0].stts_kelas + '"]').prop('checked',
                 true);
               $('#editKelas').modal('show');
@@ -310,13 +285,8 @@
             dataType: "JSON",
             success: function(data) {
               $('#a').html(data[0].nm_guru);
-              $('#b').html(data[0].nip);
               $('#c').html(data[0].kd_kelas);
               $('#d').html(data[0].nm_kelas);
-              $('#e').html(data[0].nm_jurusan);
-              $('#f').html(data[0].kd_jurusan);
-              $('#g').html(data[0].kd_ruangan);
-              $('#h').html(data[0].nm_ruangan);
               $('#i').html(data[0].nm_gedung);
               if (data[0].stts_kelas == 'Active')
                 $('#j').html("<span class='span badge rounded badge-success'>Active</span>");

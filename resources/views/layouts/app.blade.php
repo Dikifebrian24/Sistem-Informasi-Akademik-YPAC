@@ -250,7 +250,7 @@
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="#">Kelompok Mapel</a></li>
                                         <li><a href="#">Mata Pelajaran</a></li>
-                                        <li><a href="#">Jadwal Pelajaran</a></li>
+                                        <li><a href="{{ route('jadwal') }}">Jadwal Pelajaran</a></li>
                                         <li><a href="#">Bahan & Tugas</a></li>
                                         <li><a href="#">Kompetensi Dasar</a></li>
                                         <li><a href="#">Penilaian Diri</a></li>
@@ -287,12 +287,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6 footer-copyright">
-                            <p class="mb-0">SIAKAD - Media Informatika.</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="pull-right mb-0">Hand crafted & made with <i
-                                    class="fa fa-heart font-secondary"></i> nurd0tid
-                            </p>
+                            <p class="mb-0">SIAKAD</p>
                         </div>
                     </div>
                 </div>
