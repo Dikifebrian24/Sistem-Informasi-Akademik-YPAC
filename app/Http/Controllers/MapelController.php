@@ -135,7 +135,7 @@ class MapelController extends Controller
 
     public function destroy($id)
     {
-        Kelas::find($id)->delete();
-        return redirect()->route('kelas')->with(['success' => 'Kelas successfully deleted!']);
+        Mapel::find($id)->delete();
+        return redirect()->route('mapel')->with(['success' => 'Kelas successfully deleted!']);
     }
 }

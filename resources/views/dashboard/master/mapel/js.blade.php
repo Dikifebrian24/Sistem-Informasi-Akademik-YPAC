@@ -145,7 +145,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'admin/delete/' + id,
+                        url: 'mapel/delete/' + id,
                         type: 'DELETE',
                         data: {
                             _token: '{{ csrf_token() }}'
@@ -191,30 +191,7 @@
         {{--    }--}}
         {{--});--}}
 
-        $('.show_confirm').click(function(e) {
-            var form = $(this).closest("form");
-            e.preventDefault();
-            swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Poof! Your imaginary file has been deleted!", {
-                            icon: "success",
-                            // timer: 3000
-                        });
-                        form.submit();
-                    } else {
-                        swal("Your imaginary file is safe!", {
-                            icon: "info"
-                        });
-                    }
-                })
-        });
+
     </script>
     <script>
         @if (session()->has('success'))
