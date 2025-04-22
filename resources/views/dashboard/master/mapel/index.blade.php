@@ -17,7 +17,7 @@
                         <h3>Mata Pelajaran</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Applications</a></li>
-                            <li class="breadcrumb-item">Data Pengguna</li>
+                            <li class="breadcrumb-item">Data Akademik</li>
                             <li class="breadcrumb-item active">Mapel</li>
                         </ol>
                     </div>

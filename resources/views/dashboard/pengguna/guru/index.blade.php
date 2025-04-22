@@ -24,7 +24,7 @@
           <div class="col-sm-6">
             <!-- Bookmark Start-->
             <div class="bookmark">
-              <ul>
+              {{-- <ul>
                 <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top"
                     title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
                 <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top"
@@ -40,7 +40,7 @@
                     </div>
                   </form>
                 </li>
-              </ul>
+              </ul> --}}
             </div>
             <!-- Bookmark Ends-->
           </div>

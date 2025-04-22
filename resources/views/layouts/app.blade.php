@@ -14,7 +14,7 @@
     <meta name="author" content="pixelstrap">
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <title>SIAKAD - Media Informatika</title>
+    <title>SIAKAD - YPAC</title>
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -64,7 +64,7 @@
                     <ul class="nav-menus">
                         <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i
                                     data-feather="maximize"></i></a></li>
-                        <li class="onhover-dropdown">
+                        {{-- <li class="onhover-dropdown">
                             <div class="bookmark-box"><i data-feather="star"></i></div>
                             <div class="bookmark-dropdown onhover-show-div">
                                 <div class="form-group mb-0">
@@ -91,8 +91,8 @@
                                                 data-feather="star"> </i></span></li>
                                 </ul>
                             </div>
-                        </li>
-                        <li class="onhover-dropdown">
+                        </li> --}}
+                        {{-- <li class="onhover-dropdown">
                             <div class="notification-box"><i data-feather="bell"></i><span
                                     class="dot-animated"></span></div>
                             <ul class="notification-dropdown onhover-show-div">
@@ -136,11 +136,11 @@
                                     </div>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li>
                             <div class="mode"><i class="fa fa-moon-o"></i></div>
                         </li>
-                        <li class="onhover-dropdown"><i data-feather="message-square"></i>
+                        {{-- <li class="onhover-dropdown"><i data-feather="message-square"></i>
                             <ul class="chat-dropdown onhover-show-div">
                                 <li>
                                     <div class="media"><img class="img-fluid rounded-circle me-3"
@@ -172,7 +172,7 @@
                                 <li class="text-center"> <a class="f-w-700" href="javascript:void(0)">See All </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="onhover-dropdown p-0">
 
                             <button class="btn btn-primary-light" type="button"><a href="{{ route('logout') }}"
@@ -203,7 +203,7 @@
                         <h6 class="mt-3 f-14 f-w-600">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                         </h6>
                     </a>
-                    <p class="mb-0 font-roboto">Human Resources Department</p>
+                    <p class="mb-0 font-roboto">Admin</p>
 
                 </div>
                 <nav>
@@ -251,26 +251,26 @@
                                         <li><a href="#">Kelompok Mapel</a></li>
                                         <li><a href="{{ route('mapel') }}">Mata Pelajaran</a></li>
                                         <li><a href="{{ route('kelas') }}">Jadwal Pelajaran</a></li>
-                                        <li><a href="#">Bahan & Tugas</a></li>
+                                        {{-- <li><a href="#">Bahan & Tugas</a></li>
                                         <li><a href="#">Kompetensi Dasar</a></li>
                                         <li><a href="#">Penilaian Diri</a></li>
-                                        <li><a href="#">Rentang Nilai</a></li>
+                                        <li><a href="#">Rentang Nilai</a></li> --}}
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                            data-feather="calendar"></i><span>Data Absensi</span></a>
+                                            data-feather="calendar"></i><span>Data Progres Siswa</span></a>
                                     <ul class="nav-submenu menu-content">
-                                        <li><a href="#">Absensi Siswa</a></li>
-                                        <li><a href="#">Rekap Absensi</a></li>
+                                        <li><a href="#">Progres Siswa</a></li>
+                                        <li><a href="#">Rekap Progres Siswa</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                             data-feather="file-text"></i><span>Laporan Nilai Siswa</span></a>
                                     <ul class="nav-submenu menu-content">
-                                        <li><a href="#">Nilai Raport</a></li>
-                                        <li><a href="#">Capaian Belajar</a></li>
-                                        <li><a href="#">Presentasi</a></li>
-                                        <li><a href="#">Raport UTS</a></li>
+                                        <li><a href="#">Nilai Siswa</a></li>
+                                        {{-- <li><a href="#">Capaian Belajar</a></li> --}}
+                                        {{-- <li><a href="#">Presentasi</a></li> --}}
+                                        {{-- <li><a href="#">Raport UTS</a></li> --}}
                                         <li><a href="#">Cetak Raport</a></li>
                                     </ul>
                                 </li>

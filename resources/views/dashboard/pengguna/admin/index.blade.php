@@ -14,16 +14,16 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Siswa</h3>
+                        <h3>Admin</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Applications</a></li>
                             <li class="breadcrumb-item">Data Pengguna</li>
-                            <li class="breadcrumb-item active">Siswa</li>
+                            <li class="breadcrumb-item active">Admin</li>
                         </ol>
                     </div>
                     <div class="col-sm-6">
                         <!-- Bookmark Start-->
-                        <div class="bookmark">
+                        {{-- <div class="bookmark">
                             <ul>
                                 <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover" data-placement="top"
                                        title="" data-original-title="Tables"><i data-feather="inbox"></i></a></li>
@@ -41,7 +41,7 @@
                                     </form>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                         <!-- Bookmark Ends-->
                     </div>
                 </div>
