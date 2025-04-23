@@ -54,8 +54,7 @@
             <div class="main-header-right row m-0">
                 <div class="main-header-left">
                     <div class="logo-wrapper"><a href="/home"><h3>Siakad</h3></a></div>
-                    <div class="dark-logo-wrapper"><a href="/home"><img class="img-fluid"
-                                src="{{ asset('assets/images/logo/dark-logo.png') }}" alt=""></a></div>
+                    <div class="dark-logo-wrapper"> <a href="/home"> <h3>Siakad</h3></a></div>
                     <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="align-center"
                             id="sidebar-toggle"></i></div>
                 </div>
