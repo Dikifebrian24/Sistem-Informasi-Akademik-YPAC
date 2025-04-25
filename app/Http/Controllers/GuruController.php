@@ -16,9 +16,7 @@ class GuruController extends Controller
 
     public function index()
     {
-        $data = DB::table('gurus')
-            ->join('ptks', 'gurus.id_ptk', '=', 'ptks.id_ptk')
-            ->select('gurus.*', 'ptks.nm_ptk')->get();
+        $data = DB::table('gurus')->get();
         if (request()->ajax()) {
             return datatables()->of($data)
                 ->addIndexColumn()
