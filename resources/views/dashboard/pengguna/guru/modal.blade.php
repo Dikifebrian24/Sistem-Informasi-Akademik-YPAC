@@ -11,11 +11,11 @@
                     <div class="row g-2">
                         <div class="col-md-6">
                             <label class="form-label">NIP</label>
-                            <input class="form-control" type="text" name="nip" required>
+                            <input class="form-control" type="number" name="nip" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">NIK</label>
-                            <input class="form-control" type="text" name="nik" required>
+                            <input class="form-control" type="number" name="nik" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Nama Guru</label>
