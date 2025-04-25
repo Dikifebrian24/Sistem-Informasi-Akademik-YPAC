@@ -61,7 +61,7 @@ class AdminController extends Controller
 
     public function getDatatables(Request $request) {
         if ($request->ajax()) {
-            $users = Kelas::select(['id', 'first_name', 'last_name', 'email', 'level']);
+            $users = User::select(['id', 'first_name', 'last_name', 'email', 'level']);
 
             return DataTables::of($users)
                 ->addIndexColumn()
