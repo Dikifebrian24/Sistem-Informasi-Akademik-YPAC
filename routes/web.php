@@ -127,6 +127,8 @@ Route::prefix('master')->group(function () {
 
     Route::controller(GuruController::class)->prefix('guru')->group(function () {
         Route::get('', 'index')->name('guru');
+        Route::get('add', 'add')->name('guru/add');
+        Route::get('data', 'getDatatables')->name('guru/data');
         Route::post('save', 'store')->name('guru/save');
         Route::get('edit/{id}', 'edit')->name('guru/edit');
         Route::put('update/{id}', 'update')->name('guru/update');
