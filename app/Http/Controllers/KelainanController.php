@@ -20,15 +20,6 @@ class KelainanController extends Controller
 
     public function index()
     {
-        $data = DB::table('siswas')
-            ->join('jurusans', 'siswas.kd_jurusan', '=', 'jurusans.kd_jurusan')
-            ->select('siswas.*', 'jurusans.nm_jurusan')->get();
-        if (request()->ajax()) {
-            return datatables()->of($data)
-                ->addIndexColumn()
-                ->make(true);
-        }
-
         $params = [
             'title' => 'Data kelainan',
         ];

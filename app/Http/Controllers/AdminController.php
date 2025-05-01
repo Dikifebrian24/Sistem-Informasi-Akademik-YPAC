@@ -83,7 +83,7 @@ class AdminController extends Controller
             'last_name' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'role_level' => 'required|in:1,2,3' // sesuai role id
+            'role_level' => 'required|in:1,2,3'
         ]);
 
         if ($request->role_level == 1){

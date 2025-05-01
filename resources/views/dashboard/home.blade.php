@@ -77,5 +77,51 @@
         </div>
     </div>
     <!-- footer start-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Convert the PHP data to JavaScript
+        const disabilitasData = @json($disabilitasData);
 
+        // Prepare the labels and data for the chart
+        const labels = disabilitasData.map(item => item.nm_kelainan);
+        const data = disabilitasData.map(item => item.total_disabilitas);
+
+        // Define an array of colors (you can add as many as you need)
+        const colors = [
+            'rgba(75, 192, 192, 0.2)',  // Light Green
+            'rgba(255, 99, 132, 0.2)',  // Light Red
+            'rgba(255, 159, 64, 0.2)',  // Light Orange
+            'rgba(153, 102, 255, 0.2)', // Light Purple
+            'rgba(54, 162, 235, 0.2)',  // Light Blue
+            'rgba(255, 205, 86, 0.2)',  // Light Yellow
+            'rgba(201, 203, 207, 0.2)'  // Light Grey
+        ];
+
+        // Generate the backgroundColor array dynamically based on the number of bars
+        const backgroundColors = disabilitasData.map((_, index) => colors[index % colors.length]);
+
+        // Create the chart
+        const ctx = document.getElementById('myBarGraph').getContext('2d');
+        const myBarGraph = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Jumlah Penyandang Disabilitas',
+                    data: data,
+                    backgroundColor: backgroundColors,  // Set dynamic colors
+                    borderColor: 'rgba(0, 0, 0, 1)',  // Black border for all bars
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 @endsection

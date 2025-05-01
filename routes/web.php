@@ -46,6 +46,8 @@ Route::prefix('master')->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('kurikulum/delete');
     });
 
+    Route::get('/disabilitas', [\App\Http\Controllers\HomeController::class, '']);
+
     Route::controller(ThnAkademikController::class)->prefix('thnakademik')->group(function () {
         Route::get('', 'index')->name('thnakademik');
         Route::get('add', 'add')->name('thnakademik/add');
