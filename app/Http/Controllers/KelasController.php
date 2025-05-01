@@ -17,7 +17,7 @@ class KelasController extends Controller
     public function index()
     {
         $data = DB::table('kelas')
-            ->join('gurus', 'kelas.id_guru', '=', 'gurus.id_guru')
+            ->leftjoin('gurus', 'kelas.id_guru', '=', 'gurus.id_guru')
             ->select('kelas.*', 'gurus.nm_guru')
             ->get();
 
