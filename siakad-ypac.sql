@@ -135,7 +135,7 @@ CREATE TABLE `jurusans` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kelas`
+-- Table structure for table `kelas_backup`
 --
 
 CREATE TABLE `kelas` (
@@ -149,11 +149,11 @@ CREATE TABLE `kelas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `kelas`
+-- Dumping data for table `kelas_backup`
 --
 
 INSERT INTO `kelas` (`id_kelas`, `id_guru`, `kd_kelas`, `nm_kelas`, `stts_kelas`, `created_at`, `updated_at`) VALUES
-(1, 1, 'KLS01', 'kelas 1', 'Active', '2025-04-21 09:12:03', '2025-04-21 09:12:03');
+(1, 1, 'KLS01', 'kelas_backup 1', 'Active', '2025-04-21 09:12:03', '2025-04-21 09:12:03');
 
 -- --------------------------------------------------------
 
@@ -442,7 +442,7 @@ ALTER TABLE `jurusans`
   ADD UNIQUE KEY `jurusans_kd_jurusan_unique` (`kd_jurusan`);
 
 --
--- Indexes for table `kelas`
+-- Indexes for table `kelas_backup`
 --
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id_kelas`),
@@ -556,7 +556,7 @@ ALTER TABLE `jurusans`
   MODIFY `id_jurusan` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `kelas`
+-- AUTO_INCREMENT for table `kelas_backup`
 --
 ALTER TABLE `kelas`
   MODIFY `id_kelas` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

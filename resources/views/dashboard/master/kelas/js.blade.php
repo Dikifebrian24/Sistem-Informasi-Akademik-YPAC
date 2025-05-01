@@ -23,18 +23,18 @@
             $(".js-example-basic-single").select2();
             e.preventDefault()
             $.ajax({
-                url: "{{ route('mapel/add') }}",
+                url: "{{ route('kelas/add') }}",
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                    $('#kelas_backup').empty(); // Kosongkan dulu
-                    $('#kelas_backup').append('<option value="">-- Pilih Role --</option>'); // Tambah placeholder
+                    $('#role_level').empty(); // Kosongkan dulu
+                    $('#role_level').append('<option value="">-- Pilih Role --</option>'); // Tambah placeholder
 
-                    $.each(data['kelas_backup'], function(i, value) {
-                        $('#kelas_backup').append('<option value="' + value.id_kelas + '">' + value.nm_kelas + '</option>');
+                    $.each(data['role_level'], function(i, value) {
+                        $('#role_level').append('<option value="' + value.id + '">' + value.name + '</option>');
                     });
 
-                    $('#mapelModalAdd').modal('show');
+                    $('#kelasModalAdd').modal('show');
                 }
             });
         });
@@ -45,7 +45,7 @@
             $('#data').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('mapel/data') }}',
+                ajax: '{{ route('kelas/data') }}',
                 columns: [
                     {
                         data: null,
@@ -57,8 +57,10 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { data: 'nm_mapel', name: 'nm_mapel' },
+                    { data: 'kd_kelas', name: 'kd_kelas' },
                     { data: 'nm_kelas', name: 'nm_kelas' },
+                    { data: 'nm_guru', name: 'nm_guru' },
+                    { data: 'stts_kelas', name: 'stts_kelas', className: 'text-center' },
                     {
                         data: 'action',
                         name: 'action',
@@ -71,11 +73,11 @@
         });
 
 
-        $('#saveMapel').on('submit', function(e) {
+        $('#saveKelas').on('submit', function(e) {
             e.preventDefault();
 
             $.ajax({
-                url: '{{ route("mapel/store") }}',
+                url: '{{ route("kelas/store") }}',
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
@@ -89,8 +91,8 @@
                         });
 
                         $('#data').DataTable().ajax.reload();
-                        $('#mapelModalAdd').modal('hide');
-                        $('#saveMapel')[0].reset();
+                        $('#adminModalAdd').modal('hide');
+                        $('#saveKelas')[0].reset();
                     }
                 },
                 error: function(xhr) {
@@ -112,18 +114,21 @@
 
         $(document).on('click', '.edit', function() {
             let userId = $(this).data('id');
+            $('#saveEdit').show();
+            $('#save').hide();
 
             $.ajax({
-                url: 'admin/' + userId + '/edit',
+                url: 'kelas/' + userId + '/edit',
                 type: 'GET',
                 success: function(user) {
-                    $('#first_name').val(user.first_name);
-                    $('#last_name').val(user.last_name);
-                    $('#email').val(user.email);
-                    $('#role_level').val(user.level);
-                    $('#password').val('');
+                    $('#kd_kelas').val(user.kd_kelas);
+                    $('#nm_kelas').val(user.nm_kelas);
 
-                    $('#adminModalAdd').modal('show');
+                    $('#kelasModalAdd').modal('show');
+                    // $('#saveEdit').hide();
+                    // $('#save').show();
+                    $('#saveEdit').show();
+                    $('#save').hide();
 
                     $('#saveKelas').attr('data-id', user.id);
                 }
@@ -145,7 +150,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'mapel/delete/' + id,
+                        url: 'kelas/delete/' + id,
                         type: 'DELETE',
                         data: {
                             _token: '{{ csrf_token() }}'
@@ -176,7 +181,7 @@
 
         // Load select role
         {{--$.ajax({--}}
-        {{--    url: '{{ route("admin/level") }}',--}}
+        {{--    url: '{{ route("kelas/level") }}',--}}
         {{--    type: 'GET',--}}
         {{--    success: function(data) {--}}
         {{--        $('#role_level').empty().append('<option value="">-- Pilih Role --</option>');--}}
@@ -191,7 +196,30 @@
         {{--    }--}}
         {{--});--}}
 
-
+        $('.show_confirm').click(function(e) {
+            var form = $(this).closest("form");
+            e.preventDefault();
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Your imaginary file has been deleted!", {
+                            icon: "success",
+                            // timer: 3000
+                        });
+                        form.submit();
+                    } else {
+                        swal("Your imaginary file is safe!", {
+                            icon: "info"
+                        });
+                    }
+                })
+        });
     </script>
     <script>
         @if (session()->has('success'))

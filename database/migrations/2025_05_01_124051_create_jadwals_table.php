@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('id_kelas')->references('id_kelas')->on('kelas')->onDelete('cascade');
+            $table->foreign('id_kelas')->references('id_kelas')->on('kelas_backup')->onDelete('cascade');
             $table->foreign('id_mapel')->references('id')->on('mapels')->onDelete('cascade');
         });
     }

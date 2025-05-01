@@ -295,7 +295,7 @@
                       <a href="{{ route('jurusan') }}">Jurusan</a>
                     </li>
                     <li>
-                      <a href="{{ route('kelas') }}">Kelas</a>
+                      <a href="{{ route('kelas_backup') }}">Kelas</a>
                     </li>
                     <li>
                       <a href="{{ route('kepegawaian') }}">Kepegawaian</a>

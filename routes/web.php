@@ -114,12 +114,23 @@ Route::prefix('master')->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('jurusan/delete');
     });
 
+//    Route::controller(KelasController::class)->prefix('kelas_backup')->group(function () {
+//        Route::get('', 'index')->name('kelas_backup');
+//        Route::get('add', 'add')->name('kelas_backup/add');
+//        Route::post('save', 'store')->name('kelas_backup/save');
+//        Route::get('detail/{id}', 'detail')->name('kelas_backup/detail');
+//        Route::get('edit/{id}', 'edit')->name('kelas_backup/edit');
+//        Route::put('update/{id}', 'update')->name('kelas_backup/update');
+//        Route::delete('delete/{id}', 'destroy')->name('kelas_backup/delete');
+//    });
+
     Route::controller(KelasController::class)->prefix('kelas')->group(function () {
         Route::get('', 'index')->name('kelas');
         Route::get('add', 'add')->name('kelas/add');
+        Route::get('data', 'getDatatables')->name('kelas/data');
+        Route::get('{id}/edit', 'edit')->name('kelas/edit');
+        Route::post('store', 'store')->name('kelas/store');
         Route::post('save', 'store')->name('kelas/save');
-        Route::get('detail/{id}', 'detail')->name('kelas/detail');
-        Route::get('edit/{id}', 'edit')->name('kelas/edit');
         Route::put('update/{id}', 'update')->name('kelas/update');
         Route::delete('delete/{id}', 'destroy')->name('kelas/delete');
     });
@@ -187,6 +198,7 @@ Route::prefix('master')->group(function () {
         Route::put('update/{id}', 'update')->name('kelainan/update');
         Route::delete('delete/{id}', 'destroy')->name('kelainan/delete');
     });
+
 
     Route::controller(MapelController::class)->prefix('mapel')->group(function () {
         Route::get('', 'index')->name('mapel');
