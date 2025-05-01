@@ -33,7 +33,7 @@ class JadwalController extends Controller
 
         $params = [
             'title' => 'Jadwal',
-            'kelas_backup' => Kelas::all(),
+            'kelas' => Kelas::all(),
             'guru' => $data_guru,
             'mapel' => $mapel,
         ];
@@ -44,7 +44,7 @@ class JadwalController extends Controller
     {
         if ($request->ajax()) {
             $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id','nm_kelas'])
-                ->join('gurus', 'gurus.id_guru', '=', 'kelas_backup.id_guru')
+                ->join('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
                 ->where('stts_kelas', 'Active')->get();
 
             return DataTables::of($data_kelas)
@@ -103,7 +103,7 @@ class JadwalController extends Controller
             'tanggal' => 'required|date',
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
-            'id_kelas' => 'required|exists:kelas_backup,id_kelas',
+            'id_kelas' => 'required|exists:kelas,id_kelas',
             'mapel' => 'required|exists:mapels,id',
         ]);
 
