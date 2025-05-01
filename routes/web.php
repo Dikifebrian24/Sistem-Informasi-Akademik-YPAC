@@ -154,6 +154,17 @@ Route::prefix('master')->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('guru/delete');
     });
 
+    Route::controller(\App\Http\Controllers\KepalaSekolahController::class)->prefix('kepsek')->group(function () {
+        Route::get('', 'index')->name('kepsek');
+        Route::get('add', 'add')->name('kepsek/add');
+        Route::get('data', 'getDatatables')->name('kepsek/data');
+        Route::post('save', 'store')->name('kepsek/save');
+        Route::post('store', 'store')->name('kepsek/store');
+        Route::get('edit/{id}', 'edit')->name('kepsek/edit');
+        Route::put('update/{id}', 'update')->name('kepsek/update');
+        Route::delete('delete/{id}', 'destroy')->name('kepsek/delete');
+    });
+
 
     Route::controller(AdminController::class)->prefix('admin')->group(function () {
         Route::get('', 'index')->name('admin');

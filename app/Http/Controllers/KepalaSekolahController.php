@@ -10,7 +10,7 @@ use Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class GuruController extends Controller
+class KepalaSekolahController extends Controller
 {
     public function __construct()
     {
@@ -20,13 +20,13 @@ class GuruController extends Controller
     public function index()
     {
         $params = [
-            'title' => 'Guru',
+            'title' => 'Data Kepaan Sekolah',
         ];
-        return view('dashboard.pengguna.guru.index', compact('params'));
+        return view('dashboard.pengguna.kepala_sekolah.index', compact('params'));
     }
 
     public function getDatatables(){
-        $data = DB::table('gurus')->where('level_guru', 2)->get();
+        $data = DB::table('gurus')->where('level_guru', 1)->get();
         if (request()->ajax()) {
             return datatables()->of($data)
                 ->addColumn('action', function ($row) {
@@ -38,16 +38,6 @@ class GuruController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-    }
-
-    public function add() {
-        $data['role_level'] = [
-            ['id' => 1, 'name' => 'Admin'],
-            ['id' => 2, 'name' => 'Guru'],
-            ['id' => 3, 'name' => 'Siswa']
-        ];
-
-        return response()->json($data);
     }
 
     public function store(Request $request) {
@@ -70,7 +60,6 @@ class GuruController extends Controller
             // Kontak dan sekolah
             'almt_jalan'     => 'required|string|max:255',
             'no_hp'          => 'required|string|max:15',
-            'level_guru'          => 'required|string|max:15',
 
         ]);
 
@@ -81,7 +70,7 @@ class GuruController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => 2,
+            'level' => 1,
             'is_admin' => 0,
             'is_active' => 1,
         ]);
@@ -100,7 +89,7 @@ class GuruController extends Controller
                 'agama'          => $request->agama,
                 'almt_jalan'     => $request->almt_jalan,
                 'no_hp'          => $request->no_hp,
-                'level_guru'          => $request->level_guru,
+                'level_guru'     => 1,
                 'created_at'     => date('Y-m-d H:i:s'),
                 'updated_at'     => null,
             ]);
