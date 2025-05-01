@@ -117,12 +117,9 @@
                 url: 'kelainan/' + userId + '/edit',
                 type: 'GET',
                 success: function(user) {
-                    $('#first_name').val(user.first_name);
-                    $('#last_name').val(user.last_name);
-                    $('#email').val(user.email);
-                    $('#role_level').val(user.level);
-                    $('#password').val('');
-
+                    $('#nm_kelainan').val(user.nm_kelainan);
+                    $('#desc_kelainan').val(user.desc_kelainan);
+                    $('#mode').text('Edit');
                     $('#kelainanModalAdd').modal('show');
 
                     $('#saveKelas').attr('data-id', user.id);

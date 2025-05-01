@@ -48,8 +48,8 @@ class KelainanController extends Controller
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return response()->json($user);
+        $kelainan = DataKelainan::findOrFail($id);
+        return response()->json($kelainan);
     }
 
     public function destroy($id)
