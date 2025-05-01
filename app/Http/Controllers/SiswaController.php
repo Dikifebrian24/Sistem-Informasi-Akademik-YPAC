@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataKelainan;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -61,6 +62,12 @@ class SiswaController extends Controller
     }
 
     public function add() {
-        return view('dashboard.pengguna.siswa.add');
+        $kelainan = DataKelainan::select('id', 'nm_kelainan')->get();
+
+        $data = [
+            'kelainan' => $kelainan,
+        ];
+
+        return response()->json($data);return view('dashboard.pengguna.siswa.add');
     }
 }

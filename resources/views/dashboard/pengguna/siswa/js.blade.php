@@ -27,11 +27,11 @@
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                    $('#role_level').empty(); // Kosongkan dulu
-                    $('#role_level').append('<option value="">-- Pilih Role --</option>'); // Tambah placeholder
+                    $('#kelainan').empty();
+                    $('#kelainan').append('<option value="">-- Pilih Kategori Kelainan --</option>'); // Tambah placeholder
 
-                    $.each(data['role_level'], function(i, value) {
-                        $('#role_level').append('<option value="' + value.id + '">' + value.name + '</option>');
+                    $.each(data['kelainan'], function(i, value) {
+                        $('#role_level').append('<option value="' + value.id + '">' + value.nm_kelainan + '</option>');
                     });
 
                     $('#adminModalAdd').modal('show');

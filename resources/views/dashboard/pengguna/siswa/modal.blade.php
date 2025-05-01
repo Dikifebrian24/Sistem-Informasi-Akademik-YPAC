@@ -1,8 +1,8 @@
-<div class="modal fade" id="adminModalAdd" aria-labelledby="addKelasLabel" aria-hidden="true">
+<div class="modal fade" id="adminModalAdd" aria-labelledby="addSiswaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addKelasLabel">Add Kelas</h5>
+                <h5 class="modal-title" id="addSiswaLabel">Add Siswa</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -38,15 +38,7 @@
                                 <div class="valid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Role</label>
-                                <select class="form-select" id="role_level" name="role_level" required>
-                                    <option value="">-- Pilih Role --</option>
-                                </select>
-                                @error('role_level')
-                                <div class="valid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
