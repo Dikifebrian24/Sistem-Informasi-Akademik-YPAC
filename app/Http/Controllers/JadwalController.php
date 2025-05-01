@@ -6,6 +6,7 @@ use App\Models\DataKelainan;
 use App\Models\Jadwal;
 use App\Models\Jurusan;
 use App\Models\Kelas;
+use App\Models\Mapel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,10 +29,13 @@ class JadwalController extends Controller
                 ->make(true);
         }
 
+        $mapel = Mapel::all();
+
         $params = [
             'title' => 'Jadwal',
             'kelas' => Kelas::all(),
             'guru' => $data_guru,
+            'mapel' => $mapel,
         ];
         return view('dashboard.master.jadwal.index', compact('params'));
     }
@@ -93,30 +97,28 @@ class JadwalController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-            'role_level' => 'required|in:1,2,3' // sesuai role id
+        // Validate the data
+        $validated = $request->validate([
+            'materi' => 'required|string|max:255',
+            'tanggal' => 'required|date',
+            'waktu_mulai' => 'required|date_format:H:i',
+            'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
+            'id_kelas' => 'required|exists:kelas,id_kelas',
+            'mapel' => 'required|exists:mapels,id',
         ]);
 
-        if ($request->role_level == 1){
-            $is_admin = 1;
-        } else {
-            $is_admin = 0;
-        }
-
-        User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'level' => $request->role_level,
-            'is_admin' => $is_admin
+        // Store the new jadwal in the database
+        Jadwal::create([
+            'id_mapel'  => $validated['mapel'],
+            'materi' => $validated['materi'],
+            'tanggal' => $validated['tanggal'],
+            'waktu_mulai' => $validated['waktu_mulai'],
+            'waktu_selesai' => $validated['waktu_selesai'],
+            'id_kelas' => $validated['id_kelas'],
         ]);
 
-        return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
+        // Return response or redirect as needed
+        return response()->json(['message' => 'Jadwal added successfully!']);
     }
 
 //hkjhkhk

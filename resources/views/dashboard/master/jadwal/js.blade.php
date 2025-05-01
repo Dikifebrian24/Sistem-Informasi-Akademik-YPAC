@@ -36,16 +36,17 @@
             });
         });
 
-        let table;
         $(document).on('click', '.show', function () {
             let idKelas = $(this).data('id');
+            console.log(idKelas, 'kontol');
+            let temp_kelas = $('#id_kelas').va;(idKelas);
 
             // Show modal
             $('#jadwalModal').modal('show');
 
             // Destroy old instance if exists
             if ($.fn.DataTable.isDataTable('#jadwalTable')) {
-                $('#jadwalTable').DataTable().destroy();
+                $('#jadwalTable').DataTable().clear().destroy();
             }
 
             // Initialize DataTable with server-side and pass id_kelas
@@ -66,7 +67,35 @@
             });
         });
 
+        $(document).on('click', '#addJadwalBtn', function() {
+            let idKelas = $('.show').data('id');
 
+            console.log(idKelas);
+
+            $('#id_kelas').val(idKelas);
+
+            $('#addJadwalModal').modal('show');
+        });
+
+        $('#addJadwalForm').on('submit', function(e) {
+            e.preventDefault();
+
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: '{{ route("jadwal/store") }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    $('#addJadwalModal').modal('hide');
+                    $('#jadwalTable').DataTable().ajax.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('There was an error adding the jadwal.');
+                }
+            });
+        });
 
     </script>
 

@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Jadwal extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'id_kelas';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'id_kelas',
         'id_mapel',
+        'materi',
         'waktu_mulai',
         'waktu_selesai',
         'tanggal',

@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <form class="needs-validation" id="saveSiswa">
-                    @csrf
+                        @csrf
                     <div>
                         <div class="row g-2">
                             <div class="col-md-6  mb-3">
