@@ -19,15 +19,6 @@ class AdminController extends Controller
 
     public function index()
     {
-        $data = DB::table('siswas')
-            ->join('jurusans', 'siswas.kd_jurusan', '=', 'jurusans.kd_jurusan')
-            ->select('siswas.*', 'jurusans.nm_jurusan')->get();
-        if (request()->ajax()) {
-            return datatables()->of($data)
-                ->addIndexColumn()
-                ->make(true);
-        }
-
         $params = [
             'title' => 'Data Admin',
         ];
@@ -61,7 +52,7 @@ class AdminController extends Controller
 
     public function getDatatables(Request $request) {
         if ($request->ajax()) {
-            $users = User::select(['id', 'first_name', 'last_name', 'email', 'level']);
+            $users = User::select(['id', 'first_name', 'last_name', 'email', 'level'])->where('level', '1');
 
             return DataTables::of($users)
                 ->addIndexColumn()
