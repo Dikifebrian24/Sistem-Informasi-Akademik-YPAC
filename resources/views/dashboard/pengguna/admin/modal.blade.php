@@ -38,15 +38,6 @@
                                 <div class="valid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Role</label>
-                                <select class="form-select" id="role_level" name="role_level" required>
-                                    <option value="">-- Pilih Role --</option>
-                                </select>
-                                @error('role_level')
-                                <div class="valid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

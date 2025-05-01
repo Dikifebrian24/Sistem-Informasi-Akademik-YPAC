@@ -36,36 +36,40 @@
             });
         });
 
-        $(document).on('click', '.show', function () {
-            let idKelas = $(this).data('id');
-            console.log(idKelas, 'kontol');
-            let temp_kelas = $('#id_kelas').va;(idKelas);
+        let table;
+        let currentIdKelas = null;
 
-            // Show modal
+        $(document).on('click', '.show', function () {
+            currentIdKelas = $(this).data('id');
+            console.log('Clicked ID:', currentIdKelas);
+
+            $('#id_kelas').val(currentIdKelas);
+
             $('#jadwalModal').modal('show');
 
-            // Destroy old instance if exists
             if ($.fn.DataTable.isDataTable('#jadwalTable')) {
-                $('#jadwalTable').DataTable().clear().destroy();
+                table.ajax.reload();
+            } else {
+                table = $('#jadwalTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route("jadwal/get-jadwal") }}',
+                        data: function (d) {
+                            d.id_kelas = currentIdKelas; // Pass dynamic class ID
+                        }
+                    },
+                    columns: [
+                        { data: 'id', name: 'id' },
+                        { data: 'materi', name: 'materi' },
+                        { data: 'tanggal', name: 'tanggal' },
+                        { data: 'waktu_mulai', name: 'waktu_mulai' },
+                        { data: 'waktu_selesai', name: 'waktu_selesai' }
+                    ]
+                });
             }
-
-            // Initialize DataTable with server-side and pass id_kelas
-            table = $('#jadwalTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route("jadwal/get-jadwal") }}',
-                    data: { id_kelas: idKelas }
-                },
-                columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'materi', name: 'materi' },
-                    { data: 'tanggal', name: 'tanggal' },
-                    { data: 'waktu_mulai', name: 'waktu_mulai' },
-                    { data: 'waktu_selesai', name: 'waktu_selesai' }
-                ]
-            });
         });
+
 
         $(document).on('click', '#addJadwalBtn', function() {
             let idKelas = $('.show').data('id');

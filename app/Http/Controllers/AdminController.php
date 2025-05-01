@@ -83,7 +83,6 @@ class AdminController extends Controller
             'last_name' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'role_level' => 'required|in:1,2,3'
         ]);
 
         if ($request->role_level == 1){
@@ -97,8 +96,9 @@ class AdminController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => $request->role_level,
-            'is_admin' => $is_admin
+            'level' => 1,
+            'is_admin' => 1,
+            'is_active' => 1
         ]);
 
         return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
