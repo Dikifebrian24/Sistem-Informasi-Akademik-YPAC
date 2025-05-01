@@ -24,6 +24,10 @@ class SiswaController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('dashboard.pengguna.siswa.index');
+
+        $params = [
+            'title' => 'Data Siswa',
+        ];
+        return view('dashboard.pengguna.siswa.index', compact('params'));
     }
 }

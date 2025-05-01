@@ -51,8 +51,7 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-header">
-            {{-- <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-original-title="test"
-              data-bs-target="#addGedung">Add Gedung</button> --}}
+              <button class="btn btn-primary add" type="button" id="openModalBtn">Add {{ $params['title'] }}</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">

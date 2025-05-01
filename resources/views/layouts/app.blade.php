@@ -304,6 +304,10 @@
     <script src="{{ asset('assets/js/script.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+
+    <!-- Plugins JS start-->
+    <script src="{{asset('assets/js/chart/chartjs/chart.min.js')}}"></script>
+    <script src="{{ asset('assets/js/chart/chartjs/chart.custom.js') }}"></script>
     @stack('js')
 </body>
 
