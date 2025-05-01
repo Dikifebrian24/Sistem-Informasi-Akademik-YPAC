@@ -148,6 +148,7 @@ Route::prefix('master')->group(function () {
         Route::get('add', 'add')->name('guru/add');
         Route::get('data', 'getDatatables')->name('guru/data');
         Route::post('save', 'store')->name('guru/save');
+        Route::post('store', 'store')->name('guru/store');
         Route::get('edit/{id}', 'edit')->name('guru/edit');
         Route::put('update/{id}', 'update')->name('guru/update');
         Route::delete('delete/{id}', 'destroy')->name('guru/delete');

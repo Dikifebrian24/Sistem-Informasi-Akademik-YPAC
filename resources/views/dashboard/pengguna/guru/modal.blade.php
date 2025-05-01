@@ -10,20 +10,36 @@
                     @csrf
                     <div class="row g-2">
                         <div class="col-md-6">
+                            <label class="form-label">Nama Depan</label>
+                            <input class="form-control" type="text" name="first_name" id="first_name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Belakang</label>
+                            <input class="form-control" type="text" name="last_name" id="last_name" required>
+                        </div>
+                        <div class="col-md-6">
                             <label class="form-label">NIP</label>
-                            <input class="form-control" type="number" name="nip" required>
+                            <input class="form-control" type="number" name="nip" id="nip" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">NIK</label>
-                            <input class="form-control" type="number" name="nik" required>
+                            <input class="form-control" type="number" name="nik" id="nik" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Nama Guru</label>
-                            <input class="form-control" type="text" name="nm_guru" required>
+                            <label class="form-label">Email</label>
+                            <input class="form-control" type="email" name="email" id="email" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Password</label>
+                            <input class="form-control" type="password" name="password" id="password" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">NPWP</label>
+                            <input class="form-control" type="text" name="npwp" id="npwp" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Jenis Kelamin</label>
-                            <select class="form-select" name="jenkel" required>
+                            <select class="form-select" name="jenkel" id="jenkel" required>
                                 <option value="">-- Pilih Jenis Kelamin --</option>
                                 <option value="Laki - Laki">Laki - Laki</option>
                                 <option value="Perempuan">Perempuan</option>
@@ -31,55 +47,24 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Tempat Lahir</label>
-                            <input class="form-control" type="text" name="tmpt_lahir" required>
+                            <input class="form-control" type="text" name="tmpt_lahir" id="tmpt_lahir" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Tanggal Lahir</label>
-                            <input class="form-control" type="date" name="tgl_lahir" required>
+                            <input class="form-control" type="date" name="tgl_lahir" id="tgl_lahir" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Alamat Jalan</label>
-                            <input class="form-control" type="text" name="almt_jalan" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">RT/RW</label>
-                            <input class="form-control" type="text" name="rt_rw" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Kab/Kota</label>
-                            <input class="form-control" type="text" name="kab_kota" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Kelurahan</label>
-                            <input class="form-control" type="text" name="kelurahan" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Kecamatan</label>
-                            <input class="form-control" type="text" name="kecamatan" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Provinsi</label>
-                            <input class="form-control" type="text" name="provinsi" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Kode Pos</label>
-                            <input class="form-control" type="text" name="kd_pos" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">No. Telepon</label>
-                            <input class="form-control" type="text" name="no_telp" required>
+                            <label class="form-label">Alamat Lengkap</label>
+                            <input class="form-control" type="text" name="almt_jalan" id="almt_jalan" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">No. HP</label>
-                            <input class="form-control" type="text" name="no_hp" required>
+                            <input class="form-control" type="text" name="no_hp" id="no_hp" required>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Email</label>
-                            <input class="form-control" type="email" name="email" required>
-                        </div>
+
                         <div class="col-md-6">
                             <label class="form-label">Agama</label>
-                            <select class="form-select" name="agama" required>
+                            <select class="form-select" name="agama" id="agama" required>
                                 <option value="">-- Pilih Agama --</option>
                                 <option value="Islam">Islam</option>
                                 <option value="Kristen">Kristen</option>
@@ -90,16 +75,12 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Status Guru</label>
-                            <select class="form-select" name="stts_guru" required>
-                                <option value="">-- Pilih Status --</option>
-                                <option value="Active">Active</option>
-                                <option value="Non Active">Non Active</option>
+                            <label class="form-label">Kategori Guru</label>
+                            <select class="form-select" name="level_guru" id="level_guru"  required>
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="1">Kepala Sekolah</option>
+                                <option value="2">Staff Pengajar</option>
                             </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">NPWP</label>
-                            <input class="form-control" type="text" name="npwp" required>
                         </div>
                     </div>
                     <div class="modal-footer mt-3">

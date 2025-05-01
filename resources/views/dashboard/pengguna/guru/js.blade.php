@@ -69,8 +69,8 @@
                         name: 'jenkel'
                     },
                     {
-                        data: 'no_telp',
-                        name: 'no_telp'
+                        data: 'no_hp',
+                        name: 'no_hp'
                     },
                     {
                         data: 'action',
@@ -80,6 +80,45 @@
                         className: 'text-center'
                     },
                 ]
+            });
+        });
+
+        $('#saveGuru').on('submit', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '{{ route("guru/store") }}',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        $('#data').DataTable().ajax.reload();
+                        $('#guruModalAdd').modal('hide');
+                        $('#saveGuru')[0].reset();
+                    }
+                },
+                error: function(xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorMsg = '';
+
+                    $.each(errors, function(key, value) {
+                        errorMsg += value + '<br>';
+                    });
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        html: errorMsg
+                    });
+                }
             });
         });
 

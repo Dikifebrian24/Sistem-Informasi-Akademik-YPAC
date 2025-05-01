@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\Siswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Datatables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class GuruController extends Controller
 {
@@ -45,5 +48,64 @@ class GuruController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function store(Request $request) {
+        $request->validate([
+            // Identitas dasar
+            'first_name'     => 'required|string|max:50',
+            'last_name'      => 'required|string|max:50',
+            'nip'            => 'required|numeric|digits_between:10,20|unique:gurus,nik',
+            'nik'           => 'required|numeric|digits_between:10,20|unique:gurus,nik',
+            'npwp'           => 'required|numeric|digits_between:10,20|unique:gurus,npwp',
+            'email'          => 'required|email|unique:users,email',
+            'password'       => 'required|string|min:6',
+
+            // Biodata
+            'jenkel'         => 'required|in:Laki - Laki,Perempuan',
+            'tmpt_lahir'     => 'required|string|max:100',
+            'tgl_lahir'      => 'required|date',
+            'agama'          => 'required|string|max:30',
+
+            // Kontak dan sekolah
+            'almt_jalan'     => 'required|string|max:255',
+            'no_hp'          => 'required|string|max:15',
+            'level_guru'          => 'required|string|max:15',
+
+        ]);
+
+        $nm_guru = $request->first_name . ' ' . $request->last_name;
+
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'level' => 2,
+            'is_admin' => 0,
+            'is_active' => 1,
+        ]);
+
+        // Simpan ke tabel gurus jika user berhasil dibuat
+        if ($user) {
+            Guru::create([
+                'id_user'       => $user->id,
+                'nm_guru'       => $nm_guru,
+                'nip'            => $request->nip,
+                'nik'           => $request->nik,
+                'npwp'           => $request->npwp,
+                'jenkel'         => $request->jenkel,
+                'tmpt_lahir'     => $request->tmpt_lahir,
+                'tgl_lahir'      => $request->tgl_lahir,
+                'agama'          => $request->agama,
+                'almt_jalan'     => $request->almt_jalan,
+                'no_hp'          => $request->no_hp,
+                'level_guru'          => $request->level_guru,
+                'created_at'     => date('Y-m-d H:i:s'),
+                'updated_at'     => null,
+            ]);
+        }
+
+        return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
     }
 }
