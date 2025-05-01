@@ -30,4 +30,8 @@ class SiswaController extends Controller
         ];
         return view('dashboard.pengguna.siswa.index', compact('params'));
     }
+
+    public function add() {
+        return view('dashboard.pengguna.siswa.add');
+    }
 }

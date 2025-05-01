@@ -6,6 +6,7 @@ use App\Http\Controllers\GolonganController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\KelainanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KepegawaianController;
 use App\Http\Controllers\KurikulumController;
@@ -145,6 +146,17 @@ Route::prefix('master')->group(function () {
         Route::post('save', 'store')->name('admin/save');
         Route::put('update/{id}', 'update')->name('admin/update');
         Route::delete('delete/{id}', 'destroy')->name('admin/delete');
+    });
+
+    Route::controller(KelainanController::class)->prefix('kelainan')->group(function () {
+        Route::get('', 'index')->name('kelainan');
+        Route::get('add', 'add')->name('kelainan/add');
+        Route::get('data', 'getDatatables')->name('kelainan/data');
+        Route::get('{id}/edit', 'edit')->name('kelainan/edit');
+        Route::post('store', 'store')->name('kelainan/store');
+        Route::post('save', 'store')->name('kelainan/save');
+        Route::put('update/{id}', 'update')->name('kelainan/update');
+        Route::delete('delete/{id}', 'destroy')->name('kelainan/delete');
     });
 
     Route::controller(JadwalController::class)->prefix('jadwal')->group(function () {

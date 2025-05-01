@@ -234,6 +234,8 @@
                                         <li><a href="{{ route('thnakademik') }}">Tahun Akademik</a></li>
 
                                         <li><a href="{{ route('kelas') }}">Kelas</a></li>
+                                        <li><a href="{{ route('kelainan') }}">Jenis Kelainan</a></li>
+
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
