@@ -120,8 +120,11 @@ Route::prefix('master')->group(function () {
 
     Route::controller(SiswaController::class)->prefix('siswa')->group(function () {
         Route::get('', 'index')->name('siswa');
+        Route::get('add', 'add')->name('siswa/add');
+        Route::get('data', 'getDatatables')->name('siswa/data');
+        Route::get('{id}/edit', 'edit')->name('siswa/edit');
+        Route::post('store', 'store')->name('siswa/store');
         Route::post('save', 'store')->name('siswa/save');
-        Route::get('edit/{id}', 'edit')->name('siswa/edit');
         Route::put('update/{id}', 'update')->name('siswa/update');
         Route::delete('delete/{id}', 'destroy')->name('siswa/delete');
     });
