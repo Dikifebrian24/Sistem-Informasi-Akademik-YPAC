@@ -96,6 +96,7 @@ class AdminController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'email_verified_at' => date("Y-m-d H:i:s"),
             'level' => 1,
             'is_admin' => 1,
             'is_active' => 1

@@ -91,6 +91,7 @@ class SiswaController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
+            'email_verified_at' => date("Y-m-d H:i:s"),
             'password' => Hash::make($request->password),
             'level' => 3,
             'is_admin' => 0,
