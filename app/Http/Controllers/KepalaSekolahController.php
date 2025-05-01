@@ -20,7 +20,7 @@ class KepalaSekolahController extends Controller
     public function index()
     {
         $params = [
-            'title' => 'Data Kepaan Sekolah',
+            'title' => 'Data Kepala Sekolah',
         ];
         return view('dashboard.pengguna.kepala_sekolah.index', compact('params'));
     }
