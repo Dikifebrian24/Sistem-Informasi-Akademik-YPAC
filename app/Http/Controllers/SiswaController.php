@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Datatables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class SiswaController extends Controller
 {
@@ -18,17 +19,11 @@ class SiswaController extends Controller
 
     public function index()
     {
-        $data = DB::table('siswas')
-            ->join('jurusans', 'siswas.kd_jurusan', '=', 'jurusans.kd_jurusan')
-            ->select('siswas.*', 'jurusans.nm_jurusan')->get();
-        if (request()->ajax()) {
-            return datatables()->of($data)
-                ->addIndexColumn()
-                ->make(true);
-        }
+        $kelainan = DataKelainan::all();
 
         $params = [
             'title' => 'Data Siswa',
+            'kelainan' => $kelainan,
         ];
         return view('dashboard.pengguna.siswa.index', compact('params'));
     }
@@ -61,13 +56,70 @@ class SiswaController extends Controller
         }
     }
 
-    public function add() {
-        $kelainan = DataKelainan::select('id', 'nm_kelainan')->get();
+    public function store(Request $request)
+    {
+        $request->validate([
+            // Identitas dasar
+            'first_name'     => 'required|string|max:50',
+            'last_name'      => 'required|string|max:50',
+            'nik'            => 'required|numeric|digits_between:10,20|unique:siswas,nik',
+            'nisn'           => 'required|numeric|digits_between:10,20|unique:siswas,nisn',
+            'email'          => 'required|email|unique:users,email',
+            'password'       => 'required|string|min:6',
 
-        $data = [
-            'kelainan' => $kelainan,
-        ];
+            // Biodata
+            'kelainan'       => 'required|exists:data_kelainans,id',
+            'jenkel'         => 'required|in:Laki - Laki,Perempuan',
+            'tmpt_lahir'     => 'required|string|max:100',
+            'tgl_lahir'      => 'required|date',
+            'agama'          => 'required|string|max:30',
 
-        return response()->json($data);return view('dashboard.pengguna.siswa.add');
+            // Kontak dan sekolah
+            'almt_rumah'     => 'required|string|max:255',
+            'no_hp'          => 'required|string|max:15',
+            'angkatan'       => 'required|numeric',
+
+            // Data wali
+            'nm_wali'        => 'nullable|string|max:100',
+            'tgl_lahir_wali' => 'nullable|date',
+            'no_telp_wali'   => 'nullable|string|max:15',
+        ]);
+
+        $nm_siswa = $request->first_name . ' ' . $request->last_name;
+
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'level' => 3,
+            'is_admin' => 0,
+            'is_active' => 1,
+        ]);
+
+        // Simpan ke tabel siswas jika user berhasil dibuat
+        if ($user) {
+            Siswa::create([
+                'id_user'       => $user->id,
+                'id_kelainan'    => $request->kelainan,
+                'nm_siswa'       => $nm_siswa,
+                'nik'            => $request->nik,
+                'nisn'           => $request->nisn,
+                'email'          => $request->email,
+                'jenkel'         => $request->jenkel,
+                'tmpt_lahir'     => $request->tmpt_lahir,
+                'tgl_lahir'      => $request->tgl_lahir,
+                'agama'          => $request->agama,
+                'almt_rumah'     => $request->almt_rumah,
+                'no_hp'          => $request->no_hp,
+                'angkatan'       => $request->angkatan,
+                'nm_wali'        => $request->nm_wali,
+                'tgl_lahir_wali' => $request->tgl_lahir_wali,
+                'no_telp_wali'   => $request->no_telp_wali,
+            ]);
+        }
+
+        return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
     }
+
 }

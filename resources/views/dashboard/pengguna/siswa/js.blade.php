@@ -19,26 +19,9 @@
         //     });
         // });
 
-        $('#openModalBtn').on("click", function(e) {
-            $(".js-example-basic-single").select2();
-            e.preventDefault()
-            $.ajax({
-                url: "{{ route('siswa/add') }}",
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    $('#kelainan').empty();
-                    $('#kelainan').append('<option value="">-- Pilih Kategori Kelainan --</option>'); // Tambah placeholder
-
-                    $.each(data['kelainan'], function(i, value) {
-                        $('#role_level').append('<option value="' + value.id + '">' + value.nm_kelainan + '</option>');
-                    });
-
-                    $('#adminModalAdd').modal('show');
-                }
-            });
+        $('#openModalBtn').on("click", function (e) {
+            $('#siswaModalAdd').modal('show');
         });
-
 
 
         $(document).ready(function () {
@@ -57,11 +40,11 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { data: 'nama', name: 'nama' },
-                    { data: 'nisn', name: 'nisn' },
-                    { data: 'nm_kelainan', name: 'nm_kelainan' },
-                    { data: 'no_hp', name: 'no_hp' },
-                    { data: 'level', name: 'level', className: 'text-center' },
+                    {data: 'nama', name: 'nama'},
+                    {data: 'nisn', name: 'nisn'},
+                    {data: 'nm_kelainan', name: 'nm_kelainan'},
+                    {data: 'no_hp', name: 'no_hp'},
+                    {data: 'level', name: 'level', className: 'text-center'},
                     {
                         data: 'action',
                         name: 'action',
@@ -74,14 +57,14 @@
         });
 
 
-        $('#saveAdmin').on('submit', function(e) {
+        $('#saveSiswa').on('submit', function (e) {
             e.preventDefault();
 
             $.ajax({
-                url: '{{ route("admin/store") }}',
+                url: '{{ route("siswa/store") }}',
                 type: 'POST',
                 data: $(this).serialize(),
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         Swal.fire({
                             icon: 'success',
@@ -92,15 +75,15 @@
                         });
 
                         $('#data').DataTable().ajax.reload();
-                        $('#adminModalAdd').modal('hide');
-                        $('#saveKelas')[0].reset();
+                        $('#siswaModalAdd').modal('hide');
+                        $('#saveSuswa')[0].reset();
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     let errors = xhr.responseJSON.errors;
                     let errorMsg = '';
 
-                    $.each(errors, function(key, value) {
+                    $.each(errors, function (key, value) {
                         errorMsg += value + '<br>';
                     });
 
@@ -113,13 +96,13 @@
             });
         });
 
-        $(document).on('click', '.edit', function() {
+        $(document).on('click', '.edit', function () {
             let userId = $(this).data('id');
 
             $.ajax({
                 url: 'admin/' + userId + '/edit',
                 type: 'GET',
-                success: function(user) {
+                success: function (user) {
                     $('#first_name').val(user.first_name);
                     $('#last_name').val(user.last_name);
                     $('#email').val(user.email);
@@ -194,7 +177,7 @@
         {{--    }--}}
         {{--});--}}
 
-        $('.show_confirm').click(function(e) {
+        $('.show_confirm').click(function (e) {
             var form = $(this).closest("form");
             e.preventDefault();
             swal({
