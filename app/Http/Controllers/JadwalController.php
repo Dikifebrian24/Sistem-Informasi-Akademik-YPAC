@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataKelainan;
 use App\Models\Jadwal;
 use App\Models\Jurusan;
 use App\Models\Kelas;
@@ -35,29 +36,32 @@ class JadwalController extends Controller
         return view('dashboard.master.jadwal.index', compact('params'));
     }
 
-    public function dataKelas(Request $request)
+    public function getDatatables(Request $request)
     {
         if ($request->ajax()) {
-            $users = User::select(['id', 'first_name', 'last_name', 'email', 'level']);
+            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id','nm_kelas'])
+                ->join('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
+                ->where('stts_kelas', 'Active')->get();
 
-            return DataTables::of($users)
+            return DataTables::of($data_kelas)
                 ->addIndexColumn()
-                ->addColumn('nama', function ($row) {
-                    return $row->first_name . ' ' . $row->last_name;
-                })
-                ->editColumn('level', function ($row) {
-                    switch ($row->level) {
-                        case 1: return 'Kepala Sekolah';
-                        case 2: return 'Guru';
-                        case 3: return 'Siswa';
-                        default: return '-';
-                    }
-                })
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-warning edit" data-id="'.$row->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete" data-id="'.$row->id.'">Delete</button>';
+                    return '<button class="btn btn-sm btn-danger show" data-id="'.$row->id_kelas.'">Lihat</button>';
                 })
                 ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function getJadwal(Request $request)
+    {
+        $idKelas = $request->input('id_kelas');
+
+        if ($request->ajax()) {
+            $query = Jadwal::where('id_kelas', $request->id_kelas);
+
+            return DataTables::of($query)
+                ->addIndexColumn()
                 ->make(true);
         }
     }
@@ -85,32 +89,6 @@ class JadwalController extends Controller
         $user->delete();
 
         return response()->json(['success' => true, 'message' => 'User berhasil dihapus']);
-    }
-
-    public function getDatatables(Request $request) {
-        if ($request->ajax()) {
-            $users = User::select(['id', 'first_name', 'last_name', 'email', 'level']);
-
-            return DataTables::of($users)
-                ->addIndexColumn()
-                ->addColumn('nama', function ($row) {
-                    return $row->first_name . ' ' . $row->last_name;
-                })
-                ->editColumn('level', function ($row) {
-                    switch ($row->level) {
-                        case 1: return 'Kepala Sekolah';
-                        case 2: return 'Guru';
-                        case 3: return 'Siswa';
-                        default: return '-';
-                    }
-                })
-                ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-warning edit" data-id="'.$row->id.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete" data-id="'.$row->id.'">Delete</button>';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
     }
 
     public function store(Request $request)

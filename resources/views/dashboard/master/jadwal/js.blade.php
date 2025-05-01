@@ -5,12 +5,14 @@
     <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#data').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('kelas') }}',
+                ajax: '{{ route('jadwal/data') }}',
                 columns: [
                     {
                         data: null,
@@ -22,9 +24,7 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { data: 'nama', name: 'nama' },
-                    { data: 'email', name: 'email' },
-                    { data: 'level', name: 'level', className: 'text-center' },
+                    { data: 'nm_kelas', name: 'nm_kelas' },
                     {
                         data: 'action',
                         name: 'action',
@@ -35,6 +35,39 @@
                 ]
             });
         });
+
+        let table;
+        $(document).on('click', '.show', function () {
+            let idKelas = $(this).data('id');
+
+            // Show modal
+            $('#jadwalModal').modal('show');
+
+            // Destroy old instance if exists
+            if ($.fn.DataTable.isDataTable('#jadwalTable')) {
+                $('#jadwalTable').DataTable().destroy();
+            }
+
+            // Initialize DataTable with server-side and pass id_kelas
+            table = $('#jadwalTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route("jadwal/get-jadwal") }}',
+                    data: { id_kelas: idKelas }
+                },
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'materi', name: 'materi' },
+                    { data: 'tanggal', name: 'tanggal' },
+                    { data: 'waktu_mulai', name: 'waktu_mulai' },
+                    { data: 'waktu_selesai', name: 'waktu_selesai' }
+                ]
+            });
+        });
+
+
+
     </script>
 
 @endpushonce

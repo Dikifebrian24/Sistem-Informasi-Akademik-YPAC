@@ -46,6 +46,18 @@ Route::prefix('master')->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('kurikulum/delete');
     });
 
+    Route::controller(JadwalController::class)->prefix('jadwal')->group(function () {
+        Route::get('', 'index')->name('jadwal');
+        Route::get('add', 'add')->name('jadwal/add');
+        Route::get('data', 'getDatatables')->name('jadwal/data');
+        Route::get('get-jadwal', 'getJadwal')->name('jadwal/get-jadwal');
+        Route::get('{id}/edit', 'edit')->name('jadwal/edit');
+        Route::post('store', 'store')->name('jadwal/store');
+        Route::post('save', 'store')->name('jadwal/save');
+        Route::put('update/{id}', 'update')->name('jadwal/update');
+        Route::delete('delete/{id}', 'destroy')->name('jadwal/delete');
+    });
+
     Route::get('/disabilitas', [\App\Http\Controllers\HomeController::class, '']);
 
     Route::controller(ThnAkademikController::class)->prefix('thnakademik')->group(function () {
@@ -162,17 +174,6 @@ Route::prefix('master')->group(function () {
         Route::post('save', 'store')->name('kelainan/save');
         Route::put('update/{id}', 'update')->name('kelainan/update');
         Route::delete('delete/{id}', 'destroy')->name('kelainan/delete');
-    });
-
-    Route::controller(JadwalController::class)->prefix('jadwal')->group(function () {
-        Route::get('', 'index')->name('jadwal');
-        Route::get('', 'dataKelas')->name('jadwal/dataKelas');
-        Route::get('add', 'add')->name('jadwal/add');
-        Route::get('data', 'getDatatables')->name('jadwal/data');
-        Route::get('{id}/edit', 'edit')->name('jadwal/edit');
-        Route::post('store', 'store')->name('jadwal/store');
-        Route::put('update/{id}', 'update')->name('jadwal/update');
-        Route::delete('delete/{id}', 'destroy')->name('jadwal/delete');
     });
 
     Route::controller(MapelController::class)->prefix('mapel')->group(function () {
