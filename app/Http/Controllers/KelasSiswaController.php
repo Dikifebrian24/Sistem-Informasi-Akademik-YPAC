@@ -26,14 +26,23 @@ class KelasSiswaController extends Controller
     public function getDatatables(Request $request)
     {
         if ($request->ajax()) {
-            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id','nm_kelas'])
+            $data_kelas = Kelas::select([
+                'kelas.id_kelas',
+                'kelas.nm_kelas',
+                'gurus.id_guru as guru_id',
+                DB::raw('(SELECT COUNT(*) FROM kelas_siswa WHERE kelas_siswa.id_kelas = kelas.id_kelas) as jumlah_siswa')
+            ])
                 ->join('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
-                ->where('stts_kelas', 'Active')->get();
+                ->where('kelas.stts_kelas', 'Active')
+                ->get();
 
             return DataTables::of($data_kelas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     return '<button class="btn btn-sm btn-danger edit-btn" data-id="'.$row->id_kelas.'">Edit</button>';
+                })
+                ->addColumn('jumlah_siswa', function ($row) {
+                    return $row->jumlah_siswa;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -46,20 +55,40 @@ class KelasSiswaController extends Controller
     {
         $id_kelas = $request->input('id_kelas');
 
-        $kelas_info = Kelas::where('id_kelas', $id_kelas)->first();
+//        $kelas_info = Kelas::where('id_kelas', $id_kelas)->first();
+//
+//        $assignedSiswaIds = DB::table('kelas_siswa')
+//            ->where('id_kelas', $id_kelas)
+//            ->pluck('id_siswa')
+//            ->toArray();
+//
+////        $siswa = DB::table('siswas')->select('siswas.id_siswa', 'nm_siswa')
+////            ->leftJoin('kelas_siswa', 'siswas.id_siswa', '=', 'kelas_siswa.id_siswa')
+////            ->leftJoin('kelas', 'kelas.id_kelas', '=', 'kelas_siswa.id_kelas')
+////            ->whereNull('kelas_siswa.id_kelas') // To get only unassigned siswa
+////            ->get();
+//
+//        $siswa = Siswa::get();
 
-        $siswa = Siswa::select('id_siswa', 'nm_siswa')->get();
 
+        // Get the kelas information
+        $kelas_info = Kelas::findOrFail($id_kelas);
+
+        // Get the list of all siswa
+        $siswa = Siswa::all();
+
+        // Get the assigned siswa IDs for this kelas
         $assignedSiswaIds = DB::table('kelas_siswa')
             ->where('id_kelas', $id_kelas)
             ->pluck('id_siswa')
             ->toArray();
 
+
         $params = [
             'title' => 'Tambah Pembagian Kelas',
             'kelas' => $kelas_info,
             'siswa' => $siswa,
-            'assigned' => $assignedSiswaIds,
+            'assigned' => $assignedSiswaIds, // List of already assigned siswa IDs
         ];
 
         return view('dashboard.master.kelas_siswa.detail', compact('params'));

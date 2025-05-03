@@ -64,6 +64,7 @@
                                 <tr style="text-align: center">
                                     <th style="width: 55px">No</th>
                                     <th>Kelas</th>
+                                    <th>Jumlah Siswa</th>
                                     <th style="width: 120px;">Action</th>
                                 </tr>
                                 </thead>

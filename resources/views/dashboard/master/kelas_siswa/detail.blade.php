@@ -4,7 +4,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/datatables.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/sweetalert2.css') }}">
         <!-- Select2 CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
     @endPushOnce
     <div class="page-body">
@@ -27,7 +27,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Default Form Layout</h5><span>Using the <a href="#">card</a> component, you can extend the default collapse behavior to create an accordion.</span>
+                        <h5>Form Pembagian Kelas</h5>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -45,7 +45,7 @@
                                 <select class="form-control" id="siswaSelect" name="siswa[]" multiple>
                                     @foreach($params['siswa'] as $s)
                                         <option value="{{ $s->id_siswa }}"
-                                            {{ in_array($s->id_siswa, $params['assigned']) ? 'selected' : '' }}>
+                                            {{ in_array($s->id_siswa, $params['assigned']) ? 'disabled selected' : '' }}>
                                             {{ $s->nm_siswa }}
                                         </option>
                                     @endforeach
@@ -65,16 +65,17 @@
 
     @pushOnce('js')
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#siswaSelect').select2({
                     placeholder: "Pilih siswa",
                     allowClear: true
                 });
             });
 
-            $('#f_siswaKelas').on('submit', function(e) {
+            $('#f_siswaKelas').on('submit', function (e) {
                 e.preventDefault();
                 let formData = $(this).serialize();
 
@@ -82,12 +83,21 @@
                     url: '{{ route("kelas_siswa/store") }}',
                     type: 'POST',
                     data: formData,
-                    success: function(response) {
-                        alert('Siswa berhasil ditambahkan ke kelas');
-                        // Optionally reset form or reload table
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Siswa berhasil ditambahkan ke kelas.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
                     },
-                    error: function(xhr) {
-                        alert('Gagal menambahkan siswa');
+                    error: function (xhr) {
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: 'Terjadi kesalahan saat menyimpan data.',
+                            icon: 'error',
+                            confirmButtonText: 'Coba Lagi'
+                        });
                     }
                 });
             });
