@@ -235,6 +235,7 @@
 
                                         <li><a href="{{ route('kelas') }}">Kelas</a></li>
                                         <li><a href="{{ route('kelainan') }}">Jenis Kelainan</a></li>
+                                        <li><a href="{{ route('kelas_siswa') }}">Pembagian Kelas</a></li>
 
                                     </ul>
                                 </li>

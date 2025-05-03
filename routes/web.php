@@ -16,6 +16,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\ThnAkademikController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KelasSiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,23 @@ Route::prefix('master')->group(function () {
         Route::put('update/{id}', 'update')->name('jadwal/update');
         Route::delete('delete/{id}', 'destroy')->name('jadwal/delete');
     });
+
+
+    Route::controller(KelasSiswaController::class)->prefix('kelas_siswa')->group(function () {
+        Route::get('', 'index')->name('kelas_siswa');
+//        Route::get('add', 'add')->name('kelas_siswa/add_kelas_siswa');
+        Route::get('data', 'getDatatables')->name('kelas_siswa/data');
+        Route::get('get_kelas_siswa', 'getKelasSiswa')->name('kelas_siswa/get_kelas_siswa');
+        Route::get('{id}/edit', 'edit')->name('kelas_siswa/edit');
+        Route::post('store', 'store')->name('kelas_siswa/store');
+        Route::post('save', 'store')->name('kelas_siswa/save');
+        Route::put('update/{id}', 'update')->name('kelas_siswa/update');
+        Route::delete('delete/{id}', 'destroy')->name('kelas_siswa/delete');
+//        Route::post('/kelas-siswa/store', [KelasSiswaController::class, 'store'])->name('kelas_siswa.store');
+    });
+
+    Route::get('/kelas_siswa/add', [KelasSiswaController::class, 'add'])->name('kelas_siswa.add');
+
 
     Route::get('/disabilitas', [\App\Http\Controllers\HomeController::class, '']);
 

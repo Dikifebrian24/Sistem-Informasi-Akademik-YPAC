@@ -9,6 +9,7 @@ class Siswa extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_siswa';
+    protected $table = 'siswas';
 
     protected $fillable = [
         'id_user',        // Menambahkan id_user ke dalam fillable
