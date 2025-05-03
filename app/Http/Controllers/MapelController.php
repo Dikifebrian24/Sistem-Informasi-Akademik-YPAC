@@ -17,9 +17,9 @@ class MapelController extends Controller
 
     public function index()
     {
-        $data = DB::table('kelas_backup')
-            ->join('gurus', 'kelas_backup.id_guru', '=', 'gurus.id_guru')
-            ->select('kelas_backup.*', 'gurus.nm_guru')
+        $data = DB::table('kelas')
+            ->join('gurus', 'kelas.id_guru', '=', 'gurus.id_guru')
+            ->select('kelas.*', 'gurus.nm_guru')
             ->get();
 
         $params = [
@@ -30,7 +30,7 @@ class MapelController extends Controller
 
     public function getDatatables(Request $request) {
         if ($request->ajax()) {
-            $mapel = Mapel::select(['id', 'kelas_backup.nm_kelas', 'nm_mapel'])->join('kelas_backup', 'mapels.id_kelas', '=', 'kelas_backup.id_kelas');
+            $mapel = Mapel::select(['id', 'kelas.nm_kelas', 'nm_mapel'])->join('kelas', 'mapels.id_kelas', '=', 'kelas.id_kelas');
 
             return DataTables::of($mapel)
                 ->addIndexColumn()
@@ -45,17 +45,17 @@ class MapelController extends Controller
 
     public function detail($id)
     {
-        $data = DB::table('kelas_backup')
-            ->join('gurus', 'kelas_backup.id_guru', '=', 'gurus.id_guru')
+        $data = DB::table('kelas')
+            ->join('gurus', 'kelas.id_guru', '=', 'gurus.id_guru')
             ->where('id_kelas', '=', $id)
-            ->select('kelas_backup.*', 'gurus.nm_guru', 'gurus.foto', )
+            ->select('kelas.*', 'gurus.nm_guru', 'gurus.foto', )
             ->get();
         return response()->json($data);
     }
 
     public function add()
     {
-        $data['kelas_backup'] =  DB::table('kelas_backup')
+        $data['kelas'] =  DB::table('kelas')
             ->select([
                 'id_kelas',
                 'nm_kelas'
@@ -67,11 +67,11 @@ class MapelController extends Controller
     {
         $this->validate($request, [
             'nm_mapel' => 'required',
-            'kelas_backup' => 'required',
+            'kelas' => 'required',
 
         ], [
             'nm_mapel.required' => 'Silahkan isi Nama Mapel terlebih dahulu!',
-            'kelas_backup.required'   => 'Kode kelas_backup Wajib Di isi!',
+            'kelas.required'   => 'Kode kelas Wajib Di isi!',
         ]);
 
         //create post
@@ -86,12 +86,12 @@ class MapelController extends Controller
 
     public function edit($id)
     {
-        $data['item'] = DB::table('kelas_backup')
-            ->join('gurus', 'kelas_backup.id_guru', '=', 'gurus.id_guru')
-            ->join('ruangans', 'kelas_backup.kd_ruangan', '=', 'ruangans.kd_ruangan')
+        $data['item'] = DB::table('kelas')
+            ->join('gurus', 'kelas.id_guru', '=', 'gurus.id_guru')
+            ->join('ruangans', 'kelas.kd_ruangan', '=', 'ruangans.kd_ruangan')
             ->join('gedungs', 'ruangans.kd_gedung', '=', 'gedungs.kd_gedung')
             ->where('id_kelas', '=', $id)
-            ->select('kelas_backup.*', 'gurus.nm_guru', 'gurus.nip', 'gurus.foto', 'jurusans.nm_jurusan', 'ruangans.nm_ruangan', 'gedungs.nm_gedung',)
+            ->select('kelas.*', 'gurus.nm_guru', 'gurus.nip', 'gurus.foto', 'jurusans.nm_jurusan', 'ruangans.nm_ruangan', 'gedungs.nm_gedung',)
             ->get();
         $data['wali_kelas'] =  DB::table('gurus')
             ->select([
@@ -111,16 +111,16 @@ class MapelController extends Controller
     {
         $this->validate($request, [
             'kd_kelas' =>
-                'required|unique:kelas_backup,kd_kelas,' . $id . ',id_kelas',
+                'required|unique:kelas,kd_kelas,' . $id . ',id_kelas',
             'nm_kelas' => 'required',
             'nip' => 'required',
             'kd_jurusan' => 'required',
             'kd_ruangan' => 'required',
             'stts_kelas' => 'required'
         ], [
-            'kd_kelas.required' => 'Silahkan isi kode kelas_backup terlebih dahulu!',
-            'kd_kelas.unique'   => 'Kode kelas_backup telah digunakan!',
-            'nm_kelas.required'   => 'Silahkan isi nama kelas_backup terlebih dahulu!',
+            'kd_kelas.required' => 'Silahkan isi kode kelas terlebih dahulu!',
+            'kd_kelas.unique'   => 'Kode kelas telah digunakan!',
+            'nm_kelas.required'   => 'Silahkan isi nama kelas terlebih dahulu!',
             'stts_kelas.required'   => 'Silahkan pilih status terlebih dahulu!',
         ]);
 
