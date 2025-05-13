@@ -78,7 +78,8 @@ class ProgressSiswaController extends Controller
             return DataTables::of($mapel)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger" id="input_nilai" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Input</button>';
+                    return '<button class="btn btn-sm btn-danger" id="input_nilai" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Input</button>
+                            <button class="btn btn-sm btn-primary" id="show_nilai" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Lihat Nilai</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -122,6 +123,45 @@ class ProgressSiswaController extends Controller
         ];
 
         return view('dashboard.akademik.nilai.nilai', $data);
+    }
+
+    public function nilaiDetailShow(Request $request)
+    {
+        $id_mapel = $request->id_mapel;
+        $id_kelas = $request->id_kelas;
+        $id_jadwal = $request->id_jadwal;
+
+        $siswa = DB::table('kelas_siswa')
+            ->join('siswas', 'siswas.id_siswa', '=', 'kelas_siswa.id_siswa')
+            ->join('kelas', 'kelas.id_kelas', '=', 'kelas_siswa.id_kelas')
+            ->where('kelas_siswa.id_kelas', $id_kelas)
+            ->get();
+
+        $mapel = Mapel::where('id', $id_mapel)->get()->first()->nm_mapel;
+
+        $data = [
+            'mapel' => $mapel,
+            'id_mapel' => $id_mapel,
+            'id_kelas' => $id_kelas,
+            'id_jadwal' => $id_jadwal,
+            'siswa' => $siswa,
+        ];
+
+        return view('dashboard.akademik.nilai.show', $data);
+    }
+
+    public function filter(Request $request)
+    {
+        $id_mapel = $request->id_mapel;
+        $id_siswa = $request->id_siswa;
+
+        $data = DB::table('nilais')
+            ->where('id_mapel', $id_mapel)
+            ->where('id_siswa', $id_siswa)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('dashboard.akademik.nilai._filter_nilai', compact('data'));
     }
 
     public function nilaiSave(Request $request)

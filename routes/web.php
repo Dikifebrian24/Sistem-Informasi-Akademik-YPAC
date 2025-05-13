@@ -254,6 +254,8 @@ Route::prefix('master')->group(function () {
 
         Route::get('data_kelas', 'getMapelDatatables')->name('nilai_jadwal/data');
         Route::get('nilai_add', 'show')->name('nilai_jadwal/nilai_add');
+        Route::get('nilai_show', 'nilaiDetailShow')->name('nilai_jadwal/nilai_show');
         Route::post('nilai_save', 'nilaiSave')->name('nilai_jadwal/save');
+        Route::post('filter', 'filter')->name('nilai_jadwal/filter');
     });
 });

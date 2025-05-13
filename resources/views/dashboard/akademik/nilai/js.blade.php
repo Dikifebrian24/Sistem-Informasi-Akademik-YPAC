@@ -51,6 +51,53 @@
             window.location.href = `/master/data_progress/nilai_add?id_mapel=${id_mapel}&id_kelas=${id_kelas}&id_jadwal=${id_jadwal}`;
         });
 
+        $(document).on('click', '#show_nilai', function(e) {
+            e.preventDefault();
+
+            // Ambil data dari tombol yang diklik
+            let id_mapel = $(this).data('id_mapel');
+            let id_kelas = $(this).data('id_kelas');
+            let id_jadwal = $(this).data('id');
+
+            console.log('id_mapel:', id_mapel);
+            console.log('id_kelas:', id_kelas);
+            console.log('id_jadwal:', id_jadwal);
+
+            // Redirect ke route dengan parameter query string
+            window.location.href = `/master/data_progress/nilai_show?id_mapel=${id_mapel}&id_kelas=${id_kelas}&id_jadwal=${id_jadwal}`;
+        });
+
+        $(document).ready(function () {
+            $('#f_filter').on('submit', function(e) {
+                e.preventDefault();
+
+                const id_mapel = $('#id_mapel').val();
+                const id_siswa = $('#id_siswa').val();
+
+                if (!id_siswa) {
+                    Swal.fire('Peringatan', 'Silakan pilih siswa terlebih dahulu.', 'warning');
+                    return;
+                }
+
+                $.ajax({
+                    url: '{{ route("nilai_jadwal/filter") }}', // Buat route ini di web.php
+                    type: 'POST',
+                    data: {
+                        _token: $('input[name="_token"]').val(),
+                        id_mapel: id_mapel,
+                        id_siswa: id_siswa
+                    },
+                    success: function(response) {
+                        $('#hasil_nilai').html(response);
+                        $('#hasil_nilai_card').show();
+                    },
+                    error: function(xhr) {
+                        Swal.fire('Gagal', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
+                    }
+                });
+            });
+        });
+
         {{--$('#f_nilai').on('submit', function(e) {--}}
         {{--    e.preventDefault();--}}
 
