@@ -19,50 +19,57 @@
                                 <div class="card-header pb-0">
                                     <h5>Input Nilai {{ $mapel }}</h5>
                                 </div>
-                                <div class="card-body">
-                                    <form class="theme-form" id="f_nilai">
-                                        @csrf
+                                <form class="theme-form" id="f_nilai" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="card-body">
                                         <div class="mb-3">
-                                            <label class="col-form-label pt-0" for="nama_siswa">Nama Siswa</label>
-                                            <select class="form-control select2" name="id_siswa" id="id_siswa">
+                                            <label class="col-form-label pt-0" for="id_siswa">Nama Siswa</label>
+                                            <select class="form-control select2" name="id_siswa" id="id_siswa" required>
                                                 <option value="">-- Pilih Siswa --</option>
                                                 @foreach($siswa as $item)
                                                     <option value="{{ $item->id_siswa }}">{{ $item->nm_siswa }} - {{ $item->nisn }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
+
                                         <div class="mb-3">
-                                            <label class="col-form-label pt-0" for="exampleInputPassword1">Mata Pelajaran</label>
+                                            <label class="col-form-label pt-0">Mata Pelajaran</label>
                                             <input type="text" class="form-control" value="{{ $mapel }}" disabled>
-                                            <input type="hidden" class="form-control" id="{{ $id_mapel }}" value="{{ $id_mapel }}" disabled>
+                                            <input type="hidden" class="form-control" name="id_mapel" value="{{ $id_mapel }}">
                                         </div>
+
                                         <div class="mb-3">
-                                            <label class="col-form-label pt-0" for="exampleInputPassword1">Kategori Nilai</label>
-                                            <select class="form-control select2" name="kategori_nilai" id="kategori_nilai">
+                                            <label class="col-form-label pt-0" for="kategori_nilai">Kategori Nilai</label>
+                                            <select class="form-control select2" name="kategori_nilai" id="kategori_nilai" required>
                                                 <option value="Harian">Harian</option>
                                                 <option value="UTS">UTS</option>
                                                 <option value="UAS">UAS</option>
                                             </select>
                                         </div>
+
                                         <div class="mb-3">
-                                            <label class="col-form-label pt-0" for="exampleInputPassword1">Nilai </label><small>( 1-100 )</small>
-                                            <input class="form-control" id="nilai_value" type="number" placeholder="Masukkan Nilai Siswa" min="1" max="100">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="col-form-label pt-0" for="exampleInputPassword1">Keterangan </label>
-                                            <textarea class="form-control" name="desc_nilai" id="desc_nilai" cols="30" rows="10"></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="col-form-label pt-0" for="exampleInputPassword1">Lampiran File </label>
-                                            <input class="form-control" id="exampleInputPassword1" type="file">
+                                            <label class="col-form-label pt-0" for="nilai_value">Nilai</label>
+                                            <small>( 1-100 )</small>
+                                            <input class="form-control" id="nilai_value" name="nilai_value" type="number" min="1" max="100" placeholder="Masukkan Nilai Siswa" required>
                                         </div>
 
-                                    </form>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary">Submit</button>
-                                    <button class="btn btn-secondary">Cancel</button>
-                                </div>
+                                        <div class="mb-3">
+                                            <label class="col-form-label pt-0" for="desc_nilai">Keterangan</label>
+                                            <textarea class="form-control" name="desc_nilai" id="desc_nilai" cols="30" rows="3"></textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="col-form-label pt-0" for="lampiran">Lampiran File</label>
+                                            <input class="form-control" type="file" name="lampiran" id="lampiran" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Simpan Nilai</button>
+                                    </div>
+                                </form>
+
+
                             </div>
                         </div>
 
@@ -73,6 +80,6 @@
         </div>
         <!-- Container-fluid Ends-->
     </div>
-    @include('dashboard.akademik.kelas_siswa.js')
+    @include('dashboard.akademik.nilai.js')
 
 @endsection

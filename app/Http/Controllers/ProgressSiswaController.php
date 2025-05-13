@@ -7,6 +7,7 @@ use App\Models\Jadwal;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Mapel;
+use App\Models\Nilai;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -129,7 +130,7 @@ class ProgressSiswaController extends Controller
             'id_siswa' => 'required|exists:siswas,id_siswa',
             'id_mapel' => 'required|exists:mapels,id',
             'kategori_nilai' => 'required|in:Harian,UTS,UAS',
-            'nilai' => 'required|integer|min:1|max:100',
+            'nilai_value' => 'required|integer|min:1|max:100',
             'lampiran' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
         ]);
 
@@ -141,9 +142,8 @@ class ProgressSiswaController extends Controller
         Nilai::create([
             'id_siswa' => $request->id_siswa,
             'id_mapel' => $request->id_mapel,
-            'id_jadwal' => $request->id_jadwal,
             'kategori_nilai' => $request->kategori_nilai,
-            'nilai' => $request->nilai,
+            'nilai' => $request->nilai_value,
             'desc_nilai' => $request->desc_nilai,
             'lampiran' => $lampiran,
         ]);

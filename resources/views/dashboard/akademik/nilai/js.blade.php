@@ -51,24 +51,77 @@
             window.location.href = `/master/data_progress/nilai_add?id_mapel=${id_mapel}&id_kelas=${id_kelas}&id_jadwal=${id_jadwal}`;
         });
 
-        $('#f_nilai').on('submit', function(e) {
-            e.preventDefault();
+        {{--$('#f_nilai').on('submit', function(e) {--}}
+        {{--    e.preventDefault();--}}
 
-            let formData = new FormData(this);
+        {{--    console.log('tes')--}}
 
-            $.ajax({
-                url: '{{ route("nilai_jadwal/save") }}',
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(res) {
-                    alert('Nilai berhasil disimpan!');
-                    $('#f_nilai')[0].reset();
-                },
-                error: function(xhr) {
-                    alert('Terjadi kesalahan: ' + xhr.responseText);
+        {{--    let formData = new FormData(this);--}}
+
+        {{--    $.ajax({--}}
+        {{--        url: '{{ route("nilai_jadwal/save") }}',--}}
+        {{--        method: 'POST',--}}
+        {{--        data: formData,--}}
+        {{--        processData: false,--}}
+        {{--        contentType: false,--}}
+        {{--        success: function(res) {--}}
+        {{--            alert('Nilai berhasil disimpan!');--}}
+        {{--            $('#f_nilai')[0].reset();--}}
+        {{--        },--}}
+        {{--        error: function(xhr) {--}}
+        {{--            alert('Terjadi kesalahan: ' + xhr.responseText);--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--});--}}
+
+        $(document).ready(function () {
+            $('#f_nilai').on('submit', function(e) {
+                e.preventDefault();
+
+                console.log('📨 Form submit triggered');
+
+                let formData = new FormData(this);
+
+                // Cek isi formData (pakai loop karena tidak bisa langsung console.log formData)
+                for (let pair of formData.entries()) {
+                    console.log('📦 FormData:', pair[0] + ' =>', pair[1]);
                 }
+
+                $.ajax({
+                    url: '{{ route("nilai_jadwal/save") }}',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        // Optional: loader
+                        Swal.fire({
+                            title: 'Menyimpan...',
+                            text: 'Silakan tunggu',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function(res) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Nilai berhasil disimpan.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        $('#f_nilai')[0].reset();
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: 'Terjadi kesalahan: ' + xhr.responseText,
+                        });
+                    }
+                });
             });
         });
 
