@@ -28,6 +28,7 @@ class KelasSiswaController extends Controller
         if ($request->ajax()) {
             $data_kelas = Kelas::select([
                 'kelas.id_kelas',
+                'kelas.kd_kelas',
                 'kelas.nm_kelas',
                 'gurus.id_guru as guru_id',
                 DB::raw('(SELECT COUNT(*) FROM kelas_siswa WHERE kelas_siswa.id_kelas = kelas.id_kelas) as jumlah_siswa')
@@ -54,22 +55,6 @@ class KelasSiswaController extends Controller
     public function add(Request $request)
     {
         $id_kelas = $request->input('id_kelas');
-
-//        $kelas_info = Kelas::where('id_kelas', $id_kelas)->first();
-//
-//        $assignedSiswaIds = DB::table('kelas_siswa')
-//            ->where('id_kelas', $id_kelas)
-//            ->pluck('id_siswa')
-//            ->toArray();
-//
-////        $siswa = DB::table('siswas')->select('siswas.id_siswa', 'nm_siswa')
-////            ->leftJoin('kelas_siswa', 'siswas.id_siswa', '=', 'kelas_siswa.id_siswa')
-////            ->leftJoin('kelas', 'kelas.id_kelas', '=', 'kelas_siswa.id_kelas')
-////            ->whereNull('kelas_siswa.id_kelas') // To get only unassigned siswa
-////            ->get();
-//
-//        $siswa = Siswa::get();
-
 
         // Get the kelas information
         $kelas_info = Kelas::findOrFail($id_kelas);

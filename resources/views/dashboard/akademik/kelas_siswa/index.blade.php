@@ -14,18 +14,12 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>{{ $params['title'] }}</h3>
+                        <h3>{{ $params['title']}}</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Applications</a></li>
-                            <li class="breadcrumb-item">Data Master</li>
-                            <li class="breadcrumb-item active">{{ $params['title'] }}</li>
+                            <li class="breadcrumb-item">Data Akademik</li>
+                            <li class="breadcrumb-item active">{{ $params['title']}}</li>
                         </ol>
-                    </div>
-                    <div class="col-sm-6">
-                        <!-- Bookmark Start-->
-                        <div class="bookmark">
-                        </div>
-                        <!-- Bookmark Ends-->
                     </div>
                 </div>
             </div>
@@ -33,16 +27,15 @@
         <div class="container-fluid">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                    </div>
+
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="display datatables table table-bordered" id="data">
+                            <table class="display datatables table table-bordered" id="siswa_kelas_data">
                                 <thead>
                                 <tr style="text-align: center">
                                     <th style="width: 55px">No</th>
-                                    <th>Kelas</th>
-                                    <th style="width: 120px;">Action</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Jenis Kelamin</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -52,7 +45,6 @@
             </div>
         </div>
     </div>
-    @include('dashboard.master.jadwal.modal')
-    @include('dashboard.master.jadwal.js')
+    @include('dashboard.akademik.kelas_siswa.js')
 
 @endsection

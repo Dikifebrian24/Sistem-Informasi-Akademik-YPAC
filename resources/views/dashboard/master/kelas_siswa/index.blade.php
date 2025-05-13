@@ -63,6 +63,7 @@
                                 <thead>
                                 <tr style="text-align: center">
                                     <th style="width: 55px">No</th>
+                                    <th>Kode Kelas</th>
                                     <th>Kelas</th>
                                     <th>Jumlah Siswa</th>
                                     <th style="width: 120px;">Action</th>

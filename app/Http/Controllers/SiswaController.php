@@ -7,6 +7,7 @@ use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Datatables;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -121,6 +122,35 @@ class SiswaController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
+    }
+
+    public function kelas_siswa()
+    {
+        $params = [
+            'title' => 'Data Bimbingan Siswa'
+        ];
+        return view('dashboard.akademik.kelas_siswa.index', compact('params'));
+    }
+
+    public function getDataSiswaAjar(Request $request){
+        if ($request->ajax()) {
+            $kelas_siswa = DB::table('kelas_siswa')
+                ->join('kelas', 'kelas.id_kelas', '=', 'kelas_siswa.id_kelas')
+                ->join('siswas', 'siswas.id_siswa', '=', 'kelas_siswa.id_siswa')
+                ->join('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
+                ->select('siswas.id_siswa as id', 'siswas.nm_siswa as nama', 'siswas.jenkel')
+                ->where('gurus.id_user', '=', Auth::user()->id)->get();
+
+            return \Yajra\DataTables\DataTables::of($kelas_siswa)
+                ->addIndexColumn()
+//                ->addColumn('nama', function ($row) {
+//                    return $row->nm_siswa;
+//                })
+//                ->addColumn('jenkel', function ($row) {
+//                    return $row->jenkel;
+//                })
+                ->make(true);
+        }
     }
 
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KepegawaianController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\MapelController;
+use App\Http\Controllers\ProgressSiswaController;
 use App\Http\Controllers\PtkController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SiswaController;
@@ -79,6 +80,7 @@ Route::prefix('master')->group(function () {
     });
 
     Route::get('/kelas_siswa/add', [KelasSiswaController::class, 'add'])->name('kelas_siswa.add');
+    Route::get('/jadwal_detail/add', [JadwalController::class, 'add'])->name('jadwal_detail.add');
 
 
     Route::get('/disabilitas', [\App\Http\Controllers\HomeController::class, '']);
@@ -175,6 +177,10 @@ Route::prefix('master')->group(function () {
         Route::post('save', 'store')->name('siswa/save');
         Route::put('update/{id}', 'update')->name('siswa/update');
         Route::delete('delete/{id}', 'destroy')->name('siswa/delete');
+
+        // siswa ajar guru
+        Route::get('siswa_ajar', 'kelas_siswa')->name('siswa_ajar');
+        Route::get('data', 'getDataSiswaAjar')->name('siswa_to_guru/data');
     });
 
     Route::controller(GuruController::class)->prefix('guru')->group(function () {
@@ -233,5 +239,17 @@ Route::prefix('master')->group(function () {
         Route::get('edit/{id}', 'edit')->name('mapel/edit');
         Route::put('update/{id}', 'update')->name('mapel/update');
         Route::delete('delete/{id}', 'destroy')->name('mapel/delete');
+    });
+
+    Route::controller(ProgressSiswaController::class)->prefix('data_progress')->group(function () {
+        Route::get('', 'index')->name('data_progress');
+        Route::get('data', 'getDatatables')->name('data_progress/data');
+        Route::get('add', 'add')->name('data_progress/add');
+        Route::post('save', 'store')->name('data_progress/save');
+        Route::post('store', 'store')->name('data_progress/store');
+        Route::get('detail/{id}', 'detail')->name('data_progress/detail');
+        Route::get('edit/{id}', 'edit')->name('data_progress/edit');
+        Route::put('update/{id}', 'update')->name('data_progress/update');
+        Route::delete('delete/{id}', 'destroy')->name('data_progress/delete');
     });
 });

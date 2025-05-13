@@ -36,6 +36,14 @@
             });
         });
 
+        $(document).on('click', '.show-btn', function () {
+            let id = $(this).data('id');
+
+            console.log(id, 'kontol');
+
+            window.location.href = `jadwal_detail/add?id_kelas=${id}`;
+        });
+
         let table;
         let currentIdKelas = null;
 

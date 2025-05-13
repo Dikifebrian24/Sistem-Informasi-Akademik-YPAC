@@ -11,8 +11,6 @@
         $(document).on('click', '.edit-btn', function () {
             let id = $(this).data('id');
 
-            console.log(id, 'kontol');
-
             window.location.href = `kelas_siswa/add?id_kelas=${id}`;
         });
 
@@ -32,6 +30,7 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
+                    { data: 'kd_kelas', name: 'kd_kelas' },
                     { data: 'nm_kelas', name: 'nm_kelas' },
                     { data: 'jumlah_siswa', name: 'jumlah_siswa' },
                     {

@@ -7,14 +7,13 @@ use App\Models\Jadwal;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Mapel;
-use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
-class JadwalController extends Controller
+class ProgressSiswaController extends Controller
 {
     public function __construct()
     {
@@ -33,12 +32,12 @@ class JadwalController extends Controller
         $mapel = Mapel::all();
 
         $params = [
-            'title' => 'Jadwal',
+            'title' => 'Nilai Siswa',
             'kelas' => Kelas::all(),
             'guru' => $data_guru,
             'mapel' => $mapel,
         ];
-        return view('dashboard.master.jadwal.index', compact('params'));
+        return view('dashboard.akademik.nilai.index', compact('params'));
     }
 
     public function getDatatables(Request $request)
@@ -71,31 +70,15 @@ class JadwalController extends Controller
         }
     }
 
-    public function add(Request $request)
+    public function add()
     {
-        $id_kelas = $request->input('id_kelas');
-
-        // Get the kelas information
-        $kelas_info = Kelas::findOrFail($id_kelas);
-
-        // Get the list of all siswa
-        $siswa = Siswa::all();
-
-        // Get the assigned siswa IDs for this kelas
-        $assignedSiswaIds = DB::table('kelas_siswa')
-            ->where('id_kelas', $id_kelas)
-            ->pluck('id_siswa')
-            ->toArray();
-
-
-        $params = [
-            'title' => 'Tambah Pembagian Kelas',
-            'kelas' => $kelas_info,
-            'siswa' => $siswa,
-            'assigned' => $assignedSiswaIds, // List of already assigned siswa IDs
+        $data['role_level'] = [
+            ['id' => 1, 'name' => 'Admin'],
+            ['id' => 2, 'name' => 'Guru'],
+            ['id' => 3, 'name' => 'Siswa']
         ];
 
-        return view('dashboard.master.jadwal.detail', compact('params'));
+        return response()->json($data);
     }
 
     public function edit($id)

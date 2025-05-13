@@ -227,18 +227,20 @@
                                         <h6>Applications </h6>
                                     </div>
                                 </li>
-                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                            data-feather="grid"></i><span>Data Master</span></a>
-                                    <ul class="nav-submenu menu-content">
-                                        <li><a href="{{ route('kurikulum') }}">Kurikulum</a></li>
-                                        <li><a href="{{ route('thnakademik') }}">Tahun Akademik</a></li>
-
-                                        <li><a href="{{ route('kelas') }}">Kelas</a></li>
-                                        <li><a href="{{ route('kelainan') }}">Jenis Kelainan</a></li>
-                                        <li><a href="{{ route('kelas_siswa') }}">Pembagian Kelas</a></li>
-
-                                    </ul>
-                                </li>
+                                @if (\Illuminate\Support\Facades\Auth::user()->level == 1)
+                                    <li class="dropdown">
+                                        <a class="nav-link menu-title" href="javascript:void(0)">
+                                            <i data-feather="grid"></i><span>Data Master</span>
+                                        </a>
+                                        <ul class="nav-submenu menu-content">
+                                            <li><a href="{{ route('kurikulum') }}">Kurikulum</a></li>
+                                            <li><a href="{{ route('thnakademik') }}">Tahun Akademik</a></li>
+                                            <li><a href="{{ route('kelas') }}">Kelas</a></li>
+                                            <li><a href="{{ route('kelainan') }}">Jenis Kelainan</a></li>
+                                            <li><a href="{{ route('kelas_siswa') }}">Pembagian Kelas</a></li>
+                                        </ul>
+                                    </li>
+                                @endif
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                             data-feather="users"></i><span>Data Pengguna</span></a>
                                     <ul class="nav-submenu menu-content">
@@ -248,22 +250,19 @@
                                         <li><a href="{{ route('admin') }}">Admin</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                            data-feather="book"></i><span>Data Akademik</span></a>
+                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="book"></i><span>Data Akademik</span></a>
                                     <ul class="nav-submenu menu-content">
-                                        <li><a href="#">Kelompok Mapel</a></li>
+                                        <li><a href="{{ route('mapel') }}">Jadwal Mengajar</a></li>
+                                        <li><a href="{{ route('siswa_ajar') }}">Siswa bimbingan</a></li>
                                         <li><a href="{{ route('mapel') }}">Mata Pelajaran</a></li>
                                         <li><a href="{{ route('jadwal') }}">Jadwal Pelajaran</a></li>
-                                        {{-- <li><a href="#">Bahan & Tugas</a></li>
-                                        <li><a href="#">Kompetensi Dasar</a></li>
-                                        <li><a href="#">Penilaian Diri</a></li>
-                                        <li><a href="#">Rentang Nilai</a></li> --}}
+
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                             data-feather="calendar"></i><span>Data Progres Siswa</span></a>
                                     <ul class="nav-submenu menu-content">
-                                        <li><a href="#">Progres Siswa</a></li>
+                                        <li><a href="{{ route('data_progress') }}">Progres Siswa</a></li>
                                         <li><a href="#">Rekap Progres Siswa</a></li>
                                     </ul>
                                 </li>
