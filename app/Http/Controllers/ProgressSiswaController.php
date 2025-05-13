@@ -7,8 +7,10 @@ use App\Models\Jadwal;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Mapel;
+use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
@@ -31,12 +33,16 @@ class ProgressSiswaController extends Controller
 
         $mapel = Mapel::all();
 
+        $siswa = Siswa::all();
+
         $params = [
             'title' => 'Nilai Siswa',
             'kelas' => Kelas::all(),
             'guru' => $data_guru,
             'mapel' => $mapel,
+            'siswa' => $siswa,
         ];
+
         return view('dashboard.akademik.nilai.index', compact('params'));
     }
 
@@ -57,6 +63,27 @@ class ProgressSiswaController extends Controller
         }
     }
 
+    public function getMapelDatatables(Request $request)
+    {
+        if ($request->ajax()) {
+            $mapel = DB::table('jadwals')
+                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+                ->where('gurus.id_user', '=', Auth::user()->id)
+                ->select('gurus.nm_guru', 'mapels.nm_mapel', 'jadwals.id as id_jadwal', 'nm_kelas', 'jadwals.*')
+                ->get();
+
+            return DataTables::of($mapel)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-sm btn-danger" id="input_nilai" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Input</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
     public function getJadwal(Request $request)
     {
         $idKelas = $request->input('id_kelas');
@@ -68,6 +95,32 @@ class ProgressSiswaController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
+    }
+
+    public function show(Request $request)
+    {
+        $id_mapel = $request->id_mapel;
+        $id_kelas = $request->id_kelas;
+        $id_jadwal = $request->id_jadwal;
+
+        $siswa = DB::table('kelas_siswa')
+            ->join('siswas', 'siswas.id_siswa', '=', 'kelas_siswa.id_siswa')
+            ->join('kelas', 'kelas.id_kelas', '=', 'kelas_siswa.id_kelas')
+            ->where('kelas_siswa.id_kelas', $id_kelas)
+            ->get();
+
+        $mapel = Mapel::where('id', $id_mapel)->get()->first()->nm_mapel;
+        $mapel_id = Mapel::where('id', $id_mapel)->get()->first()->id;
+
+        $data = [
+            'mapel' => $mapel,
+            'id_mapel' => $id_mapel,
+            'id_kelas' => $id_kelas,
+            'id_jadwal' => $id_jadwal,
+             'siswa' => $siswa,
+        ];
+
+        return view('dashboard.akademik.nilai.nilai', $data);
     }
 
     public function add()

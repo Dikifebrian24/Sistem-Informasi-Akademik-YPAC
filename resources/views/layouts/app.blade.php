@@ -256,7 +256,7 @@
                                 <ul class="nav-submenu menu-content">
                                     @if (\Illuminate\Support\Facades\Auth::user()->level == 2)
                                         <li><a href="{{ route('mapel') }}">Jadwal Mengajar</a></li>
-                                        <li><a href="{{ route('siswa_ajar') }}">Siswa bimbingan</a></li>
+                                        <li><a href="{{ route('siswa_ajar') }}">Data siswa</a></li>
                                     @endif
                                     @if (\Illuminate\Support\Facades\Auth::user()->level == 1)
                                         <li><a href="{{ route('mapel') }}">Mata Pelajaran</a></li>
@@ -268,7 +268,7 @@
                             <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                         data-feather="calendar"></i><span>Data Progres Siswa</span></a>
                                 <ul class="nav-submenu menu-content">
-                                    <li><a href="{{ route('data_progress') }}">Progres Siswa</a></li>
+                                    <li><a href="{{ route('data_progress') }}">Input Progres Siswa</a></li>
                                     <li><a href="#">Rekap Progres Siswa</a></li>
                                 </ul>
                             </li>

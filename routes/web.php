@@ -251,5 +251,8 @@ Route::prefix('master')->group(function () {
         Route::get('edit/{id}', 'edit')->name('data_progress/edit');
         Route::put('update/{id}', 'update')->name('data_progress/update');
         Route::delete('delete/{id}', 'destroy')->name('data_progress/delete');
+
+        Route::get('data_kelas', 'getMapelDatatables')->name('nilai_jadwal/data');
+        Route::get('nilai_add', 'show')->name('nilai_jadwal/nilai_add');
     });
 });
