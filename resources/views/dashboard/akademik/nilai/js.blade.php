@@ -54,38 +54,20 @@
         $('#f_nilai').on('submit', function(e) {
             e.preventDefault();
 
-            $.ajax({
-                url: '{{ route("kelas/store") }}',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sukses!',
-                            text: response.message,
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
+            let formData = new FormData(this);
 
-                        $('#data').DataTable().ajax.reload();
-                        $('#adminModalAdd').modal('hide');
-                        $('#saveKelas')[0].reset();
-                    }
+            $.ajax({
+                url: '{{ route("nilai_jadwal/save") }}',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    alert('Nilai berhasil disimpan!');
+                    $('#f_nilai')[0].reset();
                 },
                 error: function(xhr) {
-                    let errors = xhr.responseJSON.errors;
-                    let errorMsg = '';
-
-                    $.each(errors, function(key, value) {
-                        errorMsg += value + '<br>';
-                    });
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal!',
-                        html: errorMsg
-                    });
+                    alert('Terjadi kesalahan: ' + xhr.responseText);
                 }
             });
         });

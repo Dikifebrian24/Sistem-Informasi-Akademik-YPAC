@@ -123,6 +123,34 @@ class ProgressSiswaController extends Controller
         return view('dashboard.akademik.nilai.nilai', $data);
     }
 
+    public function nilaiSave(Request $request)
+    {
+        $request->validate([
+            'id_siswa' => 'required|exists:siswas,id_siswa',
+            'id_mapel' => 'required|exists:mapels,id',
+            'kategori_nilai' => 'required|in:Harian,UTS,UAS',
+            'nilai' => 'required|integer|min:1|max:100',
+            'lampiran' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
+        ]);
+
+        $lampiran = null;
+        if ($request->hasFile('lampiran')) {
+            $lampiran = $request->file('lampiran')->store('lampiran_nilai', 'public');
+        }
+
+        Nilai::create([
+            'id_siswa' => $request->id_siswa,
+            'id_mapel' => $request->id_mapel,
+            'id_jadwal' => $request->id_jadwal,
+            'kategori_nilai' => $request->kategori_nilai,
+            'nilai' => $request->nilai,
+            'desc_nilai' => $request->desc_nilai,
+            'lampiran' => $lampiran,
+        ]);
+
+        return response()->json(['message' => 'Data nilai berhasil disimpan.']);
+    }
+
     public function add()
     {
         $data['role_level'] = [
