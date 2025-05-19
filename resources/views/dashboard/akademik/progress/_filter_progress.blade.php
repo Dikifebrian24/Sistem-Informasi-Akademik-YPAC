@@ -1,5 +1,44 @@
 @if(count($data))
 
+    @php
+        $avgNilai = $data->avg('nilai');
+        $avgNilaiRounded = round($avgNilai, 2);
+
+        // Fungsi simpel untuk memberikan label kualitas nilai
+        if ($avgNilai <= 3) {
+        $keterangan = 'Perlu banyak latihan, ayo semangat!';
+    } elseif ($avgNilai <= 5) {
+        $keterangan = 'Mulai terlihat kemajuan, terus coba ya!';
+    } elseif ($avgNilai <= 7) {
+        $keterangan = 'Bagus, kamu sudah berkembang!';
+    } elseif ($avgNilai <= 9) {
+        $keterangan = 'Hebat, terus pertahankan prestasimu!';
+    } else {
+        $keterangan = 'Sempurna! Kamu luar biasa!';
+    }
+    @endphp
+
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Grafik Perkembangan</h5>
+        </div>
+        <div class="card-body" style="height: 300px;">
+            <div class="mb-0">
+                <strong>Rata-rata Nilai:</strong>
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= round($avgNilai / 2))
+                        <span style="color: gold; font-size: 20px;">&#9733;</span>
+                    @else
+                        <span style="color: #ddd; font-size: 20px;">&#9733;</span>
+                    @endif
+                @endfor
+                <span style="margin-left: 10px;">({{ $avgNilaiRounded }})</span>
+                <div><em><strong>Simpulan:</strong> {{ $keterangan }}</em></div>
+            </div>
+            <canvas id="progressChart" style="height: 100%; width: 100%;"></canvas>
+        </div>
+    </div>
 
     <div class="col-sm-12">
         <div class="card">
@@ -54,45 +93,6 @@
 {{--        </div>--}}
 {{--    </div>--}}
 
-    @php
-        $avgNilai = $data->avg('nilai');
-        $avgNilaiRounded = round($avgNilai, 2);
-
-        // Fungsi simpel untuk memberikan label kualitas nilai
-        if ($avgNilai <= 3) {
-        $keterangan = 'Perlu banyak latihan, ayo semangat!';
-    } elseif ($avgNilai <= 5) {
-        $keterangan = 'Mulai terlihat kemajuan, terus coba ya!';
-    } elseif ($avgNilai <= 7) {
-        $keterangan = 'Bagus, kamu sudah berkembang!';
-    } elseif ($avgNilai <= 9) {
-        $keterangan = 'Hebat, terus pertahankan prestasimu!';
-    } else {
-        $keterangan = 'Sempurna! Kamu luar biasa!';
-    }
-    @endphp
-
-
-    <div class="card mt-4">
-        <div class="card-header">
-            <h5>Grafik Perkembangan</h5>
-        </div>
-        <div class="card-body" style="height: 300px;">
-            <div class="mb-3">
-                <strong>Rata-rata Nilai:</strong>
-                @for ($i = 1; $i <= 5; $i++)
-                    @if ($i <= round($avgNilai / 2))
-                        <span style="color: gold; font-size: 20px;">&#9733;</span>
-                    @else
-                        <span style="color: #ddd; font-size: 20px;">&#9733;</span>
-                    @endif
-                @endfor
-                <span style="margin-left: 10px;">({{ $avgNilaiRounded }})</span>
-                <div><em><strong>Simpulan:</strong> {{ $keterangan }}</em></div>
-            </div>
-            <canvas id="progressChart" style="height: 100%; width: 100%;"></canvas>
-        </div>
-    </div>
 
     {{-- 1. Include Chart.js dulu --}}
 
@@ -137,7 +137,6 @@
                         x: {
                             title: {
                                 display: true,
-                                text: 'Tanggal'
                             }
                         }
                     }
