@@ -69,6 +69,6 @@
         <!-- Container-fluid Ends-->
     </div>
 
-    @include('dashboard.akademik.nilai.js')
+    @include('dashboard.akademik.progress.js')
 
 @endsection

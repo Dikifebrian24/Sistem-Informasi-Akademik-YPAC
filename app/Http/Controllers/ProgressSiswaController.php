@@ -125,7 +125,7 @@ class ProgressSiswaController extends Controller
         return view('dashboard.akademik.progress.progress', $data);
     }
 
-    public function nilaiDetailShow(Request $request)
+    public function progressDetailShow(Request $request)
     {
         $id_mapel = $request->id_mapel;
         $id_kelas = $request->id_kelas;
@@ -147,7 +147,7 @@ class ProgressSiswaController extends Controller
             'siswa' => $siswa,
         ];
 
-        return view('dashboard.akademik.nilai.show', $data);
+        return view('dashboard.akademik.progress.show', $data);
     }
 
     public function filter(Request $request)
@@ -155,13 +155,13 @@ class ProgressSiswaController extends Controller
         $id_mapel = $request->id_mapel;
         $id_siswa = $request->id_siswa;
 
-        $data = DB::table('nilais')
+        $data = DB::table('progress_nilais')
             ->where('id_mapel', $id_mapel)
             ->where('id_siswa', $id_siswa)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('tgl_progress', 'asc')
             ->get();
 
-        return view('dashboard.akademik.nilai._filter_nilai', compact('data'));
+        return view('dashboard.akademik.progress._filter_progress', compact('data'));
     }
 
     public function progressSave(Request $request)

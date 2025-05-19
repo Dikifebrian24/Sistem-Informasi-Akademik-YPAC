@@ -53,7 +53,7 @@
             window.location.href = `/master/data_progress/progress_add?id_mapel=${id_mapel}&id_kelas=${id_kelas}&id_jadwal=${id_jadwal}`;
         });
 
-        $(document).on('click', '#show_nilai', function(e) {
+        $(document).on('click', '#show_progress', function(e) {
             e.preventDefault();
 
             // Ambil data dari tombol yang diklik
@@ -66,8 +66,19 @@
             console.log('id_jadwal:', id_jadwal);
 
             // Redirect ke route dengan parameter query string
-            window.location.href = `/master/data_nilai/nilai_show?id_mapel=${id_mapel}&id_kelas=${id_kelas}&id_jadwal=${id_jadwal}`;
+            window.location.href = `/master/data_progress/progress_show?id_mapel=${id_mapel}&id_kelas=${id_kelas}&id_jadwal=${id_jadwal}`;
         });
+
+        $.getScript('https://cdn.jsdelivr.net/npm/chart.js')
+            .done(function() {
+                // Setelah Chart.js berhasil dimuat, baru jalankan chart-nya
+                renderChart();
+            })
+            .fail(function() {
+                alert('Gagal memuat Chart.js');
+            });
+
+
 
         $(document).ready(function () {
             $('#f_filter').on('submit', function(e) {
@@ -92,6 +103,11 @@
                     success: function(response) {
                         $('#hasil_nilai').html(response);
                         $('#hasil_nilai_card').show();
+
+                        // Jalankan script setelah elemen sudah masuk ke DOM
+                        setTimeout(function () {
+                            renderChart(); // panggil fungsi untuk menggambar chart
+                        }, 200);
                     },
                     error: function(xhr) {
                         Swal.fire('Gagal', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
