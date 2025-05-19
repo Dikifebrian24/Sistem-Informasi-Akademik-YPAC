@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
-class ProgressSiswaController extends Controller
+class NilaiSiswaController extends Controller
 {
     public function __construct()
     {
@@ -44,7 +44,7 @@ class ProgressSiswaController extends Controller
             'siswa' => $siswa,
         ];
 
-        return view('dashboard.akademik.progress.index', compact('params'));
+        return view('dashboard.akademik.nilai.index', compact('params'));
     }
 
     public function getDatatables(Request $request)
@@ -78,8 +78,8 @@ class ProgressSiswaController extends Controller
             return DataTables::of($mapel)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger" id="input_progress" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Input</button>
-                            <button class="btn btn-sm btn-primary" id="show_progress" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Lihat Nilai</button>';
+                    return '<button class="btn btn-sm btn-danger" id="input_nilai" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Input</button>
+                            <button class="btn btn-sm btn-primary" id="show_nilai" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Lihat Nilai</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -122,7 +122,7 @@ class ProgressSiswaController extends Controller
              'siswa' => $siswa,
         ];
 
-        return view('dashboard.akademik.progress.progress', $data);
+        return view('dashboard.akademik.nilai.nilai', $data);
     }
 
     public function nilaiDetailShow(Request $request)
@@ -164,26 +164,25 @@ class ProgressSiswaController extends Controller
         return view('dashboard.akademik.nilai._filter_nilai', compact('data'));
     }
 
-    public function progressSave(Request $request)
+    public function nilaiSave(Request $request)
     {
         $request->validate([
             'id_siswa' => 'required|exists:siswas,id_siswa',
             'id_mapel' => 'required|exists:mapels,id',
-            'tgl_progress' => 'required|date',
-            'nilai_value' => 'required|integer|min:1|max:10', // 1–10 saja
-            'desc_nilai' => 'nullable|string',
-            'lampiran' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
+            'kategori_nilai' => 'required|in:Harian,UTS,UAS',
+            'nilai_value' => 'required|integer|min:1|max:100',
+            'lampiran' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
         ]);
 
         $lampiran = null;
         if ($request->hasFile('lampiran')) {
-            $lampiran = $request->file('lampiran')->store('lampiran_progress', 'public');
+            $lampiran = $request->file('lampiran')->store('lampiran_nilai', 'public');
         }
 
-        \App\Models\ProgressNilai::create([
+        Nilai::create([
             'id_siswa' => $request->id_siswa,
             'id_mapel' => $request->id_mapel,
-            'tgl_progress' => $request->tgl_progress,
+            'kategori_nilai' => $request->kategori_nilai,
             'nilai' => $request->nilai_value,
             'desc_nilai' => $request->desc_nilai,
             'lampiran' => $lampiran,

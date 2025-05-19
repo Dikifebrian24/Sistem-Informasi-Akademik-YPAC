@@ -266,6 +266,13 @@
                                 </ul>
                             </li>
                             <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                        data-feather="calendar"></i><span>Data Nilai Siswa</span></a>
+                                <ul class="nav-submenu menu-content">
+                                    <li><a href="{{ route('data_nilai') }}">Input Nilai Siswa</a></li>
+                                    <li><a href="#">Rekap Nilai Siswa</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                         data-feather="calendar"></i><span>Data Progres Siswa</span></a>
                                 <ul class="nav-submenu menu-content">
                                     <li><a href="{{ route('data_progress') }}">Input Progres Siswa</a></li>

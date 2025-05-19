@@ -252,10 +252,30 @@ Route::prefix('master')->group(function () {
         Route::put('update/{id}', 'update')->name('data_progress/update');
         Route::delete('delete/{id}', 'destroy')->name('data_progress/delete');
 
-        Route::get('data_kelas', 'getMapelDatatables')->name('nilai_jadwal/data');
-        Route::get('nilai_add', 'show')->name('nilai_jadwal/nilai_add');
-        Route::get('nilai_show', 'nilaiDetailShow')->name('nilai_jadwal/nilai_show');
-        Route::post('nilai_save', 'nilaiSave')->name('nilai_jadwal/save');
-        Route::post('filter', 'filter')->name('nilai_jadwal/filter');
+
+        Route::get('data_kelas', 'getMapelDatatables')->name('progress_jadwal/data');
+        Route::get('progress_add', 'show')->name('progress_jadwal/progress_add');
+        Route::get('progress_show', 'progressDetailShow')->name('progress_jadwal/progress_show');
+        Route::post('progress_save', 'progressSave')->name('progress_jadwal/save');
+        Route::post('filter', 'filter')->name('progress_jadwal/filter');
+    });
+
+    Route::controller(\App\Http\Controllers\NilaiSiswaController::class)->prefix('data_nilai')->group(function () {
+        Route::get('', 'index')->name('data_nilai');
+        Route::get('data', 'getDatatables')->name('data_nilai/data');
+        Route::get('add', 'add')->name('data_nilai/add');
+        Route::post('save', 'store')->name('data_nilai/save');
+        Route::post('store', 'store')->name('data_nilai/store');
+        Route::get('detail/{id}', 'detail')->name('data_nilai/detail');
+        Route::get('edit/{id}', 'edit')->name('data_nilai/edit');
+        Route::put('update/{id}', 'update')->name('data_nilai/update');
+        Route::delete('delete/{id}', 'destroy')->name('data_nilai/delete');
+
+
+        Route::get('data_kelas', 'getMapelDatatables')->name('data_nilai_jadwal/data');
+        Route::get('nilai_add', 'show')->name('data_nilai_jadwal/nilai_add');
+        Route::get('nilai_show', 'nilaiDetailShow')->name('data_nilai_jadwal/nilai_show');
+        Route::post('nilai_save', 'nilaiSave')->name('data_nilai_jadwal/save');
+        Route::post('filter', 'filter')->name('data_nilai_jadwal/filter');
     });
 });
