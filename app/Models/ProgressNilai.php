@@ -16,4 +16,17 @@ class ProgressNilai extends Model
         'desc_nilai',
         'lampiran',
     ];
+
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'id');
+        // sesuaikan nama foreign key jika beda
+    }
+
+    public function mapel()
+    {
+        return $this->belongsTo(Mapel::class, 'id_mapel');
+        // sesuaikan nama foreign key jika beda
+    }
 }

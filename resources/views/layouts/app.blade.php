@@ -277,7 +277,7 @@
                                         data-feather="calendar"></i><span>Data Progres Siswa</span></a>
                                 <ul class="nav-submenu menu-content">
                                     <li><a href="{{ route('data_progress') }}">Input Progres Siswa</a></li>
-                                    <li><a href="#">Rekap Progres Siswa</a></li>
+                                    <li><a href="{{ route('progress_jadwal/progress_recap') }}">Rekap Progres Siswa</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i

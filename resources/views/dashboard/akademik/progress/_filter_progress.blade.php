@@ -43,11 +43,11 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header pb-0">
-                <h5>Filter</h5>
+                <h5>Data</h5>
             </div>
             <div class="card-body">
                 @if(count($data))
-                    <table class="table table-bordered">
+                    <table id="myTable" class="table table-bordered">
                         <thead>
                         <tr>
                             <th>Nilai (Bintang)</th>
@@ -98,6 +98,26 @@
 
     {{-- 2. Baru jalankan script Chart-nya --}}
     <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                "order": [[ 3, "desc" ]], // Urutkan berdasarkan kolom Tanggal (index 3) descending
+                "language": {
+                    "search": "Cari:",
+                    "lengthMenu": "Tampilkan _MENU_ data per halaman",
+                    "zeroRecords": "Data tidak ditemukan",
+                    "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+                    "infoEmpty": "Tidak ada data",
+                    "infoFiltered": "(difilter dari total _MAX_ data)",
+                    "paginate": {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "Selanjutnya",
+                        "previous": "Sebelumnya"
+                    }
+                }
+            });
+        });
+
         function renderChart() {
             const labels = {!! json_encode($data->pluck('tgl_progress')->map(fn($tgl) => \Carbon\Carbon::parse($tgl)->format('d M'))) !!};
             const nilai = {!! json_encode($data->pluck('nilai')) !!};
@@ -143,6 +163,88 @@
                 }
             });
         }
+    </script>
+
+    <div class="container">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Rekap Data Progress Semua Siswa</h5>
+            </div>
+            <div class="card-body">
+
+                @if($data->count())
+                    {{-- Rata-rata nilai --}}
+                    @php
+                        $avgNilai = round($data->avg('nilai'), 2);
+                    @endphp
+
+                    <div class="mb-3">
+                        <strong>Rata-rata Nilai Keseluruhan: </strong> {{ $avgNilai }} / 10
+                    </div>
+
+                    <table id="rekapTable" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Nama Siswa</th>
+                            <th>Mata Pelajaran</th>
+                            <th>Nilai (Bintang)</th>
+                            <th>Keterangan</th>
+                            <th>Lampiran</th>
+                            <th>Tanggal Progress</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data as $item)
+                            <tr>
+                                <td>{{ $item->siswa->nama ?? '-' }}</td>
+                                <td>{{ $item->mapel->nama ?? '-' }}</td>
+                                <td>{{ $item->nilai }}</td>
+                                <td>{{ $item->desc_nilai ?? '-' }}</td>
+                                <td>
+                                    @if($item->lampiran)
+                                        <a href="{{ asset('storage/' . $item->lampiran) }}" target="_blank">Lihat File</a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($item->tgl_progress)->format('d M Y') }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="alert alert-warning">Belum ada data progress.</div>
+                @endif
+
+            </div>
+        </div>
+    </div>
+
+    {{-- Include jQuery dan DataTables --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#rekapTable').DataTable({
+                "order": [[ 5, "desc" ]], // Urutkan berdasarkan tanggal progress (kolom index 5)
+                "language": {
+                    "search": "Cari:",
+                    "lengthMenu": "Tampilkan _MENU_ data per halaman",
+                    "zeroRecords": "Data tidak ditemukan",
+                    "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+                    "infoEmpty": "Tidak ada data",
+                    "infoFiltered": "(difilter dari total _MAX_ data)",
+                    "paginate": {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "Selanjutnya",
+                        "previous": "Sebelumnya"
+                    }
+                }
+            });
+        });
     </script>
 @else
     <div class="alert alert-warning">Belum ada data nilai untuk siswa ini.</div>

@@ -5,7 +5,7 @@
         </div>
         <div class="card-body">
             @if(count($data))
-                <table class="table table-bordered">
+                <table id="myTable" class="table table-bordered">
                     <thead>
                     <tr>
                         <th>Kategori</th>
@@ -40,3 +40,27 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            "order": [[ 3, "desc" ]], // Urutkan berdasarkan kolom Tanggal (index 3) descending
+            "language": {
+                "search": "Cari:",
+                "lengthMenu": "Tampilkan _MENU_ data per halaman",
+                "zeroRecords": "Data tidak ditemukan",
+                "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+                "infoEmpty": "Tidak ada data",
+                "infoFiltered": "(difilter dari total _MAX_ data)",
+                "paginate": {
+                    "first": "Pertama",
+                    "last": "Terakhir",
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                }
+            }
+        });
+    });
+
+</script>

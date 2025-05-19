@@ -256,6 +256,7 @@ Route::prefix('master')->group(function () {
         Route::get('data_kelas', 'getMapelDatatables')->name('progress_jadwal/data');
         Route::get('progress_add', 'show')->name('progress_jadwal/progress_add');
         Route::get('progress_show', 'progressDetailShow')->name('progress_jadwal/progress_show');
+        Route::get('progress_recap', 'rekapProgress')->name('progress_jadwal/progress_recap');
         Route::post('progress_save', 'progressSave')->name('progress_jadwal/save');
         Route::post('filter', 'filter')->name('progress_jadwal/filter');
     });

@@ -8,6 +8,7 @@ use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Nilai;
+use App\Models\ProgressNilai;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -148,6 +149,21 @@ class ProgressSiswaController extends Controller
         ];
 
         return view('dashboard.akademik.progress.show', $data);
+    }
+
+    public function rekapProgress()
+    {
+        // Ambil semua data progress lengkap dengan relasi siswa & mapel
+        $data = DB::table('progress_nilais')
+            ->join('siswas', 'progress_nilais.id_siswa', '=', 'siswas.id_siswa')
+            ->join('mapels', 'progress_nilais.id_mapel', '=', 'mapels.id')
+            ->select('progress_nilais.*', 'siswas.nm_siswa as nama_siswa', 'mapels.nm_mapel as nama_mapel')
+            ->orderBy('id', 'desc')
+            ->get();
+
+//        dd($data);
+
+        return view('dashboard.akademik.progress.recap', compact('data'));
     }
 
     public function filter(Request $request)
