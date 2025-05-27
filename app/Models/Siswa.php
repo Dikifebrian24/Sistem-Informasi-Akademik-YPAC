@@ -28,5 +28,6 @@ class Siswa extends Model
         'nm_wali',
         'tgl_lahir_wali',
         'no_telp_wali',
+        'created_at'
     ];
 }

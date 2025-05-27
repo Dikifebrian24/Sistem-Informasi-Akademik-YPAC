@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\GuruImport;
+use App\Imports\SiswaImport;
 use App\Models\DataKelainan;
 use App\Models\Siswa;
 use App\Models\User;
@@ -10,6 +12,7 @@ use Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -35,6 +38,8 @@ class SiswaController extends Controller
                     ->join('siswas', 'siswas.id_user', '=', 'users.id')
                     ->join('data_kelainans', 'data_kelainans.id', '=', 'siswas.id_kelainan');
 
+//            dd($users);
+
             return \Yajra\DataTables\DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('nama', function ($row) {
@@ -55,6 +60,17 @@ class SiswaController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'import_data' => 'required|mimes:xlsx,xls',
+        ]);
+
+        Excel::import(new SiswaImport(), $request->file('import_data'));
+
+        return response()->json(['message' => 'Import berhasil!']);
     }
 
     public function store(Request $request)

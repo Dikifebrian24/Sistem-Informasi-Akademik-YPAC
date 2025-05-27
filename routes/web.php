@@ -177,10 +177,16 @@ Route::prefix('master')->group(function () {
         Route::post('save', 'store')->name('siswa/save');
         Route::put('update/{id}', 'update')->name('siswa/update');
         Route::delete('delete/{id}', 'destroy')->name('siswa/delete');
+        Route::post('import', 'import')->name('siswa/import');
+
+        Route::get('template', function () {
+            $file = public_path('template_import/template_import_siswa.xlsx');
+            return response()->download($file);
+        })->name('download.template_siswa');
 
         // siswa ajar guru
         Route::get('siswa_ajar', 'kelas_siswa')->name('siswa_ajar');
-        Route::get('data', 'getDataSiswaAjar')->name('siswa_to_guru/data');
+        Route::get('dataAjar', 'getDataSiswaAjar')->name('siswa_to_guru/data');
     });
 
     Route::controller(GuruController::class)->prefix('guru')->group(function () {

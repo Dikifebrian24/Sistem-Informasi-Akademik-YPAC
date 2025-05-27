@@ -28,7 +28,7 @@
             $('#data').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('siswa/data') }}',
+                ajax: '{{ url('master/siswa/data') }}',
                 columns: [
                     {
                         data: null,
@@ -176,6 +176,46 @@
         {{--        }--}}
         {{--    }--}}
         {{--});--}}
+        $('#importBtn').on("click", function (e) {
+            e.preventDefault()
+            $('#importModal').modal('show');
+        });
+
+        $('#template_download').on('click', function () {
+            window.location.href = "{{ route('download.template_siswa') }}";
+        });
+
+        $('#f_import').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+
+            $.ajax({
+                url: "{{ route('siswa/import') }}",
+                method: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    // Optional: tampilkan loading indicator
+                },
+                success: function (response) {
+                    alert(response.message); // tampilkan pesan sukses
+                    $('#import_data').val(''); // reset file input
+
+                    $('#importModal').modal('hide');
+                    $('#data').DataTable().ajax.reload();
+                },
+                error: function (xhr) {
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        alert("Error: " + xhr.responseJSON.message);
+                    } else {
+                        alert("Terjadi kesalahan saat upload.");
+                    }
+                }
+            });
+        });
 
         $('.show_confirm').click(function (e) {
             var form = $(this).closest("form");
