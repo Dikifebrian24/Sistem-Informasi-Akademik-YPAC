@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\GuruImport;
 
 class GuruController extends Controller
 {
@@ -38,6 +40,17 @@ class GuruController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'import_data' => 'required|mimes:xlsx,xls',
+        ]);
+
+        Excel::import(new GuruImport, $request->file('import_data'));
+
+        return response()->json(['message' => 'Import berhasil!']);
     }
 
     public function add() {

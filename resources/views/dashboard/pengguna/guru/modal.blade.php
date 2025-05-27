@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Kategori Guru</label>
-                            <select class="form-select" name="level_guru" id="level_guru"  required>
+                            <select class="form-select" name="level_guru" id="level_guru" required>
                                 <option value="">-- Pilih Kategori --</option>
                                 <option value="1">Kepala Sekolah</option>
                                 <option value="2">Staff Pengajar</option>
@@ -92,3 +92,45 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import Data Guru</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="f_import" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="container">
+                        <!-- tombol download template -->
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">Template Import</label><br>
+                                <button type="button" class="btn btn-primary" id="template_download">Download</button>
+                            </div>
+                        </div>
+
+                        <!-- file input -->
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label class="form-label">File (.xlsx)</label>
+                                <input class="form-control" type="file" name="import_data" id="import_data" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer mt-3">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+

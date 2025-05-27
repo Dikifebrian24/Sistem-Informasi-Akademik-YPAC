@@ -83,14 +83,14 @@
             });
         });
 
-        $('#saveGuru').on('submit', function(e) {
+        $('#saveGuru').on('submit', function (e) {
             e.preventDefault();
 
             $.ajax({
                 url: '{{ route("guru/store") }}',
                 type: 'POST',
                 data: $(this).serialize(),
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         Swal.fire({
                             icon: 'success',
@@ -105,11 +105,11 @@
                         $('#saveGuru')[0].reset();
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     let errors = xhr.responseJSON.errors;
                     let errorMsg = '';
 
-                    $.each(errors, function(key, value) {
+                    $.each(errors, function (key, value) {
                         errorMsg += value + '<br>';
                     });
 
@@ -122,14 +122,14 @@
             });
         });
 
-        $('#openModalBtn').on("click", function(e) {
+        $('#openModalBtn').on("click", function (e) {
             $(".js-example-basic-single").select2();
             e.preventDefault()
             $.ajax({
                 url: "{{ route('guru/add') }}",
                 type: "GET",
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     // $('#role_level').empty(); // Kosongkan dulu
                     // $('#role_level').append('<option value="">-- Pilih Role --</option>'); // Tambah placeholder
 
@@ -138,6 +138,47 @@
                     // });
 
                     $('#guruModalAdd').modal('show');
+                }
+            });
+        });
+
+        $('#importBtn').on("click", function (e) {
+            e.preventDefault()
+            $('#importModal').modal('show');
+        });
+
+        $('#template_download').on('click', function () {
+            window.location.href = "{{ route('download.template') }}";
+        });
+
+        $('#f_import').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+
+            $.ajax({
+                url: "{{ route('guru/import') }}",
+                method: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    // Optional: tampilkan loading indicator
+                },
+                success: function (response) {
+                    alert(response.message); // tampilkan pesan sukses
+                    $('#import_data').val(''); // reset file input
+
+                    $('#importModal').modal('hide');
+                    $('#data').DataTable().ajax.reload();
+                },
+                error: function (xhr) {
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        alert("Error: " + xhr.responseJSON.message);
+                    } else {
+                        alert("Terjadi kesalahan saat upload.");
+                    }
                 }
             });
         });
