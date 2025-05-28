@@ -198,6 +198,20 @@
             });
         });
 
+        $('#generateFileBtn').on('click', function (e) {
+            e.preventDefault();
+            console.log('Generate File clicked');
+            const generateModal = new bootstrap.Modal(document.getElementById('generateModal'));
+            generateModal.show();
+        });
+
+        $('#importFileBtn').on('click', function (e) {
+            e.preventDefault();
+            console.log('Import File clicked');
+            const importModal = new bootstrap.Modal(document.getElementById('importModal'));
+            importModal.show();
+        });
+
         $(document).on('click', '.delete', function () {
             let id = $(this).data('id');
 

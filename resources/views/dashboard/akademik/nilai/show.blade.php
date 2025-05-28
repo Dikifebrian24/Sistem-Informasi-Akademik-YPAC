@@ -64,11 +64,79 @@
                     </div>
                 </div>
 
+                <div class="col-sm-12 col-xl-12" id="hasil_nilai_card">
+                    <div class="row" id="hasil_nilai">
+                        <div class="col-sm-12">
+                            <div class="card">
+{{--                                <div class="card-header pb-0">--}}
+{{--                                </div>--}}
+
+                                <style>
+                                    .dropdown-item.dropdown-hover:hover {
+                                        background-color: #4f4b4b; /* Warna merah Bootstrap (danger) */
+                                        color: white;
+                                    }
+                                </style>
+                                <div class="card-header">
+                                    <h5>Nilai Siswa</h5><br>
+
+                                    <button class="btn add" style="background-color: blue; color: white" type="button" id="openModalBtn">Add Data Siswa</button>
+{{--                                    <button class="btn btn-danger import" type="button" id="importBtn">Import</button>--}}
+                                    <button class="btn btn-danger dropdown-toggle" type="button" id="importDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Import
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="importDropdown">
+                                        <li><a class="dropdown-item" href="#" id="generateFileBtn">Generate File</a></li>
+                                        <li><a class="dropdown-item" href="#" id="importFileBtn">Import File</a></li>
+                                    </ul>
+                                    <button class="btn export" type="button" style="background-color: green; color: white" id="exportBtn">Export</button>
+                                </div>
+                                <div class="card-body">
+{{--                                    @if(count($data))--}}
+                                        <table id="myTable" class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Kategori</th>
+                                                <th>Nilai</th>
+                                                <th>Keterangan</th>
+                                                <th>Lampiran</th>
+                                                <th>Tanggal</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+{{--                                            @foreach($data as $item)--}}
+{{--                                                <tr>--}}
+{{--                                                    <td>{{ $item->kategori_nilai }}</td>--}}
+{{--                                                    <td>{{ $item->nilai }}</td>--}}
+{{--                                                    <td>{{ $item->desc_nilai ?? '-' }}</td>--}}
+{{--                                                    <td>--}}
+{{--                                                        @if($item->lampiran)--}}
+{{--                                                            <a href="{{ asset('storage/' . $item->lampiran) }}" target="_blank">Lihat--}}
+{{--                                                                File</a>--}}
+{{--                                                        @else--}}
+{{--                                                            ---}}
+{{--                                                        @endif--}}
+{{--                                                    </td>--}}
+{{--                                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>--}}
+{{--                                                </tr>--}}
+{{--                                            @endforeach--}}
+                                            </tbody>
+                                        </table>
+{{--                                    @else--}}
+{{--                                        <div class="alert alert-warning">Belum ada data nilai untuk siswa ini.</div>--}}
+{{--                                    @endif--}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <!-- Container-fluid Ends-->
     </div>
 
+    @include('dashboard.akademik.nilai.modal')
     @include('dashboard.akademik.nilai.js')
 
 @endsection
