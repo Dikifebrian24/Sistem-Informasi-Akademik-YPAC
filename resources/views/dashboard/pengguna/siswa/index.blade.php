@@ -51,8 +51,9 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <button class="btn btn-primary add" type="button" id="openModalBtn">Add Data Siswa</button>
+                        <button class="btn add" style="background-color: blue; color: white" type="button" id="openModalBtn">Add Data Siswa</button>
                         <button class="btn btn-danger import" type="button" id="importBtn">Import</button>
+                        <button class="btn export" type="button" style="background-color: green; color: white" id="exportBtn">Export</button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

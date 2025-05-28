@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SiswaExport;
 use App\Imports\GuruImport;
 use App\Imports\SiswaImport;
 use App\Models\DataKelainan;
 use App\Models\Siswa;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Datatables;
 use Illuminate\Support\Facades\Auth;
@@ -71,6 +73,15 @@ class SiswaController extends Controller
         Excel::import(new SiswaImport(), $request->file('import_data'));
 
         return response()->json(['message' => 'Import berhasil!']);
+    }
+
+
+    public function export()
+    {
+        $timestamp = Carbon::now()->format('Ymd_His');
+        $filename = "data_siswa_{$timestamp}.xlsx";
+
+        return Excel::download(new SiswaExport, $filename);
     }
 
     public function store(Request $request)

@@ -181,6 +181,11 @@
             $('#importModal').modal('show');
         });
 
+        $('#exportBtn').on("click", function (e) {
+            e.preventDefault();
+            window.location.href = "/master/siswa/export";
+        });
+
         $('#template_download').on('click', function () {
             window.location.href = "{{ route('download.template_siswa') }}";
         });

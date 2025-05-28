@@ -178,6 +178,7 @@ Route::prefix('master')->group(function () {
         Route::put('update/{id}', 'update')->name('siswa/update');
         Route::delete('delete/{id}', 'destroy')->name('siswa/delete');
         Route::post('import', 'import')->name('siswa/import');
+        Route::get('export', 'export')->name('siswa/export');
 
         Route::get('template', function () {
             $file = public_path('template_import/template_import_siswa.xlsx');
@@ -199,11 +200,14 @@ Route::prefix('master')->group(function () {
         Route::put('update/{id}', 'update')->name('guru/update');
         Route::delete('delete/{id}', 'destroy')->name('guru/delete');
         Route::post('import', 'import')->name('guru/import');
+        Route::get('export', 'export')->name('guru/export');
 
         Route::get('template', function () {
             $file = public_path('template_import/template_import_guru.xlsx');
             return response()->download($file);
         })->name('download.template');
+
+
     });
 
     Route::controller(\App\Http\Controllers\KepalaSekolahController::class)->prefix('kepsek')->group(function () {
