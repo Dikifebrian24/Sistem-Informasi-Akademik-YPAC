@@ -89,6 +89,16 @@
             $('#addJadwalModal').modal('show');
         });
 
+        $(document).on('click', '#importJadwalBtn', function() {
+            let idKelas = $('.show').data('id');
+
+            console.log(idKelas);
+
+            $('#id_kelas').val(idKelas);
+
+            $('#importJadwalModal').modal('show');
+        });
+
         $('#addJadwalForm').on('submit', function(e) {
             e.preventDefault();
 

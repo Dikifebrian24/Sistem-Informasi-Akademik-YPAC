@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\JadwalImport;
+use App\Imports\SiswaImport;
 use App\Models\DataKelainan;
 use App\Models\Jadwal;
 use App\Models\Jurusan;
@@ -12,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class JadwalController extends Controller
@@ -39,6 +42,17 @@ class JadwalController extends Controller
             'mapel' => $mapel,
         ];
         return view('dashboard.master.jadwal.index', compact('params'));
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'import_data' => 'required|mimes:xlsx,xls',
+        ]);
+
+        Excel::import(new JadwalImport(), $request->file('import_data'));
+
+        return response()->json(['message' => 'Import berhasil!']);
     }
 
     public function getDatatables(Request $request)

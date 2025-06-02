@@ -9,12 +9,14 @@
             <div class="modal-body">
                 <!-- Add Jadwal Button -->
                 <button class="btn btn-primary mb-3" id="addJadwalBtn">Add Jadwal</button>
+                <button class="btn btn-primary mb-3" id="importJadwalBtn">Import Jadwal</button>
                 <input type="text" id="id_kelas">
                 <!-- Jadwal Table -->
                 <table id="jadwalTable" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Guru</th>
                         <th>Materi</th>
                         <th>Tanggal</th>
                         <th>Waktu Mulai</th>
@@ -64,6 +66,30 @@
                         <label for="waktu_selesai" class="form-label">Waktu Selesai</label>
                         <input type="time" class="form-control" id="waktu_selesai" name="waktu_selesai" required>
                     </div>
+                    <input type="hidden" id="id_kelas" name="id_kelas">
+                    <button type="submit" class="btn btn-primary">Save Jadwal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="importJadwalModal" tabindex="-1" aria-labelledby="importJadwalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importJadwalModalLabel">Tambah Jadwal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addJadwalForm">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="materi" class="form-label">File Import</label>
+                        <input type="file" class="form-control" id="jadwal" name="jadwal" required>
+                    </div>
+
                     <input type="hidden" id="id_kelas" name="id_kelas">
                     <button type="submit" class="btn btn-primary">Save Jadwal</button>
                 </form>
