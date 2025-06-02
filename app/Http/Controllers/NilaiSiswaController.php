@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TemplateNilaiExport;
 use App\Models\DataKelainan;
 use App\Models\Jadwal;
 use App\Models\Jurusan;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class NilaiSiswaController extends Controller
@@ -45,6 +47,21 @@ class NilaiSiswaController extends Controller
         ];
 
         return view('dashboard.akademik.nilai.index', compact('params'));
+    }
+
+    public function exportTemplate(Request $request, $idKelas)
+    {
+        $id_mapel = $request->query('id_mapel');
+        $id_kelas = $idKelas;
+
+//        dd($id_mapel, $id_kelas);
+
+        // Validasi param
+//        if (!$id_mapel || !$id_jadwal) {
+//            abort(400, 'Missing parameter');
+//        }
+
+        return Excel::download(new TemplateNilaiExport($id_kelas, $id_mapel), 'template_nilai_kelas_'.$id_kelas.'.xlsx');
     }
 
     public function getDatatables(Request $request)

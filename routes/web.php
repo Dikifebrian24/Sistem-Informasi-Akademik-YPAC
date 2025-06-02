@@ -66,6 +66,8 @@ Route::prefix('master')->group(function () {
 
         Route::get('/kelas/{id}', 'detail')->name('kelas.detail');
         Route::post('import', 'import')->name('jadwal/import');
+
+
     });
 
 
@@ -297,5 +299,7 @@ Route::prefix('master')->group(function () {
         Route::get('nilai_show', 'nilaiDetailShow')->name('data_nilai_jadwal/nilai_show');
         Route::post('nilai_save', 'nilaiSave')->name('data_nilai_jadwal/save');
         Route::post('filter', 'filter')->name('data_nilai_jadwal/filter');
+        Route::get('template-nilai/{id_kelas}', 'exportTemplate');
+
     });
 });

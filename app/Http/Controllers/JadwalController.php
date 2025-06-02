@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TemplateNilaiExport;
 use App\Imports\JadwalImport;
 use App\Imports\SiswaImport;
 use App\Models\DataKelainan;
@@ -98,6 +99,21 @@ class JadwalController extends Controller
         ];
 
         return view('dashboard.master.jadwal.detail', compact('params'));
+    }
+
+    public function exportTemplate(Request $request)
+    {
+        $id_mapel = $request->get('_id_mapel');
+        $id_kelas = $request->get('_id_kelas');
+
+//        dd($id_mapel, $id_kelas);
+
+        // Validasi param
+//        if (!$id_mapel || !$id_jadwal) {
+//            abort(400, 'Missing parameter');
+//        }
+
+        return Excel::download(new TemplateNilaiExport($id_kelas, $id_mapel), 'template_nilai_kelas_'.$id_kelas.'.xlsx');
     }
 
     public function getJadwal(Request $request)

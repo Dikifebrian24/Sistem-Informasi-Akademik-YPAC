@@ -25,8 +25,8 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { data: 'nm_mapel', name: 'nm_mapel' },
-                    { data: 'nm_kelas', name: 'nm_kelas' },
+                    {data: 'nm_mapel', name: 'nm_mapel'},
+                    {data: 'nm_kelas', name: 'nm_kelas'},
                     {
                         data: 'action',
                         name: 'action',
@@ -38,7 +38,7 @@
             });
         });
 
-        $(document).on('click', '#input_nilai', function(e) {
+        $(document).on('click', '#input_nilai', function (e) {
             e.preventDefault();
 
             // Ambil data dari tombol yang diklik
@@ -54,7 +54,7 @@
             window.location.href = `/master/data_nilai/nilai_add?id_mapel=${id_mapel}&id_kelas=${id_kelas}&id_jadwal=${id_jadwal}`;
         });
 
-        $(document).on('click', '#show_nilai', function(e) {
+        $(document).on('click', '#show_nilai', function (e) {
             e.preventDefault();
 
             // Ambil data dari tombol yang diklik
@@ -71,7 +71,7 @@
         });
 
         $(document).ready(function () {
-            $('#f_filter').on('submit', function(e) {
+            $('#f_filter').on('submit', function (e) {
                 e.preventDefault();
 
                 const id_mapel = $('#id_mapel').val();
@@ -90,11 +90,11 @@
                         id_mapel: id_mapel,
                         id_siswa: id_siswa
                     },
-                    success: function(response) {
+                    success: function (response) {
                         $('#hasil_nilai').html(response);
                         $('#hasil_nilai_card').show();
                     },
-                    error: function(xhr) {
+                    error: function (xhr) {
                         Swal.fire('Gagal', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
                     }
                 });
@@ -125,7 +125,7 @@
         {{--});--}}
 
         $(document).ready(function () {
-            $('#f_nilai').on('submit', function(e) {
+            $('#f_nilai').on('submit', function (e) {
                 e.preventDefault();
 
                 console.log('📨 Form submit triggered');
@@ -143,7 +143,7 @@
                     data: formData,
                     processData: false,
                     contentType: false,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         // Optional: loader
                         Swal.fire({
                             title: 'Menyimpan...',
@@ -154,7 +154,7 @@
                             }
                         });
                     },
-                    success: function(res) {
+                    success: function (res) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Berhasil!',
@@ -164,7 +164,7 @@
                         });
                         $('#f_nilai')[0].reset();
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Gagal!',
@@ -175,7 +175,7 @@
             });
         });
 
-        $(document).on('click', '.edit', function() {
+        $(document).on('click', '.edit', function () {
             let userId = $(this).data('id');
             $('#saveEdit').show();
             $('#save').hide();
@@ -183,7 +183,7 @@
             $.ajax({
                 url: 'kelas/' + userId + '/edit',
                 type: 'GET',
-                success: function(user) {
+                success: function (user) {
                     $('#kd_kelas').val(user.kd_kelas);
                     $('#nm_kelas').val(user.nm_kelas);
 
@@ -198,11 +198,91 @@
             });
         });
 
+        // $('#generateFileBtn').on('click', function (e) {
+        //     e.preventDefault();
+        //
+        //     const params = new URLSearchParams(window.location.search);
+        //     let id_mapel = params.get("id_mapel");
+        //     let id_kelas = params.get("id_kelas");
+        //     let id_jadwal = params.get("id_jadwal");
+        //
+        //     // Redirect ke route untuk generate file
+        //     window.location.href = `data_nilai/generate-template?id_mapel=${id_mapel}&id_kelas=${id_kelas}&id_jadwal=${id_jadwal}`;
+        // });
+
         $('#generateFileBtn').on('click', function (e) {
             e.preventDefault();
-            console.log('Generate File clicked');
-            const generateModal = new bootstrap.Modal(document.getElementById('generateModal'));
-            generateModal.show();
+
+            // Ambil parameter dari URL
+            const params = new URLSearchParams(window.location.search);
+            const id_kelas = params.get("id_kelas");
+            const id_mapel = params.get("id_mapel");
+            const id_jadwal = params.get("id_jadwal");
+
+            if (!id_kelas || !id_mapel || !id_jadwal) {
+                Swal.fire('Error', 'Parameter tidak lengkap di URL.', 'error');
+                return;
+            }
+            //
+            // console.log(id_kelas, id_mapel, id_jadwal);
+
+            {{--$.ajax({--}}
+            {{--    --}}{{--url: {{ url('template-nilai') }},--}}
+            {{--    url: "{{ url('template-nilai') }}",--}}
+            {{--    type: 'GET',--}}
+            {{--    data: {--}}
+            {{--        _id_kelas: id_kelas,--}}
+            {{--        _id_mapel: id_mapel--}}
+            {{--    },--}}
+            {{--    success: function (response) {--}}
+            {{--        Swal.fire({--}}
+            {{--            icon: 'success',--}}
+            {{--            title: 'Berhasil!',--}}
+            {{--            text: response.message,--}}
+            {{--            timer: 2000,--}}
+            {{--            showConfirmButton: false--}}
+            {{--        });--}}
+
+            {{--        // Reload DataTable--}}
+            {{--        $('#data').DataTable().ajax.reload();--}}
+            {{--    },--}}
+            {{--    error: function () {--}}
+            {{--        Swal.fire({--}}
+            {{--            icon: 'error',--}}
+            {{--            title: 'Gagal!',--}}
+            {{--            text: 'Terjadi kesalahan saat menghapus data.'--}}
+            {{--        });--}}
+            {{--    }--}}
+            {{--});--}}
+
+            // Contoh endpoint: sesuaikan route-mu
+            const downloadUrl = `template-nilai/${id_kelas}?id_mapel=${id_mapel}&id_jadwal=${id_jadwal}`;
+
+            fetch(downloadUrl, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengunduh file');
+                    return response.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `template_nilai_kelas_${id_kelas}.xlsx`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+
+                    Swal.fire('Sukses', 'Template berhasil digenerate dan diunduh!', 'success');
+                })
+                .catch(error => {
+                    Swal.fire('Error', error.message, 'error');
+                });
         });
 
         $('#importFileBtn').on('click', function (e) {
@@ -256,7 +336,7 @@
             });
         });
 
-        $('.show_confirm').click(function(e) {
+        $('.show_confirm').click(function (e) {
             var form = $(this).closest("form");
             e.preventDefault();
             swal({
