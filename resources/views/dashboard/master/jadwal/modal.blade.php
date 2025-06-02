@@ -40,7 +40,6 @@
             <div class="modal-body">
                 <form id="addJadwalForm">
                     @csrf
-                    <!-- Form fields to add jadwal -->
                     <div class="mb-3">
                         <label for="materi" class="form-label">Mata Pelajaran</label>
                         <select name="mapel" id="mapel" class="form-control">
@@ -83,11 +82,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addJadwalForm">
+                <form id="f_import">
                     @csrf
                     <div class="mb-3">
                         <label for="materi" class="form-label">File Import</label>
-                        <input type="file" class="form-control" id="jadwal" name="jadwal" required>
+                        <input type="file" class="form-control" id="import_data" name="import_data" required>
                     </div>
 
                     <input type="hidden" id="id_kelas" name="id_kelas">

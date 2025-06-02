@@ -63,6 +63,9 @@ Route::prefix('master')->group(function () {
         Route::post('save', 'store')->name('jadwal/save');
         Route::put('update/{id}', 'update')->name('jadwal/update');
         Route::delete('delete/{id}', 'destroy')->name('jadwal/delete');
+
+        Route::get('/kelas/{id}', 'detail')->name('kelas.detail');
+        Route::post('import', 'import')->name('jadwal/import');
     });
 
 

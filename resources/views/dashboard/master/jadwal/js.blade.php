@@ -78,6 +78,40 @@
             }
         });
 
+        $('#f_import').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+
+            console.log(formData)
+
+            {{--$.ajax({--}}
+            {{--    url: "{{ route('jadwal/import') }}",--}}
+            {{--    method: "POST",--}}
+            {{--    data: formData,--}}
+            {{--    dataType: 'json',--}}
+            {{--    contentType: false,--}}
+            {{--    processData: false,--}}
+            {{--    beforeSend: function () {--}}
+            {{--        // Optional: tampilkan loading indicator--}}
+            {{--    },--}}
+            {{--    success: function (response) {--}}
+            {{--        alert(response.message); // tampilkan pesan sukses--}}
+            {{--        $('#import_data').val(''); // reset file input--}}
+
+            {{--        $('#importModal').modal('hide');--}}
+            {{--        $('#data').DataTable().ajax.reload();--}}
+            {{--    },--}}
+            {{--    error: function (xhr) {--}}
+            {{--        if (xhr.responseJSON && xhr.responseJSON.message) {--}}
+            {{--            alert("Error: " + xhr.responseJSON.message);--}}
+            {{--        } else {--}}
+            {{--            alert("Terjadi kesalahan saat upload.");--}}
+            {{--        }--}}
+            {{--    }--}}
+            {{--});--}}
+        });
+
 
         $(document).on('click', '#addJadwalBtn', function() {
             let idKelas = $('.show').data('id');

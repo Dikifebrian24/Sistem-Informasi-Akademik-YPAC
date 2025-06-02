@@ -34,15 +34,20 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
+                        <button class="btn btn-primary mb-3" id="addJadwalBtn">Add Jadwal</button>
+                        <button class="btn btn-primary mb-3" id="importJadwalBtn">Import Jadwal</button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="display datatables table table-bordered" id="data">
+                            <table id="jadwalTable" class="table table-bordered table-striped">
                                 <thead>
-                                <tr style="text-align: center">
-                                    <th style="width: 55px">No</th>
-                                    <th>Kelas</th>
-                                    <th style="width: 120px;">Action</th>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Guru</th>
+                                    <th>Materi</th>
+                                    <th>Tanggal</th>
+                                    <th>Waktu Mulai</th>
+                                    <th>Waktu Selesai</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -56,3 +61,4 @@
     @include('dashboard.master.jadwal.js')
 
 @endsection
+

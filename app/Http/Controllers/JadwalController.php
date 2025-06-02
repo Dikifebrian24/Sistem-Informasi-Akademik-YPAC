@@ -72,6 +72,14 @@ class JadwalController extends Controller
         }
     }
 
+    public function detail($id)
+    {
+//        $kelas = Kelas::findOrFail($id);
+        $jadwal = Jadwal::where('id_kelas', $id);
+
+        return view('detail', compact('jadwal'));
+    }
+
     public function getJadwal(Request $request)
     {
         $idKelas = $request->input('id_kelas');
