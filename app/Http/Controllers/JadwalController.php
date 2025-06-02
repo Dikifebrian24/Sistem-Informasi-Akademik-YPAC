@@ -19,6 +19,8 @@ use Yajra\DataTables\DataTables;
 
 class JadwalController extends Controller
 {
+
+
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
@@ -50,7 +52,8 @@ class JadwalController extends Controller
             'import_data' => 'required|mimes:xlsx,xls',
         ]);
 
-        Excel::import(new JadwalImport(), $request->file('import_data'));
+//        Excel::import(new JadwalImport(), $request->file('import_data'));
+        Excel::import(new JadwalImport($request->id_kelas), $request->file('import_data'));
 
         return response()->json(['message' => 'Import berhasil!']);
     }
@@ -65,7 +68,7 @@ class JadwalController extends Controller
             return DataTables::of($data_kelas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger show" data-id="'.$row->id_kelas.'">Lihat</button>';
+                    return '<button class="btn btn-sm btn-danger" id="show" data-id="'.$row->id_kelas.'">Lihat</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -77,7 +80,24 @@ class JadwalController extends Controller
 //        $kelas = Kelas::findOrFail($id);
         $jadwal = Jadwal::where('id_kelas', $id);
 
-        return view('detail', compact('jadwal'));
+        $data_guru = DB::table('users')->where('level', 2)->get();
+//        if (request()->ajax()) {
+//            return datatables()->of($data_guru)
+//                ->addIndexColumn()
+//                ->make(true);
+//        }
+
+        $mapel = Mapel::all();
+
+        $params = [
+            'title' => 'Jadwal',
+            'kelas' => Kelas::all(),
+            'guru' => $data_guru,
+            'mapel' => $mapel,
+            'jadwal' => $jadwal,
+        ];
+
+        return view('dashboard.master.jadwal.detail', compact('params'));
     }
 
     public function getJadwal(Request $request)
@@ -85,7 +105,14 @@ class JadwalController extends Controller
         $idKelas = $request->input('id_kelas');
 
         if ($request->ajax()) {
-            $query = Jadwal::where('id_kelas', $request->id_kelas);
+//            $query = Jadwal::where('id_kelas', $request->id_kelas);
+
+            $query = DB::table('jadwals')
+                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+                ->where('jadwals.id_kelas', $idKelas)
+                ->get();
 
             return DataTables::of($query)
                 ->addIndexColumn()

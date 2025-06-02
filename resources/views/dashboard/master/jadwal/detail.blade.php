@@ -14,11 +14,11 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>{{ $params['title'] }}</h3>
+                        <h3>Jadwal Kelas</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Applications</a></li>
                             <li class="breadcrumb-item">Data Master</li>
-                            <li class="breadcrumb-item active">{{ $params['title'] }}</li>
+                            <li class="breadcrumb-item active">Jadwal Kelas</li>
                         </ol>
                     </div>
                     <div class="col-sm-6">
@@ -44,6 +44,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Guru</th>
+                                    <th>Mata Pelajarang</th>
                                     <th>Materi</th>
                                     <th>Tanggal</th>
                                     <th>Waktu Mulai</th>
@@ -59,6 +60,5 @@
     </div>
     @include('dashboard.master.jadwal.modal')
     @include('dashboard.master.jadwal.js')
-
 @endsection
 

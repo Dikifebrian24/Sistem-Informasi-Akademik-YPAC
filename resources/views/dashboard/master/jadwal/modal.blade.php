@@ -1,33 +1,33 @@
 <!-- Modal to show Jadwal Table -->
-<div class="modal fade" id="jadwalModal" tabindex="-1" aria-labelledby="jadwalModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="jadwalModalLabel">Jadwal Kelas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Add Jadwal Button -->
-                <button class="btn btn-primary mb-3" id="addJadwalBtn">Add Jadwal</button>
-                <button class="btn btn-primary mb-3" id="importJadwalBtn">Import Jadwal</button>
-                <input type="text" id="id_kelas">
-                <!-- Jadwal Table -->
-                <table id="jadwalTable" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Guru</th>
-                        <th>Materi</th>
-                        <th>Tanggal</th>
-                        <th>Waktu Mulai</th>
-                        <th>Waktu Selesai</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+{{--<div class="modal fade" id="jadwalModal" tabindex="-1" aria-labelledby="jadwalModalLabel" aria-hidden="true">--}}
+{{--    <div class="modal-dialog modal-xl">--}}
+{{--        <div class="modal-content">--}}
+{{--            <div class="modal-header">--}}
+{{--                <h5 class="modal-title" id="jadwalModalLabel">Jadwal Kelas</h5>--}}
+{{--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body">--}}
+{{--                <!-- Add Jadwal Button -->--}}
+{{--                <button class="btn btn-primary mb-3" id="addJadwalBtn">Add Jadwal</button>--}}
+{{--                <button class="btn btn-primary mb-3" id="importJadwalBtn">Import Jadwal</button>--}}
+{{--                <input type="text" id="id_kelas">--}}
+{{--                <!-- Jadwal Table -->--}}
+    {{--                <table id="jadwalTable" class="table table-bordered table-striped">--}}
+{{--                    <thead>--}}
+{{--                    <tr>--}}
+{{--                        <th>ID</th>--}}
+{{--                        <th>Guru</th>--}}
+{{--                        <th>Materi</th>--}}
+{{--                        <th>Tanggal</th>--}}
+{{--                        <th>Waktu Mulai</th>--}}
+{{--                        <th>Waktu Selesai</th>--}}
+{{--                    </tr>--}}
+{{--                    </thead>--}}
+{{--                </table>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 <!-- Modal to Add New Jadwal -->
 <div class="modal fade" id="addJadwalModal" tabindex="-1" aria-labelledby="addJadwalModalLabel" aria-hidden="true">
