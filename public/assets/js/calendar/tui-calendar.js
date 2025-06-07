@@ -9200,9 +9200,9 @@ var mmin = Math.min;
  *       id: '1',
  *       name: 'My Calendar',
  *       color: '#ffffff',
- *       bgColor: '#24695c',
- *       dragBgColor: '#24695c',
- *       borderColor: '#24695c'
+ *       bgColor: '#25b5cf ',
+ *       dragBgColor: '#25b5cf ',
+ *       borderColor: '#25b5cf '
  *     },
  *     {
  *       id: '2',
