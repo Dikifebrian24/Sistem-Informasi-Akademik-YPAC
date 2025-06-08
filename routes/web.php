@@ -285,6 +285,7 @@ Route::prefix('master')->group(function () {
     Route::controller(\App\Http\Controllers\NilaiSiswaController::class)->prefix('data_nilai')->group(function () {
         Route::get('', 'index')->name('data_nilai');
         Route::get('data', 'getDatatables')->name('data_nilai/data');
+        Route::get('nilai_data', 'getNilaiData')->name('data_nilai/nilai_data');
         Route::get('add', 'add')->name('data_nilai/add');
         Route::post('save', 'store')->name('data_nilai/save');
         Route::post('store', 'store')->name('data_nilai/store');

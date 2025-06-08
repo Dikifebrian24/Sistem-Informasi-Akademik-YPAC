@@ -27,17 +27,21 @@
                                             {{-- Mata Pelajaran --}}
                                             <div class="col-md-4">
                                                 <label for="mapel" class="form-label">Mata Pelajaran</label>
-                                                <input type="text" class="form-control" id="mapel" value="{{ $mapel }}" disabled>
-                                                <input type="hidden" name="id_mapel" id="id_mapel" value="{{ $id_mapel }}">
+                                                <input type="text" class="form-control" id="mapel" value="{{ $mapel }}"
+                                                       disabled>
+                                                <input type="hidden" name="id_mapel" id="id_mapel"
+                                                       value="{{ $id_mapel }}">
                                             </div>
 
                                             {{-- Nama Siswa --}}
                                             <div class="col-md-4">
                                                 <label for="nama_siswa" class="form-label">Nama Siswa</label>
-                                                <select class="form-control select2" name="id_siswa" id="id_siswa" required>
+                                                <select class="form-control select2" name="id_siswa" id="id_siswa"
+                                                        required>
                                                     <option value="">-- Pilih Siswa --</option>
                                                     @foreach($siswa as $item)
-                                                        <option value="{{ $item->id_siswa }}">{{ $item->nm_siswa }} - {{ $item->nisn }}</option>
+                                                        <option value="{{ $item->id_siswa }}">{{ $item->nm_siswa }}
+                                                            - {{ $item->nisn }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -46,7 +50,8 @@
                                             <div class="col-md-4 d-flex align-items-end">
                                                 <div class="w-100">
                                                     <label class="form-label">&nbsp;</label>
-                                                    <button type="submit" class="btn btn-primary w-100">Submit Form</button>
+                                                    <button type="submit" class="btn btn-primary w-100">Submit Form
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -68,8 +73,8 @@
                     <div class="row" id="hasil_nilai">
                         <div class="col-sm-12">
                             <div class="card">
-{{--                                <div class="card-header pb-0">--}}
-{{--                                </div>--}}
+                                {{--                                <div class="card-header pb-0">--}}
+                                {{--                                </div>--}}
 
                                 <style>
                                     .dropdown-item.dropdown-hover:hover {
@@ -80,51 +85,34 @@
                                 <div class="card-header">
                                     <h5>Nilai Siswa</h5><br>
 
-                                    <button class="btn add" style="background-color: blue; color: white" type="button" id="openModalBtn">Add Data Siswa</button>
-{{--                                    <button class="btn btn-danger import" type="button" id="importBtn">Import</button>--}}
-                                    <button class="btn btn-danger dropdown-toggle" type="button" id="importDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn add" style="background-color: blue; color: white" type="button"
+                                            id="openModalBtn">Add Data Siswa
+                                    </button>
+                                    {{--                                    <button class="btn btn-danger import" type="button" id="importBtn">Import</button>--}}
+                                    <button class="btn btn-danger dropdown-toggle" type="button" id="importDropdown"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
                                         Import
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="importDropdown">
-                                        <li><a class="dropdown-item" href="#" id="generateFileBtn">Generate File</a></li>
+                                        <li><a class="dropdown-item" href="#" id="generateFileBtn">Generate File</a>
+                                        </li>
                                         <li><a class="dropdown-item" href="#" id="importFileBtn">Import File</a></li>
                                     </ul>
-                                    <button class="btn export" type="button" style="background-color: green; color: white" id="exportBtn">Export</button>
+                                    <button class="btn export" type="button"
+                                            style="background-color: green; color: white" id="exportBtn">Export
+                                    </button>
                                 </div>
                                 <div class="card-body">
-{{--                                    @if(count($data))--}}
-                                        <table id="myTable" class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>Kategori</th>
-                                                <th>Nilai</th>
-                                                <th>Keterangan</th>
-                                                <th>Lampiran</th>
-                                                <th>Tanggal</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-{{--                                            @foreach($data as $item)--}}
-{{--                                                <tr>--}}
-{{--                                                    <td>{{ $item->kategori_nilai }}</td>--}}
-{{--                                                    <td>{{ $item->nilai }}</td>--}}
-{{--                                                    <td>{{ $item->desc_nilai ?? '-' }}</td>--}}
-{{--                                                    <td>--}}
-{{--                                                        @if($item->lampiran)--}}
-{{--                                                            <a href="{{ asset('storage/' . $item->lampiran) }}" target="_blank">Lihat--}}
-{{--                                                                File</a>--}}
-{{--                                                        @else--}}
-{{--                                                            ---}}
-{{--                                                        @endif--}}
-{{--                                                    </td>--}}
-{{--                                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>--}}
-{{--                                                </tr>--}}
-{{--                                            @endforeach--}}
-                                            </tbody>
-                                        </table>
-{{--                                    @else--}}
-{{--                                        <div class="alert alert-warning">Belum ada data nilai untuk siswa ini.</div>--}}
-{{--                                    @endif--}}
+                                    <table id="table-nilai" class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Nama Siswa</th>
+                                            <th>Materi</th>
+                                            <th>Nilai</th>
+                                            <th>Tanggal</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
                                 </div>
                             </div>
                         </div>

@@ -51,35 +51,32 @@ class NilaiSiswaController extends Controller
         return view('dashboard.akademik.nilai.index', compact('params'));
     }
 
+    public function getNilaiData(Request $request)
+    {
+        if ($request->ajax()) {
+            $data_nilai = DB::table('nilais')
+                ->join('mapels', 'mapels.id', '=', 'nilais.id_mapel')
+                ->join('siswas', 'siswas.id_siswa', '=', 'nilais.id_siswa')
+                ->join('jadwals', 'jadwals.id', '=', 'nilais.id_jadwal')
+                ->get();
+
+            return DataTables::of($data_nilai)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-sm btn-danger show" data-id="'.$row->id_kelas.'">Lihat</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
     public function exportTemplate(Request $request, $idKelas)
     {
         $id_mapel = $request->query('id_mapel');
         $id_kelas = $idKelas;
 
-//        dd($id_mapel, $id_kelas);
-
-        // Validasi param
-//        if (!$id_mapel || !$id_jadwal) {
-//            abort(400, 'Missing parameter');
-//        }
-
         return Excel::download(new TemplateNilaiExport($id_kelas, $id_mapel), 'template_nilai_kelas_'.$id_kelas.'.xlsx');
     }
-
-//    public function importNilai(Request $request)
-//    {
-//        $request->validate([
-//            'file_nilai' => 'required|mimes:xlsx,xls'
-//        ]);
-//
-//        $id_kelas = $request->input('id_kelas');
-//        $id_mapel = $request->input('id_mapel');
-//        $id_jadwal = $request->input('id_jadwal');
-//
-//        Excel::import(new NilaiImport($id_mapel, $id_kelas, $id_jadwal), $request->file('file_nilai'));
-//
-//        return response()->json(['message' => 'Import nilai berhasil']);
-//    }
 
     public function importNilai(Request $request)
     {

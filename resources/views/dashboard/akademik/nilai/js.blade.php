@@ -38,6 +38,28 @@
             });
         });
 
+
+        $(document).ready(function () {
+            var nilai_siswa = $('#table-nilai').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('data_nilai/nilai_data') }}',
+                columns: [
+
+                    {data: 'nm_siswa', name: 'nm_siswa'},
+                    {data: 'materi', name: 'materi'},
+                    {data: 'nilai', name: 'nilai'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                ]
+            });
+        });
+
         $(document).on('click', '#input_nilai', function (e) {
             e.preventDefault();
 
