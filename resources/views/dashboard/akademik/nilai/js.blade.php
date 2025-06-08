@@ -292,6 +292,71 @@
             importModal.show();
         });
 
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                id_mapel: params.get('id_mapel'),
+                id_kelas: params.get('id_kelas'),
+                id_jadwal: params.get('id_jadwal'),
+            };
+        }
+
+        $('#importForm').on('submit', function(e) {
+            e.preventDefault();
+
+            let { id_mapel, id_kelas } = getUrlParams();
+
+            if (!id_mapel || !id_kelas) {
+                Swal.fire('Error', 'Parameter URL tidak lengkap!', 'error');
+                return;
+            }
+
+            let formData = new FormData(this);
+            formData.append('id_mapel', id_mapel);
+            formData.append('id_kelas', id_kelas);
+
+            $.ajax({
+                url: '{{ route("data_nilai_jadwal.import") }}',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                beforeSend: function() {
+                    // contoh disable tombol submit, spinner, dll
+                    $('#importForm button[type=submit]').attr('disabled', true);
+                },
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    // Bootstrap 5 modal hide
+                    var importModalEl = document.getElementById('importModal');
+                    var modal = bootstrap.Modal.getInstance(importModalEl);
+                    modal.hide();
+
+                    $('#jadwalTable').DataTable().ajax.reload();
+                },
+                error: function(xhr) {
+                    let errMsg = 'Gagal import file!';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Error', errMsg, 'error');
+                },
+                complete: function() {
+                    $('#importForm button[type=submit]').attr('disabled', false);
+                }
+            });
+        });
+
         $(document).on('click', '.delete', function () {
             let id = $(this).data('id');
 

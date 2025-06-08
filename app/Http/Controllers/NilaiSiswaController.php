@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TemplateNilaiExport;
+use App\Imports\NilaiImport;
 use App\Models\DataKelainan;
 use App\Models\Jadwal;
 use App\Models\Jurusan;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class NilaiSiswaController extends Controller
 {
@@ -62,6 +64,54 @@ class NilaiSiswaController extends Controller
 //        }
 
         return Excel::download(new TemplateNilaiExport($id_kelas, $id_mapel), 'template_nilai_kelas_'.$id_kelas.'.xlsx');
+    }
+
+//    public function importNilai(Request $request)
+//    {
+//        $request->validate([
+//            'file_nilai' => 'required|mimes:xlsx,xls'
+//        ]);
+//
+//        $id_kelas = $request->input('id_kelas');
+//        $id_mapel = $request->input('id_mapel');
+//        $id_jadwal = $request->input('id_jadwal');
+//
+//        Excel::import(new NilaiImport($id_mapel, $id_kelas, $id_jadwal), $request->file('file_nilai'));
+//
+//        return response()->json(['message' => 'Import nilai berhasil']);
+//    }
+
+    public function importNilai(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file_import' => 'required|file|mimes:xlsx,xls',
+            'id_kelas' => 'required|integer',
+            'id_mapel' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ], 422);
+        }
+
+        try {
+            $id_kelas = $request->input('id_kelas');
+            $id_mapel = $request->input('id_mapel');
+
+            Excel::import(new NilaiImport($id_kelas, $id_mapel), $request->file('file_import'));
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Import nilai berhasil.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Import gagal: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function getDatatables(Request $request)

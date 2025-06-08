@@ -301,5 +301,8 @@ Route::prefix('master')->group(function () {
         Route::post('filter', 'filter')->name('data_nilai_jadwal/filter');
         Route::get('template-nilai/{id_kelas}', 'exportTemplate');
 
+        // Route baru untuk import nilai via AJAX
+        Route::post('import-nilai', 'importNilai')->name('data_nilai_jadwal.import');
+
     });
 });
