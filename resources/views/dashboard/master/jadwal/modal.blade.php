@@ -50,7 +50,17 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="materi" class="form-label">Materi</label>
+                        <label for="materi" class="form-label">Guru Pengajar</label>
+                        <input type="hidden" name="kelas_id" id="kelas_id">
+                        <select name="guru" id="guru" class="form-control">
+                            <option value="">-- Pilih Guru --</option>
+                            @foreach($params['guru'] as $item)
+                                <option value="{{ $item->id_guru }}">{{ $item->nm_guru }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="materi" class="form-label">Materi (e.g Pertemuan 1 , Pertemuan 2, UTS, UAS)</label>
                         <input type="text" class="form-control" id="materi" name="materi" required>
                     </div>
                     <div class="mb-3">
@@ -65,7 +75,6 @@
                         <label for="waktu_selesai" class="form-label">Waktu Selesai</label>
                         <input type="time" class="form-control" id="waktu_selesai" name="waktu_selesai" required>
                     </div>
-                    <input type="hidden" id="id_kelas" name="id_kelas">
                     <button type="submit" class="btn btn-primary">Save Jadwal</button>
                 </form>
             </div>
@@ -93,7 +102,6 @@
                         <input type="file" class="form-control" id="import_data" name="import_data" required>
                     </div>
 
-                    <input type="hidden" id="id_kelas" name="id_kelas">
                     <button type="submit" class="btn btn-primary">Save Jadwal</button>
                 </form>
             </div>

@@ -11,6 +11,16 @@
 
 
         $(document).ready(function () {
+            // Ambil kelas ID dari URL
+            const urlParts = window.location.pathname.split('/');
+            const kelasId = urlParts[urlParts.length - 1];
+
+            // Set value ke input hidden
+            $('#kelas_id').val(kelasId);
+        });
+
+
+        $(document).ready(function () {
             $('#jadwalTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -36,8 +46,105 @@
                     {data: 'materi', name: 'materi'},
                     {data: 'tanggal', name: 'tanggal'},
                     {data: 'waktu_mulai', name: 'waktu_mulai'},
-                    {data: 'waktu_selesai', name: 'waktu_selesai'}
+                    {data: 'waktu_selesai', name: 'waktu_selesai'},
+                    {data: 'action', name: 'action'}
                 ]
+            });
+
+            $(document).on('click', '.edit', function () {
+                let id = $(this).data('id');
+
+                $.ajax({
+                    url: '/jadwal/edit/'+ id,
+                    method: 'GET',
+                    success: function (response) {
+                        // Isi nilai form
+                        $('#addJadwalModalLabel').text('Edit Jadwal');
+                        $('#mapel').empty();
+                        $('#guru').empty();
+
+                        // Isi dropdown mapel
+                        $('#mapel').append('<option value="">-- Pilih Mapel --</option>');
+                        $.each(response.mapel, function (i, item) {
+                            let selected = (item.id == response.jadwal.id_mapel) ? 'selected' : '';
+                            $('#mapel').append(`<option value="${item.id}" ${selected}>${item.nm_mapel}</option>`);
+                        });
+
+                        // Isi dropdown guru
+                        $('#guru').append('<option value="">-- Pilih Guru --</option>');
+                        $.each(response.guru, function (i, item) {
+                            let selected = (item.id_guru == response.jadwal.id_guru) ? 'selected' : '';
+                            $('#guru').append(`<option value="${item.id_guru}" ${selected}>${item.nm_guru}</option>`);
+                        });
+
+                        // Isi input lain
+                        $('#materi').val(response.jadwal.materi);
+                        $('#tanggal').val(response.jadwal.tanggal);
+                        $('#waktu_mulai').val(response.jadwal.waktu_mulai);
+                        $('#waktu_selesai').val(response.jadwal.waktu_selesai);
+
+                        // Simpan id jadwal di form sebagai hidden input atau di data attribute form
+                        $('#addJadwalForm').attr('data-id', id);
+
+                        // Tampilkan modal
+                        $('#addJadwalModal').modal('show');
+                    },
+                    error: function () {
+                        alert('Data gagal dimuat');
+                    }
+                });
+            });
+
+            $('#editJadwalForm').on('submit', function (e) {
+                e.preventDefault();
+
+                let formData = $(this).serialize();
+                let id = $('#edit-id').val();
+
+                $.ajax({
+                    url: '/jadwal/' + id,
+                    method: 'PUT',
+                    data: formData,
+                    success: function (response) {
+                        $('#editModal').modal('hide');
+                        $('#jadwalTable').DataTable().ajax.reload();
+                        alert(response.message);
+                    },
+                    error: function () {
+                        alert('Gagal mengedit data.');
+                    }
+                });
+            });
+
+            $(document).on('click', '.delete', function () {
+                const id = $(this).data('id');
+
+                Swal.fire({
+                    title: 'Yakin hapus?',
+                    text: 'Data tidak bisa dikembalikan!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/jadwal/' + id,
+                            method: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (response) {
+                                $('#jadwalTable').DataTable().ajax.reload();
+                                Swal.fire('Berhasil!', response.message, 'success');
+                            },
+                            error: function () {
+                                Swal.fire('Gagal!', 'Gagal menghapus data.', 'error');
+                            }
+                        });
+                    }
+                });
             });
 
             $('#template_download').on('click', function () {
@@ -189,25 +296,56 @@
             $('#importJadwalModal').modal('show');
         });
 
+        // // Ambil ID kelas dari URL (misal: .../kelas/1)
+        // function getKelasIdFromURL() {
+        //     let urlParts = window.location.pathname.split('/');
+        //     return urlParts[urlParts.length - 1]; // Ambil angka terakhir
+        // }
+        //
+        // // Set ID ke input hidden saat halaman siap
+        // $(document).ready(function () {
+        //     let kelasId = getKelasIdFromURL();
+        //     $('#id_kelas').val(kelasId);
+        // });
+
+
         $('#addJadwalForm').on('submit', function (e) {
             e.preventDefault();
 
-            let formData = $(this).serialize();
+            let id = $(this).attr('data-id'); // ambil id jika ada (edit)
+
+            let url = '';
+            let method = '';
+
+            if (id) {
+                url = `/jadwal/${id}`;  // URL update
+                method = 'PUT';
+            } else {
+                url = '{{ route('jadwal/store') }}';  // URL tambah
+                method = 'POST';
+            }
 
             $.ajax({
-                url: '{{ route("jadwal/store") }}',
-                method: 'POST',
-                data: formData,
+                url: url,
+                method: method,
+                data: $(this).serialize(),
                 success: function (response) {
                     alert(response.message);
                     $('#addJadwalModal').modal('hide');
                     $('#jadwalTable').DataTable().ajax.reload();
+
+                    // reset form dan hapus data-id agar modal siap untuk tambah lagi
+                    $('#addJadwalForm')[0].reset();
+                    $('#addJadwalForm').removeAttr('data-id');
+                    $('#addJadwalModalLabel').text('Tambah Jadwal');
                 },
-                error: function (xhr, status, error) {
-                    alert('There was an error adding the jadwal.');
+                error: function (xhr) {
+                    alert('Terjadi kesalahan');
                 }
             });
         });
+
+
 
     </script>
 

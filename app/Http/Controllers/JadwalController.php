@@ -6,6 +6,7 @@ use App\Exports\TemplateNilaiExport;
 use App\Imports\JadwalImport;
 use App\Imports\SiswaImport;
 use App\Models\DataKelainan;
+use App\Models\Guru;
 use App\Models\Jadwal;
 use App\Models\Jurusan;
 use App\Models\Kelas;
@@ -37,11 +38,12 @@ class JadwalController extends Controller
         }
 
         $mapel = Mapel::all();
+        $guru = Guru::all();
 
         $params = [
             'title' => 'Jadwal',
             'kelas' => Kelas::all(),
-            'guru' => $data_guru,
+            'guru' => $guru,
             'mapel' => $mapel,
         ];
         return view('dashboard.master.jadwal.index', compact('params'));
@@ -62,14 +64,14 @@ class JadwalController extends Controller
     public function getDatatables(Request $request)
     {
         if ($request->ajax()) {
-            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id','nm_kelas'])
-                ->join('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
+            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id', 'nm_kelas'])
+                ->leftjoin('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
                 ->where('stts_kelas', 'Active')->get();
 
             return DataTables::of($data_kelas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger" id="show" data-id="'.$row->id_kelas.'">Lihat</button>';
+                    return '<button class="btn btn-sm btn-danger" id="show" data-id="' . $row->id_kelas . '">Lihat</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -89,11 +91,12 @@ class JadwalController extends Controller
 //        }
 
         $mapel = Mapel::all();
+        $guru = Guru::all();
 
         $params = [
             'title' => 'Jadwal',
             'kelas' => Kelas::all(),
-            'guru' => $data_guru,
+            'guru' => $guru,
             'mapel' => $mapel,
             'jadwal' => $jadwal,
         ];
@@ -113,7 +116,7 @@ class JadwalController extends Controller
 //            abort(400, 'Missing parameter');
 //        }
 
-        return Excel::download(new TemplateNilaiExport($id_kelas, $id_mapel), 'template_nilai_kelas_'.$id_kelas.'.xlsx');
+        return Excel::download(new TemplateNilaiExport($id_kelas, $id_mapel), 'template_nilai_kelas_' . $id_kelas . '.xlsx');
     }
 
     public function getJadwal(Request $request)
@@ -124,6 +127,7 @@ class JadwalController extends Controller
 //            $query = Jadwal::where('id_kelas', $request->id_kelas);
 
             $query = DB::table('jadwals')
+                ->select('jadwals.id as jadwal_id', 'materi', 'nm_mapel', 'jadwals.tanggal', 'waktu_mulai', 'waktu_selesai', 'nm_guru')
                 ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
                 ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
                 ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
@@ -132,6 +136,13 @@ class JadwalController extends Controller
 
             return DataTables::of($query)
                 ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '
+            <button class="btn btn-sm btn-warning edit" data-id="' . $row->jadwal_id . '">Edit</button>
+            <button class="btn btn-sm btn-danger delete" data-id="' . $row->jadwal_id . '">Delete</button>
+        ';
+                })
+                ->rawColumns(['action'])
                 ->make(true);
         }
     }
@@ -163,18 +174,57 @@ class JadwalController extends Controller
         return view('dashboard.master.jadwal.detail', compact('params'));
     }
 
+//    public function edit($id)
+//    {
+////        $jadwal = Jadwal::findOrFail($id);
+//
+//
+//        return response()->json($jadwal);
+//    }
+
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return response()->json($user);
+//        dd($id);
+        $jadwal = DB::table('jadwals')->where('id', $id)->first();
+
+//        dd($jadwal);
+
+        if (!$jadwal) {
+            return response()->json(['message' => 'Data jadwal tidak ditemukan'], 404);
+        }
+
+        $mapel = Mapel::all();
+        $guru = Guru::all();
+
+        return response()->json([
+            'jadwal' => $jadwal,
+            'mapel' => $mapel,
+            'guru' => $guru,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $jadwal = Jadwal::findOrFail($id);
+
+        $jadwal->id_mapel = $request->input('mapel');
+        $jadwal->id_guru = $request->input('guru');
+        $jadwal->materi = $request->input('materi');
+        $jadwal->tanggal = $request->input('tanggal');
+        $jadwal->waktu_mulai = $request->input('waktu_mulai');
+        $jadwal->waktu_selesai = $request->input('waktu_selesai');
+
+        $jadwal->save();
+
+        return response()->json(['message' => 'Jadwal berhasil diperbarui']);
     }
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $jadwal = Jadwal::findOrFail($id);
+        $jadwal->delete();
 
-        return response()->json(['success' => true, 'message' => 'User berhasil dihapus']);
+        return response()->json(['message' => 'Jadwal berhasil dihapus']);
     }
 
     public function store(Request $request)
@@ -185,18 +235,20 @@ class JadwalController extends Controller
             'tanggal' => 'required|date',
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
-            'id_kelas' => 'required|exists:kelas,id_kelas',
+            'kelas_id' => 'required|exists:kelas,id_kelas',
             'mapel' => 'required|exists:mapels,id',
+            'guru' => 'required|exists:gurus,id_guru',
         ]);
 
         // Store the new jadwal in the database
         Jadwal::create([
-            'id_mapel'  => $validated['mapel'],
+            'id_mapel' => $validated['mapel'],
+            'id_guru' => $validated['guru'],
             'materi' => $validated['materi'],
             'tanggal' => $validated['tanggal'],
             'waktu_mulai' => $validated['waktu_mulai'],
             'waktu_selesai' => $validated['waktu_selesai'],
-            'id_kelas' => $validated['id_kelas'],
+            'id_kelas' => $validated['kelas_id'],
         ]);
 
         // Return response or redirect as needed

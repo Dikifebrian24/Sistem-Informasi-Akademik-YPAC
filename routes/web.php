@@ -49,6 +49,11 @@ Route::get('/mapel/{id}/edit', [MapelController::class, 'edit']);
 Route::put('/mapel/{id}', [MapelController::class, 'update']);
 Route::get('/kelas', [MapelController::class, 'getKelas']);
 
+Route::get('/jadwal/edit/{id}', [JadwalController::class, 'edit']);
+//Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
+Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy']);
+Route::put('jadwal/{id}', [JadwalController::class, 'update'])->name('jadwal.update');
+
 Route::prefix('master')->group(function () {
     Route::controller(KurikulumController::class)->prefix('kurikulum')->group(function () {
         Route::get('', 'index')->name('kurikulum');

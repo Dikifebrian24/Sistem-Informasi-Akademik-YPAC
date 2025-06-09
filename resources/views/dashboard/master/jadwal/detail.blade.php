@@ -49,6 +49,7 @@
                                     <th>Tanggal</th>
                                     <th>Waktu Mulai</th>
                                     <th>Waktu Selesai</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                             </table>
