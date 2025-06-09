@@ -40,6 +40,10 @@
                 ]
             });
 
+            $('#template_download').on('click', function () {
+                window.location.href = "{{ route('download.template_jadwal') }}";
+            });
+
             $('#data').DataTable({
                 processing: true,
                 serverSide: true,

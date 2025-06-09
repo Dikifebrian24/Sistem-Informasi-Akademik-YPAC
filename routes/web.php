@@ -70,9 +70,11 @@ Route::prefix('master')->group(function () {
         Route::get('/kelas/{id}', 'detail')->name('kelas.detail');
         Route::post('import', 'import')->name('jadwal/import');
 
-
+        Route::get('template', function () {
+            $file = public_path('template_import/template_import_jadwal.xlsx');
+            return response()->download($file);
+        })->name('download.template_jadwal');
     });
-
 
     Route::controller(KelasSiswaController::class)->prefix('kelas_siswa')->group(function () {
         Route::get('', 'index')->name('kelas_siswa');

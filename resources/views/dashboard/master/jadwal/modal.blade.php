@@ -85,6 +85,10 @@
                 <form id="f_import">
                     @csrf
                     <div class="mb-3">
+                        <label class="form-label">Template Import</label><br>
+                        <button type="button" class="btn btn-primary" id="template_download">Download</button>
+                    </div>
+                    <div class="mb-3">
                         <label for="materi" class="form-label">File Import</label>
                         <input type="file" class="form-control" id="import_data" name="import_data" required>
                     </div>
