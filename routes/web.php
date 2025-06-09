@@ -45,6 +45,9 @@ Auth::routes(['verify' => true]);
 Route::get('/raport/{id}', [RaportController::class, 'cetak'])->name('raport.cetak');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/mapel/{id}/edit', [MapelController::class, 'edit']);
+Route::put('/mapel/{id}', [MapelController::class, 'update']);
+Route::get('/kelas', [MapelController::class, 'getKelas']);
 
 Route::prefix('master')->group(function () {
     Route::controller(KurikulumController::class)->prefix('kurikulum')->group(function () {

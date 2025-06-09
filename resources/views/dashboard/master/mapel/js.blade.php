@@ -27,11 +27,11 @@
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                    $('#kelas_backup').empty(); // Kosongkan dulu
-                    $('#kelas_backup').append('<option value="">-- Pilih Role --</option>'); // Tambah placeholder
+                    $('#kelas').empty(); // Kosongkan dulu
+                    $('#kelas').append('<option value="">-- Pilih Kelas --</option>'); // Tambah placeholder
 
-                    $.each(data['kelas_backup'], function(i, value) {
-                        $('#kelas_backup').append('<option value="' + value.id_kelas + '">' + value.nm_kelas + '</option>');
+                    $.each(data['kelas'], function(i, value) {
+                        $('#kelas').append('<option value="' + value.id_kelas + '">' + value.nm_kelas + '</option>');
                     });
 
                     $('#mapelModalAdd').modal('show');
@@ -110,28 +110,71 @@
             });
         });
 
-        $(document).on('click', '.edit', function() {
-            let userId = $(this).data('id');
+        $(document).on('click', '.edit', function () {
+            let id = $(this).data('id');
+
+            $.get('/mapel/' + id + '/edit', function (data) {
+                // Load data mapel
+                $('#edit-id').val(data.id);
+                $('#edit-nm_mapel').val(data.nm_mapel);
+
+                // Load data kelas lalu set option dan pilih yang sesuai
+                $.get('/kelas', function (kelasData) {
+                    let options = '<option value="">-- Pilih Kelas --</option>';
+                    kelasData.forEach(function (k) {
+                        options += `<option value="${k.id_kelas}" ${k.id_kelas == data.id_kelas ? 'selected' : ''}>${k.nm_kelas}</option>`;
+                    });
+                    $('#edit-id_kelas').html(options);
+                });
+
+                $('#editModal').modal('show');
+            });
+        });
+
+        $('#editForm').submit(function (e) {
+            e.preventDefault();
+
+            let id = $('#edit-id').val();
+            let formData = $(this).serialize();
 
             $.ajax({
-                url: 'admin/' + userId + '/edit',
-                type: 'GET',
-                success: function(user) {
-                    $('#first_name').val(user.first_name);
-                    $('#last_name').val(user.last_name);
-                    $('#email').val(user.email);
-                    $('#role_level').val(user.level);
-                    $('#password').val('');
+                url: '/mapel/' + id,
+                type: 'PUT',
+                data: formData,
+                success: function (response) {
+                    $('#editModal').modal('hide');
 
-                    $('#adminModalAdd').modal('show');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
 
-                    $('#saveKelas').attr('data-id', user.id);
+                    $('#data').DataTable().ajax.reload(null, false);
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Terjadi kesalahan saat menyimpan data.'
+                    });
                 }
             });
         });
 
+
+
+
         $(document).on('click', '.delete', function () {
             let id = $(this).data('id');
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
             Swal.fire({
                 title: 'Apakah kamu yakin?',

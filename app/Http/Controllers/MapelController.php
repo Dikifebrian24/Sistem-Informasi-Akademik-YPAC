@@ -86,56 +86,39 @@ class MapelController extends Controller
 
     public function edit($id)
     {
-        $data['item'] = DB::table('kelas')
-            ->join('gurus', 'kelas.id_guru', '=', 'gurus.id_guru')
-            ->join('ruangans', 'kelas.kd_ruangan', '=', 'ruangans.kd_ruangan')
-            ->join('gedungs', 'ruangans.kd_gedung', '=', 'gedungs.kd_gedung')
-            ->where('id_kelas', '=', $id)
-            ->select('kelas.*', 'gurus.nm_guru', 'gurus.nip', 'gurus.foto', 'jurusans.nm_jurusan', 'ruangans.nm_ruangan', 'gedungs.nm_gedung',)
-            ->get();
-        $data['wali_kelas'] =  DB::table('gurus')
-            ->select([
-                'id_guru',
-                'nm_guru'
-            ])->get();
-
-        $data['nm_ruangan'] = DB::table('ruangans')
-            ->select([
-                'kd_ruangan',
-                'nm_ruangan'
-            ])->get();
-        return response()->json($data);
+        $mapel = Mapel::findOrFail($id);
+        return response()->json($mapel);
     }
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'kd_kelas' =>
-                'required|unique:kelas,kd_kelas,' . $id . ',id_kelas',
-            'nm_kelas' => 'required',
-            'nip' => 'required',
-            'kd_jurusan' => 'required',
-            'kd_ruangan' => 'required',
-            'stts_kelas' => 'required'
-        ], [
-            'kd_kelas.required' => 'Silahkan isi kode kelas terlebih dahulu!',
-            'kd_kelas.unique'   => 'Kode kelas telah digunakan!',
-            'nm_kelas.required'   => 'Silahkan isi nama kelas terlebih dahulu!',
-            'stts_kelas.required'   => 'Silahkan pilih status terlebih dahulu!',
+        $request->validate([
+            'nm_mapel' => 'required|string',
+            'id_kelas' => 'required|exists:kelas,id_kelas',
         ]);
 
-        $data = Kelas::find($id);
-        $data->kd_kelas = $request->kd_kelas;
-        $data->nm_kelas = $request->nm_kelas;
-        $data->nip = $request->nip;
-        $data->stts_kelas = $request->stts_kelas;
-        $data->update();
-        return response()->json(['success' => 'Kelas successfully updated!']);
+        $mapel = Mapel::findOrFail($id);
+        $mapel->nm_mapel = $request->nm_mapel;
+        $mapel->id_kelas = $request->id_kelas;
+        $mapel->save();
+
+        return response()->json(['message' => 'Data berhasil diperbarui.']);
+    }
+
+    public function getKelas()
+    {
+        return response()->json(Kelas::all());
     }
 
     public function destroy($id)
     {
-        Mapel::find($id)->delete();
-        return redirect()->route('mapel')->with(['success' => 'Kelas successfully deleted!']);
+        try {
+            $mapel = Mapel::findOrFail($id);
+            $mapel->delete();
+
+            return response()->json(['message' => 'Data berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal menghapus data.'], 500);
+        }
     }
 }
