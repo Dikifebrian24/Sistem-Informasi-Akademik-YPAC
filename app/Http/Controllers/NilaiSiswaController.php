@@ -55,6 +55,7 @@ class NilaiSiswaController extends Controller
     {
         if ($request->ajax()) {
             $data_nilai = DB::table('nilais')
+                ->select('nilais.id as nilai_id', 'nilais.*', 'nm_siswa', 'jadwals.materi')
                 ->join('mapels', 'mapels.id', '=', 'nilais.id_mapel')
                 ->join('siswas', 'siswas.id_siswa', '=', 'nilais.id_siswa')
                 ->join('jadwals', 'jadwals.id', '=', 'nilais.id_jadwal')
@@ -63,7 +64,13 @@ class NilaiSiswaController extends Controller
             return DataTables::of($data_nilai)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger show" data-id="'.$row->id_kelas.'">Lihat</button>';
+                    return '<button class="btn btn-sm btn-danger edit-btn"
+                  data-id="' . $row->nilai_id . '"
+                  data-nilai="' . $row->nilai . '"
+                  data-siswa="' . $row->nm_siswa . '"
+                  data-toggle="modal" data-target="#editModal">
+                  Edit
+            </button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -75,7 +82,7 @@ class NilaiSiswaController extends Controller
         $id_mapel = $request->query('id_mapel');
         $id_kelas = $idKelas;
 
-        return Excel::download(new TemplateNilaiExport($id_kelas, $id_mapel), 'template_nilai_kelas_'.$id_kelas.'.xlsx');
+        return Excel::download(new TemplateNilaiExport($id_kelas, $id_mapel), 'template_nilai_kelas_' . $id_kelas . '.xlsx');
     }
 
     public function importNilai(Request $request)
@@ -111,17 +118,32 @@ class NilaiSiswaController extends Controller
         }
     }
 
+    public function update(Request $request)
+    {
+
+//        dd($request);
+        $updated = DB::table('nilais')
+            ->where('id', $request->nilai_id)
+            ->update([
+                'nilai' => $request->nilai,
+                'updated_at' => now(),
+            ]);
+
+//        dd($updated);
+
+        return response()->json(['success' => true, 'message' => 'Nilai berhasil diperbarui']);
+    }
     public function getDatatables(Request $request)
     {
         if ($request->ajax()) {
-            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id','nm_kelas'])
+            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id', 'nm_kelas'])
                 ->join('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
                 ->where('stts_kelas', 'Active')->get();
 
             return DataTables::of($data_kelas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger show" data-id="'.$row->id_kelas.'">Lihat</button>';
+                    return '<button class="btn btn-sm btn-danger show" data-id="' . $row->id_kelas . '">Lihat</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -142,8 +164,8 @@ class NilaiSiswaController extends Controller
             return DataTables::of($mapel)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger" id="input_nilai" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Input</button>
-                            <button class="btn btn-sm btn-primary" id="show_nilai" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Lihat Nilai</button>';
+                    return '<button class="btn btn-sm btn-danger" id="input_nilai" data-id_kelas="' . $row->id_kelas . '" data-id_mapel="' . $row->id_mapel . '" data-id="' . $row->id_jadwal . '">Input</button>
+                            <button class="btn btn-sm btn-primary" id="show_nilai" data-id_kelas="' . $row->id_kelas . '" data-id_mapel="' . $row->id_mapel . '" data-id="' . $row->id_jadwal . '">Lihat Nilai</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -183,7 +205,7 @@ class NilaiSiswaController extends Controller
             'id_mapel' => $id_mapel,
             'id_kelas' => $id_kelas,
             'id_jadwal' => $id_jadwal,
-             'siswa' => $siswa,
+            'siswa' => $siswa,
         ];
 
         return view('dashboard.akademik.nilai.nilai', $data);
@@ -294,7 +316,7 @@ class NilaiSiswaController extends Controller
 
         // Store the new jadwal in the database
         Jadwal::create([
-            'id_mapel'  => $validated['mapel'],
+            'id_mapel' => $validated['mapel'],
             'materi' => $validated['materi'],
             'tanggal' => $validated['tanggal'],
             'waktu_mulai' => $validated['waktu_mulai'],

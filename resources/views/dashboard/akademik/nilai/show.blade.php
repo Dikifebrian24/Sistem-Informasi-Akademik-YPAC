@@ -109,7 +109,7 @@
                                             <th>Nama Siswa</th>
                                             <th>Materi</th>
                                             <th>Nilai</th>
-                                            <th>Tanggal</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                     </table>

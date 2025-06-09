@@ -35,3 +35,32 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="editForm">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Nilai</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="nilai_id" name="nilai_id">
+                    <div class="mb-3">
+                        <label>Nama Siswa</label>
+                        <input type="text" id="siswa" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label>Nilai</label>
+                        <input type="number" id="nilai" name="nilai" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

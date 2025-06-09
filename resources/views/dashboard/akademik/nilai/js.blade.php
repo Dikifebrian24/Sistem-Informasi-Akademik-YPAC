@@ -38,6 +38,30 @@
             });
         });
 
+        $(document).on('click', '.edit-btn', function () {
+            $('#nilai_id').val($(this).data('id'));
+            $('#mapel').val($(this).data('mapel'));
+            $('#siswa').val($(this).data('siswa'));
+            $('#nilai').val($(this).data('nilai'));
+            $('#editModal').modal('show');
+        });
+
+        $('#editForm').submit(function(e){
+            e.preventDefault();
+            let formData = $(this).serialize();
+            $.ajax({
+                url: '{{ route('data_nilai/update') }}', // Ganti sesuai route
+                method: 'POST',
+                data: formData,
+                success: function(res){
+                    $('#editModal').modal('hide');
+                    $('#table-nilai').DataTable().ajax.reload(); // reload DataTable
+                },
+                error: function(err){
+                    alert("Gagal update nilai.");
+                }
+            });
+        });
 
         $(document).ready(function () {
             var nilai_siswa = $('#table-nilai').DataTable({

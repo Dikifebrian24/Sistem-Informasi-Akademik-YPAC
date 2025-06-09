@@ -306,7 +306,7 @@ Route::prefix('master')->group(function () {
         Route::post('store', 'store')->name('data_nilai/store');
         Route::get('detail/{id}', 'detail')->name('data_nilai/detail');
         Route::get('edit/{id}', 'edit')->name('data_nilai/edit');
-        Route::put('update/{id}', 'update')->name('data_nilai/update');
+        Route::post('update', 'update')->name('data_nilai/update');
         Route::delete('delete/{id}', 'destroy')->name('data_nilai/delete');
 
 
