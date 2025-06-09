@@ -287,7 +287,7 @@
                                     {{-- <li><a href="#">Capaian Belajar</a></li> --}}
                                     {{-- <li><a href="#">Presentasi</a></li> --}}
                                     {{-- <li><a href="#">Raport UTS</a></li> --}}
-                                    <li><a href="#">Cetak Raport</a></li>
+                                    <li><a href="{{ route('raport') }}">Cetak Raport</a></li>
                                 </ul>
                             </li>
                         </ul>

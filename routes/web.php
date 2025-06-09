@@ -18,6 +18,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\ThnAkademikController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelasSiswaController;
+use App\Http\Controllers\RaportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,8 @@ Route::post('/logout', function () {
 })->name('logout');
 
 Auth::routes(['verify' => true]);
+
+Route::get('/raport/{id}', [RaportController::class, 'cetak'])->name('raport.cetak');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -165,6 +168,18 @@ Route::prefix('master')->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('kelas/delete');
     });
 
+    Route::controller(RaportController::class)->prefix('raport')->group(function () {
+        Route::get('', 'index')->name('raport');
+        Route::post('filter', 'filter')->name('filter.kelas');
+        Route::get('add', 'add')->name('raport/add');
+        Route::get('data', 'getDatatables')->name('raport/data');
+        Route::get('{id}/edit', 'edit')->name('raport/edit');
+        Route::post('store', 'store')->name('raport/store');
+        Route::post('save', 'store')->name('raport/save');
+        Route::put('update/{id}', 'update')->name('raport/update');
+        Route::delete('delete/{id}', 'destroy')->name('raport/delete');
+    });
+
     Route::controller(KepegawaianController::class)->prefix('kepegawaian')->group(function () {
         Route::get('', 'index')->name('kepegawaian');
         Route::post('save', 'store')->name('kepegawaian/save');
@@ -211,8 +226,6 @@ Route::prefix('master')->group(function () {
             $file = public_path('template_import/template_import_guru.xlsx');
             return response()->download($file);
         })->name('download.template');
-
-
     });
 
     Route::controller(\App\Http\Controllers\KepalaSekolahController::class)->prefix('kepsek')->group(function () {
