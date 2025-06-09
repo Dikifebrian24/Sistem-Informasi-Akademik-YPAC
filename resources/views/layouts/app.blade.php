@@ -269,6 +269,7 @@
                             <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                         data-feather="calendar"></i><span>Data Nilai Siswa</span></a>
                                 <ul class="nav-submenu menu-content">
+
                                     <li><a href="{{ route('data_nilai') }}">Input Nilai Siswa</a></li>
                                     <li><a href="#">Rekap Nilai Siswa</a></li>
                                 </ul>
@@ -283,7 +284,7 @@
                             <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                         data-feather="file-text"></i><span>Laporan Nilai Siswa</span></a>
                                 <ul class="nav-submenu menu-content">
-                                    <li><a href="#">Nilai Siswa</a></li>
+                                    <li><a href="{{route('laporan_nilai_siswa')}}">Nilai Siswa</a></li>
                                     {{-- <li><a href="#">Capaian Belajar</a></li> --}}
                                     {{-- <li><a href="#">Presentasi</a></li> --}}
                                     {{-- <li><a href="#">Raport UTS</a></li> --}}

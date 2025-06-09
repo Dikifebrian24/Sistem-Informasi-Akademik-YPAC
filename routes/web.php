@@ -43,6 +43,7 @@ Route::post('/logout', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/raport/{id}', [RaportController::class, 'cetak'])->name('raport.cetak');
+Route::get('/nilai/{id}', [\App\Http\Controllers\NilaiSiswaController::class, 'cetak'])->name('laporan.cetak');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/mapel/{id}/edit', [MapelController::class, 'edit']);
@@ -53,6 +54,7 @@ Route::get('/jadwal/edit/{id}', [JadwalController::class, 'edit']);
 //Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
 Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy']);
 Route::put('jadwal/{id}', [JadwalController::class, 'update'])->name('jadwal.update');
+Route::get('laporan_nilai_siswa', [\App\Http\Controllers\NilaiSiswaController::class, 'laporan_nilai_index'])->name('laporan_nilai_siswa');
 
 Route::prefix('master')->group(function () {
     Route::controller(KurikulumController::class)->prefix('kurikulum')->group(function () {
@@ -317,6 +319,7 @@ Route::prefix('master')->group(function () {
         Route::post('update', 'update')->name('data_nilai/update');
         Route::delete('delete/{id}', 'destroy')->name('data_nilai/delete');
 
+        Route::post('filterLaporan', 'filterLaporan')->name('laporan.kelas');
 
         Route::get('data_kelas', 'getMapelDatatables')->name('data_nilai_jadwal/data');
         Route::get('nilai_add', 'show')->name('data_nilai_jadwal/nilai_add');

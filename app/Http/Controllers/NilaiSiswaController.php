@@ -36,6 +36,7 @@ class NilaiSiswaController extends Controller
                 ->make(true);
         }
 
+
         $mapel = Mapel::all();
 
         $siswa = Siswa::all();
@@ -51,6 +52,15 @@ class NilaiSiswaController extends Controller
         return view('dashboard.akademik.nilai.index', compact('params'));
     }
 
+    public function laporan_nilai_index()
+    {
+        $kelas = Kelas::all();
+        $params = [
+            'kelas' => $kelas,
+            'title' => 'Nilai Siswa',
+        ];
+        return view('dashboard.akademik.nilai.laporan_nilai', compact('params'));
+    }
     public function getNilaiData(Request $request)
     {
         if ($request->ajax()) {
@@ -248,6 +258,58 @@ class NilaiSiswaController extends Controller
             ->get();
 
         return view('dashboard.akademik.nilai._filter_nilai', compact('data'));
+    }
+
+    public function filterLaporan(Request $request)
+    {
+        $id_kelas = $request->id_kelas;
+
+        $data = DB::table('kelas_siswa')
+            ->join('kelas', 'kelas_siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('siswas', 'siswas.id_siswa', '=', 'kelas_siswa.id_siswa')
+            ->where('kelas_siswa.id_kelas', $id_kelas)
+            ->get();
+
+//        dd($data);
+
+        return view('dashboard.akademik.nilai._filter_laporan', compact('data'));
+    }
+
+    public function cetak($id)
+    {
+//        $siswa = Siswa::with('kelas', 'nilai', 'ekskul')->findOrFail($id);
+
+//        $nilai_harian = DB::table('nilais')
+//            ->join('jadwals', 'jadwals.id', '=', 'nilais.id_jadwal')
+//            ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+//            ->select('mapels.nm_mapel', DB::raw('AVG(nilais.nilai) as avg'))
+//            ->where('nilais.id_siswa', $id)
+//            ->whereNotIn('jadwals.materi', ['UAS', 'UTS'])
+//            ->groupBy('mapels.nm_mapel')
+//            ->get();
+
+
+//        dd($nilai_harian);
+        $nilai = DB::table('nilais')
+            ->join('jadwals', 'jadwals.id', '=', 'nilais.id_jadwal')
+            ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+            ->join('siswas', 'siswas.id_siswa', '=', 'nilais.id_siswa')
+            ->select('siswas.nm_siswa','jadwals.materi','mapels.nm_mapel', 'nilais.nilai')
+            ->where('nilais.id_siswa', $id)
+            ->get();
+
+        $siswa = DB::table('siswas')
+            ->where('id_siswa', $id)
+            ->get()->first();
+
+        // Untuk export ke Word
+        $html = view('dashboard.akademik.nilai.template', compact('siswa', 'nilai'))->render();
+
+        $filename = 'Laporan_Nilai_' . $siswa->nm_siswa . '.doc';
+
+        return response($html)
+            ->header('Content-Type', 'application/msword')
+            ->header('Content-Disposition', "attachment; filename=$filename");
     }
 
     public function nilaiSave(Request $request)
