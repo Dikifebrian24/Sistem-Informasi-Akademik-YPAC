@@ -296,6 +296,7 @@ class NilaiSiswaController extends Controller
             ->join('siswas', 'siswas.id_siswa', '=', 'nilais.id_siswa')
             ->select('siswas.nm_siswa','jadwals.materi','mapels.nm_mapel', 'nilais.nilai')
             ->where('nilais.id_siswa', $id)
+            ->orderBy('jadwals.created_at', 'asc')
             ->get();
 
         $siswa = DB::table('siswas')
