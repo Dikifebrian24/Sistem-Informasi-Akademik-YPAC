@@ -56,6 +56,9 @@ Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy']);
 Route::put('jadwal/{id}', [JadwalController::class, 'update'])->name('jadwal.update');
 Route::get('laporan_nilai_siswa', [\App\Http\Controllers\NilaiSiswaController::class, 'laporan_nilai_index'])->name('laporan_nilai_siswa');
 
+Route::get('/siswa/edit/{id}', [SiswaController::class, 'edit']);
+Route::put('/siswa/update/{id}', [SiswaController::class, 'update']);
+
 Route::prefix('master')->group(function () {
     Route::controller(KurikulumController::class)->prefix('kurikulum')->group(function () {
         Route::get('', 'index')->name('kurikulum');

@@ -56,6 +56,13 @@
             });
         });
 
+        $('#siswaModalAdd').on('hidden.bs.modal', function () {
+            $('#saveSiswa')[0].reset();
+            $('#siswa_id').remove();
+            $('#addSiswaLabel').text('Add Siswa');
+            $('#saveSiswa').attr('action', '/siswa/store'); // Kembali ke mode add
+        });
+
 
         $('#saveSiswa').on('submit', function (e) {
             e.preventDefault();
@@ -97,24 +104,87 @@
         });
 
         $(document).on('click', '.edit', function () {
-            let userId = $(this).data('id');
+            let id = $(this).data('id');
 
             $.ajax({
-                url: 'admin/' + userId + '/edit',
+                url: `/siswa/edit/${id}`,
                 type: 'GET',
-                success: function (user) {
-                    $('#first_name').val(user.first_name);
-                    $('#last_name').val(user.last_name);
-                    $('#email').val(user.email);
-                    $('#role_level').val(user.level);
-                    $('#password').val('');
+                success: function (response) {
+                    if (response.success) {
+                        let user = response.data;
+                        let siswa = user.siswa;
 
-                    $('#adminModalAdd').modal('show');
+                        // console.log(user)
 
-                    $('#saveKelas').attr('data-id', user.id);
+
+
+                        // Data user
+                        $('#edit_siswa_id').val(user.id_user); // atau id siswa yang sesuai
+                        $('#edit_first_name').val(user.first_name);
+                        $('#edit_last_name').val(user.last_name);
+                        $('#edit_email').val(user.email);
+                        $('#edit_nik').val(user.nik);
+                        $('#edit_nisn').val(user.nisn);
+                        $('#edit_jenkel').val(user.jenkel);
+                        $('#edit_tmpt_lahir').val(user.tmpt_lahir);
+                        $('#edit_tgl_lahir').val(user.tgl_lahir);
+                        $('#edit_agama').val(user.agama);
+                        $('#edit_almt_rumah').val(user.almt_rumah);
+                        $('#edit_angkatan').val(user.angkatan);
+                        $('#edit_nm_wali').val(user.nm_wali);
+                        $('#edit_tgl_lahir_wali').val(user.tgl_lahir_wali);
+                        $('#edit_no_telp_wali').val(user.no_telp_wali);
+                        $('#edit_no_hp').val(user.no_hp);
+                        $('#edit_kelainan').val(user.id_kelainan);
+
+                        $('#siswaModalEdit').modal('show');
+                    }
                 }
             });
         });
+
+
+        $('#editSiswa').on('submit', function (e) {
+            e.preventDefault();
+
+            let id = $('#edit_siswa_id').val();
+
+            $.ajax({
+                url: `/siswa/update/${id}`,
+                type: 'PUT',
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        $('#data').DataTable().ajax.reload();
+                        $('#siswaModalEdit').modal('hide');
+                        $('#editSiswa')[0].reset();
+                    }
+                },
+                error: function (xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorMsg = '';
+
+                    $.each(errors, function (key, value) {
+                        errorMsg += value + '<br>';
+                    });
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        html: errorMsg
+                    });
+                }
+            });
+        });
+
 
         $(document).on('click', '.delete', function () {
             let id = $(this).data('id');
