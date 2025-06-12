@@ -274,13 +274,18 @@
                                     <li><a href="#">Rekap Nilai Siswa</a></li>
                                 </ul>
                             </li>
-                            <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                        data-feather="calendar"></i><span>Data Progres Siswa</span></a>
-                                <ul class="nav-submenu menu-content">
-                                    <li><a href="{{ route('data_progress') }}">Input Progres Siswa</a></li>
-                                    <li><a href="{{ route('progress_jadwal/progress_recap') }}">Rekap Progres Siswa</a></li>
-                                </ul>
-                            </li>
+
+                            @if (\Illuminate\Support\Facades\Auth::user()->level == 2)
+                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                            data-feather="calendar"></i><span>Data Progres Siswa</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="{{ route('data_progress') }}">Input Progres Siswa</a></li>
+                                        <li><a href="{{ route('progress_jadwal/progress_recap') }}">Rekap Progres
+                                                Siswa</a></li>
+                                    </ul>
+                                </li>
+                            @endif
+
                             <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                         data-feather="file-text"></i><span>Laporan Nilai Siswa</span></a>
                                 <ul class="nav-submenu menu-content">
