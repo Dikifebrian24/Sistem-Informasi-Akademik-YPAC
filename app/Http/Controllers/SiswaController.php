@@ -37,7 +37,7 @@ class SiswaController extends Controller
     public function getDatatables(Request $request)
     {
         if ($request->ajax()) {
-            $users = User::select(['users.id', 'first_name', 'last_name', 'nm_kelainan', 'no_hp', 'nisn'])
+            $users = User::select(['users.id', 'first_name', 'last_name', 'nm_kelainan', 'no_hp', 'nisn', 'angkatan'])
                 ->join('siswas', 'siswas.id_user', '=', 'users.id')
                 ->join('data_kelainans', 'data_kelainans.id', '=', 'siswas.id_kelainan');
 
@@ -235,6 +235,21 @@ class SiswaController extends Controller
             'success' => true,
             'message' => 'Data berhasil diupdate'
         ]);
+    }
+
+    public function destroy($id)
+    {
+        // Hapus data siswa terlebih dahulu
+        $siswa = Siswa::where('id_user', $id)->first();
+        if ($siswa) {
+            $siswa->delete();
+        }
+
+        // Hapus data user
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['success' => true, 'message' => 'User dan data siswa berhasil dihapus']);
     }
 
 

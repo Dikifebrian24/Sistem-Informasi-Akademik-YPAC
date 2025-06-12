@@ -65,7 +65,7 @@
                                     <th>NISN</th>
                                     <th>Jenis Kelainan</th>
                                     <th>No Telp</th>
-                                    <th>Kelas</th>
+                                    <th>Angkatan</th>
                                     <th style="width: 120px;">Action</th>
                                 </tr>
                                 </thead>

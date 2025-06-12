@@ -214,6 +214,7 @@ Route::prefix('master')->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('siswa/delete');
         Route::post('import', 'import')->name('siswa/import');
         Route::get('export', 'export')->name('siswa/export');
+//        Route::delete('delete/{id}', 'destroy')->name('admin/delete');
 
         Route::get('template', function () {
             $file = public_path('template_import/template_import_siswa.xlsx');

@@ -44,7 +44,7 @@
                     {data: 'nisn', name: 'nisn'},
                     {data: 'nm_kelainan', name: 'nm_kelainan'},
                     {data: 'no_hp', name: 'no_hp'},
-                    {data: 'level', name: 'level', className: 'text-center'},
+                    {data: 'angkatan', name: 'angkatan', className: 'text-center'},
                     {
                         data: 'action',
                         name: 'action',
@@ -201,7 +201,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'admin/delete/' + id,
+                        url: 'siswa/delete/' + id,
                         type: 'DELETE',
                         data: {
                             _token: '{{ csrf_token() }}'
