@@ -51,6 +51,36 @@
                 ]
             });
 
+
+            $('#data_mengajar').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route("jadwal_mengajar/getData") }}',
+                    data: function (d) {
+                        d.id_kelas = kelasId;
+                    }
+                },
+                columns: [
+                    {
+                        data: null,
+                        name: 'id',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {data: 'nm_mapel', name: 'nm_mapel'},
+                    {data: 'nm_kelas', name: 'nm_kelas'},
+                    {data: 'materi', name: 'materi'},
+                    {data: 'hari', name: 'hari'},
+                    {data: 'waktu_mulai', name: 'waktu_mulai'},
+                    {data: 'waktu_selesai', name: 'waktu_selesai'},
+                ]
+            });
+
             $(document).on('click', '.edit', function () {
                 let id = $(this).data('id');
 

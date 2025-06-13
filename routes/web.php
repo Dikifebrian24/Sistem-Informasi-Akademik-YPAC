@@ -59,6 +59,12 @@ Route::get('laporan_nilai_siswa', [\App\Http\Controllers\NilaiSiswaController::c
 Route::get('/siswa/edit/{id}', [SiswaController::class, 'edit']);
 Route::put('/siswa/update/{id}', [SiswaController::class, 'update']);
 
+
+//jadwal mengajar
+Route::get('/jadwal_mengajar', [JadwalController::class, 'jadwal_mengajar'])->name('jadwal_mengajar');
+Route::get('/jadwal_mengajar_data', [JadwalController::class, 'getDatatablesMengajar'])->name('jadwal_mengajar/getData');
+
+
 Route::prefix('master')->group(function () {
     Route::controller(KurikulumController::class)->prefix('kurikulum')->group(function () {
         Route::get('', 'index')->name('kurikulum');

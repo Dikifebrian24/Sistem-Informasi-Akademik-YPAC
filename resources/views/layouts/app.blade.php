@@ -256,7 +256,7 @@
                                         data-feather="book"></i><span>Data Akademik</span></a>
                                 <ul class="nav-submenu menu-content">
                                     @if (\Illuminate\Support\Facades\Auth::user()->level == 2)
-                                        <li><a href="{{ route('mapel') }}">Jadwal Mengajar</a></li>
+                                        <li><a href="{{ route('jadwal_mengajar') }}">Jadwal Mengajar</a></li>
                                         <li><a href="{{ route('siswa_ajar') }}">Data siswa</a></li>
                                     @endif
                                     @if (\Illuminate\Support\Facades\Auth::user()->level == 1)

@@ -14,11 +14,12 @@ use App\Models\Mapel;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
-
+use Carbon\Carbon;
 class JadwalController extends Controller
 {
 
@@ -61,6 +62,20 @@ class JadwalController extends Controller
         return response()->json(['message' => 'Import berhasil!']);
     }
 
+    public function jadwal_mengajar()
+    {
+        $mapel = Mapel::all();
+        $guru = Guru::all();
+
+        $params = [
+            'title' => 'Jadwal Mengajar',
+            'kelas' => Kelas::all(),
+            'guru' => $guru,
+            'mapel' => $mapel,
+        ];
+        return view('dashboard.master.jadwal.jadwal_mengajar', compact('params'));
+    }
+
     public function getDatatables(Request $request)
     {
         if ($request->ajax()) {
@@ -72,6 +87,32 @@ class JadwalController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     return '<button class="btn btn-sm btn-danger" id="show" data-id="' . $row->id_kelas . '">Lihat</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function getDatatablesMengajar(Request $request)
+    {
+        if ($request->ajax()) {
+//            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id', 'nm_kelas'])
+//                ->leftjoin('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
+//                ->where('stts_kelas', 'Active')->get();
+
+            $mengajar = DB::table('jadwals')
+                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+                ->where('gurus.id_user', Auth::user()->id)
+                ->get();
+
+            return DataTables::of($mengajar)
+                ->addIndexColumn()
+                ->editColumn('hari', function ($row) {
+                    // pastikan $row->tanggal ada dan formatnya YYYY-MM-DD
+                    $date = Carbon::parse($row->tanggal);
+                    return $date->translatedFormat('l'); // contoh: Senin, Selasa, dll
                 })
                 ->rawColumns(['action'])
                 ->make(true);
