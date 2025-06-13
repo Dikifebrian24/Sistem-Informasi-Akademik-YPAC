@@ -11,6 +11,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KepegawaianController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\MapelController;
+use App\Http\Controllers\NilaiSiswaController;
 use App\Http\Controllers\ProgressSiswaController;
 use App\Http\Controllers\PtkController;
 use App\Http\Controllers\RuanganController;
@@ -63,6 +64,8 @@ Route::put('/siswa/update/{id}', [SiswaController::class, 'update']);
 //jadwal mengajar
 Route::get('/jadwal_mengajar', [JadwalController::class, 'jadwal_mengajar'])->name('jadwal_mengajar');
 Route::get('/jadwal_mengajar_data', [JadwalController::class, 'getDatatablesMengajar'])->name('jadwal_mengajar/getData');
+Route::delete('/nilai/delete/{id}', [NilaiSiswaController::class, 'destroy'])->name('nilai.delete');
+
 
 
 Route::prefix('master')->group(function () {
@@ -317,7 +320,7 @@ Route::prefix('master')->group(function () {
         Route::post('filter', 'filter')->name('progress_jadwal/filter');
     });
 
-    Route::controller(\App\Http\Controllers\NilaiSiswaController::class)->prefix('data_nilai')->group(function () {
+    Route::controller(NilaiSiswaController::class)->prefix('data_nilai')->group(function () {
         Route::get('', 'index')->name('data_nilai');
         Route::get('data', 'getDatatables')->name('data_nilai/data');
         Route::get('nilai_data', 'getNilaiData')->name('data_nilai/nilai_data');

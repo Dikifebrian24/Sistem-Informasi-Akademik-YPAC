@@ -74,13 +74,17 @@ class NilaiSiswaController extends Controller
             return DataTables::of($data_nilai)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger edit-btn"
+                    return '<button class="btn btn-sm btn-warning edit-btn"
                   data-id="' . $row->nilai_id . '"
                   data-nilai="' . $row->nilai . '"
                   data-siswa="' . $row->nm_siswa . '"
                   data-toggle="modal" data-target="#editModal">
                   Edit
-            </button>';
+            </button>
+             <button class="btn btn-sm btn-danger delete-btn"
+                data-id="' . $row->nilai_id . '">
+                Hapus
+             </button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -378,10 +382,9 @@ class NilaiSiswaController extends Controller
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        DB::table('nilais')->where('id', $id)->delete();
 
-        return response()->json(['success' => true, 'message' => 'User berhasil dihapus']);
+        return response()->json(['success' => true, 'message' => 'Data nilai berhasil dihapus']);
     }
 
     public function store(Request $request)

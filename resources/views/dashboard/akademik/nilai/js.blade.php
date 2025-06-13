@@ -84,6 +84,38 @@
             });
         });
 
+        $(document).on('click', '.delete-btn', function () {
+            let id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: "Data nilai akan dihapus permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/nilai/delete/${id}`,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire('Berhasil!', response.message, 'success');
+                                $('#table-nilai').DataTable().ajax.reload();
+                            }
+                        },
+                        error: function () {
+                            Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus data.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+
         $(document).on('click', '#input_nilai', function (e) {
             e.preventDefault();
 
