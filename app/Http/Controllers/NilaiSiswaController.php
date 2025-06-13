@@ -163,13 +163,32 @@ class NilaiSiswaController extends Controller
     public function getMapelDatatables(Request $request)
     {
         if ($request->ajax()) {
+//            $mapel = DB::table('jadwals')
+//                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+//                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+//                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+//                ->where('gurus.id_user', '=', Auth::user()->id)
+//                ->select('gurus.nm_guru', 'mapels.nm_mapel', 'jadwals.id as id_jadwal', 'nm_kelas', 'jadwals.*')
+//                ->get();
+
             $mapel = DB::table('jadwals')
                 ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
                 ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
                 ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
                 ->where('gurus.id_user', '=', Auth::user()->id)
-                ->select('gurus.nm_guru', 'mapels.nm_mapel', 'jadwals.id as id_jadwal', 'nm_kelas', 'jadwals.*')
+                ->select(
+                    'mapels.id as id_mapel',
+                    'mapels.nm_mapel',
+                    DB::raw('MIN(jadwals.id) as id_jadwal'),
+                    DB::raw('MIN(jadwals.tanggal) as tanggal'),
+                    DB::raw('MIN(kelas.nm_kelas) as nm_kelas'),
+                    DB::raw('MIN(gurus.nm_guru) as nm_guru'),
+                    'mapels.id_kelas'
+                )
+                ->groupBy('mapels.nm_mapel', 'mapels.id_kelas', 'mapels.id')
                 ->get();
+
+
 
             return DataTables::of($mapel)
                 ->addIndexColumn()
