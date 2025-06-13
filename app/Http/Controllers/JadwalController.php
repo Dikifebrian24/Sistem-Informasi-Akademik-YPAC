@@ -105,6 +105,7 @@ class JadwalController extends Controller
                 ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
                 ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
                 ->where('gurus.id_user', Auth::user()->id)
+                ->orderBy('jadwals.tanggal', 'asc')
                 ->get();
 
             return DataTables::of($mengajar)
@@ -113,6 +114,11 @@ class JadwalController extends Controller
                     // pastikan $row->tanggal ada dan formatnya YYYY-MM-DD
                     $date = Carbon::parse($row->tanggal);
                     return $date->translatedFormat('l'); // contoh: Senin, Selasa, dll
+                })
+                ->editColumn('tanggal', function ($row) {
+                    $date = Carbon::parse($row->tanggal);
+                    return $date->translatedFormat('d F Y'); // Contoh: 12 Juni 2025
+                    // Kalau ingin format lengkap: return $date->translatedFormat('l, d F Y');
                 })
                 ->rawColumns(['action'])
                 ->make(true);

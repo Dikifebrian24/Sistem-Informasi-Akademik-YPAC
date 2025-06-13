@@ -76,6 +76,7 @@
                     {data: 'nm_kelas', name: 'nm_kelas'},
                     {data: 'materi', name: 'materi'},
                     {data: 'hari', name: 'hari'},
+                    {data: 'tanggal', name: 'tanggal'},
                     {data: 'waktu_mulai', name: 'waktu_mulai'},
                     {data: 'waktu_selesai', name: 'waktu_selesai'},
                 ]
