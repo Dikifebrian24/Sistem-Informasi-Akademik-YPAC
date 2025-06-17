@@ -20,6 +20,7 @@ use App\Http\Controllers\ThnAkademikController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelasSiswaController;
 use App\Http\Controllers\RaportController;
+use App\Http\Controllers\RekapAkademikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,12 @@ Route::put('/siswa/update/{id}', [SiswaController::class, 'update']);
 Route::get('/jadwal_mengajar', [JadwalController::class, 'jadwal_mengajar'])->name('jadwal_mengajar');
 Route::get('/jadwal_mengajar_data', [JadwalController::class, 'getDatatablesMengajar'])->name('jadwal_mengajar/getData');
 Route::delete('/nilai/delete/{id}', [NilaiSiswaController::class, 'destroy'])->name('nilai.delete');
+
+
+//siswa view (rekap akademik)
+Route::get('/rekap_akademik_nilai', [RekapAkademikController::class, 'index'])->name('rekap_akademik_nilai');
+Route::get('/rekap_nilai_data', [RekapAkademikController::class, 'getDatatablesNilai'])->name('rekap_nilai_data');
+
 
 
 

@@ -243,37 +243,53 @@
                                     </ul>
                                 </li>
                             @endif
-                            <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                        data-feather="users"></i><span>Data Pengguna</span></a>
-                                <ul class="nav-submenu menu-content">
-                                    <li><a href="{{ route('siswa') }}">Siswa</a></li>
-                                    <li><a href="{{ route('guru') }}">Guru</a></li>
-                                    <li><a href="{{ route('kepsek') }}">Kepala Sekolah</a></li>
-                                    <li><a href="{{ route('admin') }}">Admin</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                        data-feather="book"></i><span>Data Akademik</span></a>
-                                <ul class="nav-submenu menu-content">
-                                    @if (\Illuminate\Support\Facades\Auth::user()->level == 2)
-                                        <li><a href="{{ route('jadwal_mengajar') }}">Jadwal Mengajar</a></li>
-                                        <li><a href="{{ route('siswa_ajar') }}">Data siswa</a></li>
-                                    @endif
-                                    @if (\Illuminate\Support\Facades\Auth::user()->level == 1)
-                                        <li><a href="{{ route('mapel') }}">Mata Pelajaran</a></li>
-                                        <li><a href="{{ route('jadwal') }}">Jadwal Pelajaran</a></li>
-                                    @endif
+                            @if (\Illuminate\Support\Facades\Auth::user()->level == 1)
+                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                            data-feather="users"></i><span>Data Pengguna</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="{{ route('siswa') }}">Siswa</a></li>
+                                        <li><a href="{{ route('guru') }}">Guru</a></li>
+                                        <li><a href="{{ route('kepsek') }}">Kepala Sekolah</a></li>
+                                        <li><a href="{{ route('admin') }}">Admin</a></li>
+                                    </ul>
+                                </li>
+                            @endif
+                            @if(\Illuminate\Support\Facades\Auth::user()->level == 2 || \Illuminate\Support\Facades\Auth::user()->level == 1)
+                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                            data-feather="book"></i><span>Data Akademik</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        @if (\Illuminate\Support\Facades\Auth::user()->level == 2)
+                                            <li><a href="{{ route('jadwal_mengajar') }}">Jadwal Mengajar</a></li>
+                                            <li><a href="{{ route('siswa_ajar') }}">Data siswa</a></li>
+                                        @endif
+                                        @if (\Illuminate\Support\Facades\Auth::user()->level == 1)
+                                            <li><a href="{{ route('mapel') }}">Mata Pelajaran</a></li>
+                                            <li><a href="{{ route('jadwal') }}">Jadwal Pelajaran</a></li>
+                                        @endif
 
-                                </ul>
-                            </li>
+                                    </ul>
+                                </li>
+                            @endif
                             <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                         data-feather="calendar"></i><span>Data Nilai Siswa</span></a>
                                 <ul class="nav-submenu menu-content">
 
-                                    <li><a href="{{ route('data_nilai') }}">Input Nilai Siswa</a></li>
-                                    <li><a href="#">Rekap Nilai Siswa</a></li>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->level == 2 || \Illuminate\Support\Facades\Auth::user()->level == 1)
+                                        <li><a href="{{ route('data_nilai') }}">Input Nilai Siswa</a></li>
+                                    @endif
+
                                 </ul>
                             </li>
+
+                            @if(\Illuminate\Support\Facades\Auth::user()->level == 3)
+                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                            data-feather="calendar"></i><span>Rekap Akademik Siswa</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="{{ route('rekap_akademik_nilai') }}">Rekap Nilai</a></li>
+                                        <li><a href="{{ route('data_nilai') }}">Rekap Progress</a></li>
+                                    </ul>
+                                </li>
+                            @endif
 
                             @if (\Illuminate\Support\Facades\Auth::user()->level == 2)
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
