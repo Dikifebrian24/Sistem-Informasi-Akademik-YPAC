@@ -29,26 +29,54 @@ class RekapAkademikController extends Controller
     public function getDatatablesNilai(Request $request)
     {
         if ($request->ajax()) {
+            $id_user = Auth::user()->id;
             $kelas = DB::table('mapels')
-                ->select('mapels.nm_mapel', 'kelas.nm_kelas')
+                ->select('mapels.nm_mapel', 'kelas.nm_kelas', 'mapels.id as id_mapel')
                 ->join('kelas', 'kelas.id_kelas', '=', 'mapels.id_kelas')
                 ->join('kelas_siswa', 'kelas_siswa.id_kelas', '=', 'kelas.id_kelas')
                 ->join('siswas','kelas_siswa.id_siswa','=','siswas.id_siswa')
                 ->join('users','users.id','=','siswas.id_user')
-                ->where('users.id', Auth::user()->id)
+                ->where('users.id', $id_user)
                 ->get();
 
 //            dd($kelas);
 
             return DataTables::of($kelas)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-warning edit">Edit</button>
-                        <button class="btn btn-sm btn-danger delete">Delete</button>';
+                ->addColumn('action', function ($row) use ($id_user) {
+                    return '<button class="btn btn-sm btn-primary" data-id_mapel="'. $row->id_mapel.'" data-id_user="'.$id_user.'" id="get_detail_nilai">Lihat</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+
+    public function get_detail_nilai(Request $request)
+    {
+        $id_mapel = $request->id_mapel;
+        $id_user = Auth::user()->id;
+
+        $id_siswa = DB::table('siswas')
+            ->join('users', 'users.id', '=', 'siswas.id_user')
+            ->where('users.id', $id_user)
+            ->get()->first();
+//        dd($id_siswa);
+
+        $nilai = DB::table('nilais')
+            ->join('mapels', 'mapels.id', '=', 'nilais.id_mapel')
+            ->join('siswas', 'siswas.id_siswa', '=', 'nilais.id_siswa')
+            ->join('users', 'users.id', '=', 'siswas.id_user')
+            ->where('nilais.id_mapel', $id_mapel)
+            ->where('nilais.id_siswa', '=', "$id_siswa->id_siswa")
+            ->select('nilais.*', 'kategori_nilai', 'siswas.nm_siswa as nama_siswa')
+            ->get();
+
+
+//        dd($nilai);
+
+        // Kirim ke view baru
+        return view('dashboard.akademik.rekap_akademik.detail_nilai', compact('nilai'))->render();
     }
 
     public function detail($id)

@@ -38,12 +38,45 @@
             });
         });
 
-        $(document).on('click', '.edit-btn', function () {
-            $('#nilai_id').val($(this).data('id'));
-            $('#mapel').val($(this).data('mapel'));
-            $('#siswa').val($(this).data('siswa'));
-            $('#nilai').val($(this).data('nilai'));
-            $('#editModal').modal('show');
+        // $(document).on('click', '#get_detail_nilai', function () {
+        //     var id_mapel = $(this).data('id_mapel');
+        //     var id_user = $(this).data('id_user');
+        //
+        //     console.log('id_mapel:', id_mapel);
+        //     console.log('id_user:', id_user);
+        //
+        //     $.ajax({
+        //         url: '/get_detail_nilai',
+        //         type: 'GET',
+        //         data: {
+        //             id_mapel: id_mapel,
+        //             id_user: id_user
+        //         },
+        //         success: function(response) {
+        //
+        //             $('#detail_nilai_container').html(response);
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error('Terjadi kesalahan:', error);
+        //             alert('Gagal mengambil detail nilai.');
+        //         }
+        //     });
+        // });
+
+        $(document).on('click', '#get_detail_nilai', function(e) {
+            e.preventDefault();
+
+            // Ambil data dari tombol yang diklik
+            let id_mapel = $(this).data('id_mapel');
+            let id_kelas = $(this).data('id_kelas');
+            let id_jadwal = $(this).data('id');
+
+            console.log('id_mapel:', id_mapel);
+            console.log('id_kelas:', id_kelas);
+            console.log('id_jadwal:', id_jadwal);
+
+            // Redirect ke route dengan parameter query string
+            window.location.href = `/get_detail_nilai?id_mapel=${id_mapel}&id_kelas=${id_kelas}`;
         });
 
         $('#editForm').submit(function(e){
