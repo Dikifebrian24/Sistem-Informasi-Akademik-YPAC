@@ -122,6 +122,11 @@
             });
         });
 
+        $('#exportGuruBtn').on("click", function (e) {
+            e.preventDefault();
+            window.location.href = "/master/guru/export";
+        });
+
         $('#openModalBtn').on("click", function (e) {
             $(".js-example-basic-single").select2();
             e.preventDefault()

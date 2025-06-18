@@ -254,6 +254,7 @@ Route::prefix('master')->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('guru/delete');
         Route::post('import', 'import')->name('guru/import');
         Route::get('export', 'export')->name('guru/export');
+//        Route::get('export', 'export')->name('siswa/export');
 
         Route::get('template', function () {
             $file = public_path('template_import/template_import_guru.xlsx');

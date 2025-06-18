@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GuruExport;
+use App\Exports\SiswaExport;
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Datatables;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +28,14 @@ class GuruController extends Controller
             'title' => 'Guru',
         ];
         return view('dashboard.pengguna.guru.index', compact('params'));
+    }
+
+    public function export()
+    {
+        $timestamp = Carbon::now()->format('Ymd_His');
+        $filename = "data_guru_{$timestamp}.xlsx";
+
+        return Excel::download(new GuruExport(), $filename);
     }
 
     public function getDatatables(){
