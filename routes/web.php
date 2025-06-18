@@ -271,6 +271,8 @@ Route::prefix('master')->group(function () {
         Route::get('edit/{id}', 'edit')->name('kepsek/edit');
         Route::put('update/{id}', 'update')->name('kepsek/update');
         Route::delete('delete/{id}', 'destroy')->name('kepsek/delete');
+
+        Route::get('export', 'export')->name('kepsek/export');
     });
 
 

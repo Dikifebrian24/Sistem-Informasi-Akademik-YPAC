@@ -30,6 +30,11 @@
                     }
                 })
         });
+
+        $('#exportKepsekBtn').on("click", function (e) {
+            e.preventDefault();
+            window.location.href = "/master/kepsek/export";
+        });
     </script>
     <script>
         @if (session()->has('success'))

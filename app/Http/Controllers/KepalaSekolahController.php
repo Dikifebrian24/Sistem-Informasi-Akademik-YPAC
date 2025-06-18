@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GuruExport;
+use App\Exports\KepsekExport;
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KepalaSekolahController extends Controller
 {
@@ -96,5 +100,13 @@ class KepalaSekolahController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
+    }
+
+    public function export()
+    {
+        $timestamp = Carbon::now()->format('Ymd_His');
+        $filename = "data_guru_{$timestamp}.xlsx";
+
+        return Excel::download(new KepsekExport(), $filename);
     }
 }

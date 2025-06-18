@@ -36,6 +36,9 @@
                 <div class="card">
                     <div class="card-header">
                         <button class="btn btn-primary add" type="button" id="openModalBtn">Add {{ $params['title'] }}</button>
+
+                        <button class="btn export" type="button" style="background-color: green; color: white" id="exportKepsekBtn">Export</button>
+
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
