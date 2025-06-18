@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -30,7 +31,15 @@ class HomeController extends Controller
             ->groupBy('dk.nm_kelainan')
             ->get();
 
-        return view('dashboard.home', compact('disabilitasData'));
+        $siswa = DB::table('siswas')
+            ->join('users', 'siswas.id_user', '=', 'users.id')
+            ->where('siswas.id_user', Auth::user()->id)
+            ->get()->first();
+
+//        dd($siswa);
+
+        return view('dashboard.home', compact('disabilitasData', 'siswa'));
     }
+
 
 }
