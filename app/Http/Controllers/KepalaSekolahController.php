@@ -105,7 +105,7 @@ class KepalaSekolahController extends Controller
     public function export()
     {
         $timestamp = Carbon::now()->format('Ymd_His');
-        $filename = "data_guru_{$timestamp}.xlsx";
+        $filename = "data_kepsek_{$timestamp}.xlsx";
 
         return Excel::download(new KepsekExport(), $filename);
     }
