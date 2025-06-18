@@ -61,7 +61,6 @@ class RekapAkademikController extends Controller
             ->join('users', 'users.id', '=', 'siswas.id_user')
             ->where('users.id', $id_user)
             ->get()->first();
-//        dd($id_siswa);
 
         $nilai = DB::table('nilais')
             ->join('mapels', 'mapels.id', '=', 'nilais.id_mapel')
@@ -71,9 +70,6 @@ class RekapAkademikController extends Controller
             ->where('nilais.id_siswa', '=', "$id_siswa->id_siswa")
             ->select('nilais.*', 'kategori_nilai', 'siswas.nm_siswa as nama_siswa')
             ->get();
-
-
-//        dd($nilai);
 
         // Kirim ke view baru
         return view('dashboard.akademik.rekap_akademik.detail_nilai', compact('nilai'))->render();
