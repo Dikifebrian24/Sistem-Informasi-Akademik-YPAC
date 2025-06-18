@@ -12,8 +12,8 @@
     <meta name="keywords"
           content="admin template, viho admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/logo/ypac.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo/ypac.png') }}" type="image/x-icon">
     <title>SIAKAD - YPAC</title>
     <!-- Google font-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -197,8 +197,7 @@
         <header class="main-nav">
             <div class="sidebar-user text-center"><a class="setting-primary" href="javascript:void(0)"><i
                         data-feather="settings"></i></a><img class="img-90 rounded-circle"
-                                                             src="{{ asset('assets/images/dashboard/1.png') }}" alt="">
-                <div class="badge-bottom"><span class="badge badge-primary">New</span></div>
+                                                             src="{{ asset('assets/images/logo/ypac.png') }}" alt="">
                 <a
                     href="user-profile.html">
                     <h6 class="mt-3 f-14 f-w-600">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
