@@ -295,8 +295,8 @@
                                             data-feather="calendar"></i><span>Data Progres Siswa</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="{{ route('data_progress') }}">Input Progres Siswa</a></li>
-                                        <li><a href="{{ route('progress_jadwal/progress_recap') }}">Rekap Progres
-                                                Siswa</a></li>
+{{--                                        <li><a href="{{ route('progress_jadwal/progress_recap') }}">Rekap Progres--}}
+{{--                                                Siswa</a></li>--}}
                                     </ul>
                                 </li>
                             @endif
