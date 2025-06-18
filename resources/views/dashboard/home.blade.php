@@ -39,16 +39,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-md-12 box-col-12">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <h5>Polar Chart</h5>
-                        </div>
-                        <div class="card-body chart-block chart-vertical-center">
-                            <canvas id="myPolarGraph"></canvas>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="col-xl-6 col-md-12 box-col-12">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-header pb-0">--}}
+{{--                            <h5>Polar Chart</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body chart-block chart-vertical-center">--}}
+{{--                            <canvas id="myPolarGraph"></canvas>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
         <!-- Container-fluid Ends-->
