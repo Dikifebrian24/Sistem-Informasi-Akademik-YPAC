@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Illuminate\Support\Facades\Auth::user()->level == 1)
+    @if(Illuminate\Support\Facades\Auth::user()->level == 1 ||Illuminate\Support\Facades\Auth::user()->level == 2)
         <div class="page-body">
             <div class="container-fluid">
                 <div class="page-header">

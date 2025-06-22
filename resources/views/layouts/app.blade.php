@@ -203,7 +203,15 @@
                     <h6 class="mt-3 f-14 f-w-600">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                     </h6>
                 </a>
-                <p class="mb-0 font-roboto">Admin</p>
+
+                @if(\Illuminate\Support\Facades\Auth::user()->level == 1)
+                    <p class="mb-0 font-roboto">Admin</p>
+
+                @elseif(\Illuminate\Support\Facades\Auth::user()->level == 2)
+                    <p class="mb-0 font-roboto">Guru</p>
+                @elseif(\Illuminate\Support\Facades\Auth::user()->level == 3)
+                    <p class="mb-0 font-roboto">Siswa</p>
+                @endif
 
             </div>
             <nav>
@@ -221,9 +229,9 @@
                                 </div>
                             </li>
                             {{--                                admin & guru --}}
-                                <li class="dropdown"><a class="nav-link menu" href="{{ route('home') }}"><i
-                                            data-feather="home"></i><span>Dashboard</span></a>
-                                </li>
+                            <li class="dropdown"><a class="nav-link menu" href="{{ route('home') }}"><i
+                                        data-feather="home"></i><span>Dashboard</span></a>
+                            </li>
 
                             <li class="sidebar-main-title">
                                 <div>
@@ -271,16 +279,14 @@
                                     </ul>
                                 </li>
                             @endif
-                            <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                        data-feather="calendar"></i><span>Data Nilai Siswa</span></a>
-                                <ul class="nav-submenu menu-content">
-
-                                    @if(\Illuminate\Support\Facades\Auth::user()->level == 2 || \Illuminate\Support\Facades\Auth::user()->level == 1)
+                            @if(\Illuminate\Support\Facades\Auth::user()->level == 2)
+                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                            data-feather="calendar"></i><span>Data Nilai Siswa</span></a>
+                                    <ul class="nav-submenu menu-content">
                                         <li><a href="{{ route('data_nilai') }}">Input Nilai Siswa</a></li>
-                                    @endif
-
-                                </ul>
-                            </li>
+                                    </ul>
+                                </li>
+                            @endif
 
                             @if(\Illuminate\Support\Facades\Auth::user()->level == 3)
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i

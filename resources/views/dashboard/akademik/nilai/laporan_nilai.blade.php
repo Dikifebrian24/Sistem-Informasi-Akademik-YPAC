@@ -12,15 +12,31 @@
 
     <div class="page-body">
         <div class="container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3>Laporan Nilai Siswa</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item">Laporan Nilai Siswa</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12 col-xl-12">
                     <div class="row">
+
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h5>Filter</h5>
+                                    <h5>Filter Kelas</h5>
                                 </div>
                                 <div class="card-body">
+
                                     <form class="needs-validation" id="f_filter" novalidate>
                                         @csrf
                                         <div class="row g-3">

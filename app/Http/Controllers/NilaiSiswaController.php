@@ -73,6 +73,13 @@ class NilaiSiswaController extends Controller
 
             return DataTables::of($data_nilai)
                 ->addIndexColumn()
+                ->editColumn('lampiran', function ($row) {
+                    if (is_null($row->lampiran)) {
+                        return 'Tidak ada lampiran';
+                    } else {
+                        return '<a href="' . asset('storage/' . $row->lampiran) . '" target="_blank">Lampiran</a>';
+                    }
+                })
                 ->addColumn('action', function ($row) {
                     return '<button class="btn btn-sm btn-warning edit-btn"
                   data-id="' . $row->nilai_id . '"
@@ -86,7 +93,7 @@ class NilaiSiswaController extends Controller
                 Hapus
              </button>';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'lampiran'])
                 ->make(true);
         }
     }

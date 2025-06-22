@@ -36,9 +36,6 @@
                                     <th style="width: 55px">No</th>
                                     <th>Nama Mapel</th>
                                     <th>Kelas</th>
-                                    <th>Materi</th>
-                                    <th>Hari</th>
-                                    <th>Hari</th>
                                     <th>Jam Mulai</th>
                                     <th>Jam Selesai</th>
                                 </tr>

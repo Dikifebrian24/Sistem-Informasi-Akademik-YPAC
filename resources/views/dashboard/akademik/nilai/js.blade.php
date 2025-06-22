@@ -73,6 +73,7 @@
                     {data: 'nm_siswa', name: 'nm_siswa'},
                     {data: 'materi', name: 'materi'},
                     {data: 'nilai', name: 'nilai'},
+                    {data: 'lampiran', name: 'lampiran'},
                     {
                         data: 'action',
                         name: 'action',

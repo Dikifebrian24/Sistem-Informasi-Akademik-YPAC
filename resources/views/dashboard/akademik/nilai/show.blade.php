@@ -109,6 +109,7 @@
                                             <th>Nama Siswa</th>
                                             <th>Materi</th>
                                             <th>Nilai</th>
+                                            <th>Lampiran</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -118,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-
+                /a>
             </div>
         </div>
         <!-- Container-fluid Ends-->
