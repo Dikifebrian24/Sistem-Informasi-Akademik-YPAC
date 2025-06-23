@@ -76,6 +76,8 @@ class JadwalController extends Controller
         return view('dashboard.master.jadwal.jadwal_mengajar', compact('params'));
     }
 
+
+
     public function getDatatables(Request $request)
     {
         if ($request->ajax()) {
@@ -111,9 +113,7 @@ class JadwalController extends Controller
             return DataTables::of($mengajar)
                 ->addIndexColumn()
                 ->editColumn('hari', function ($row) {
-                    // pastikan $row->tanggal ada dan formatnya YYYY-MM-DD
-                    $date = Carbon::parse($row->tanggal);
-                    return $date->translatedFormat('l'); // contoh: Senin, Selasa, dll
+                    return $this->getHari($row->tanggal);
                 })
                 ->editColumn('tanggal', function ($row) {
                     $date = Carbon::parse($row->tanggal);
@@ -300,6 +300,23 @@ class JadwalController extends Controller
 
         // Return response or redirect as needed
         return response()->json(['message' => 'Jadwal added successfully!']);
+    }
+
+    public function getHari($tanggal) {
+        $carbon = Carbon::parse($tanggal);
+        $englishDay = $carbon->format('l'); // contoh: 'Tuesday'
+
+        $map = [
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu',
+            'Sunday' => 'Minggu',
+        ];
+
+        return $map[$englishDay] ?? $englishDay;
     }
 
 //hkjhkhk

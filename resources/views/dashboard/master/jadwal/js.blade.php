@@ -74,10 +74,13 @@
                     },
                     {data: 'nm_mapel', name: 'nm_mapel'},
                     {data: 'nm_kelas', name: 'nm_kelas'},
+                    {data: 'hari', name: 'hari'},
                     {data: 'waktu_mulai', name: 'waktu_mulai'},
                     {data: 'waktu_selesai', name: 'waktu_selesai'},
                 ]
             });
+
+
 
             $(document).on('click', '.edit', function () {
                 let id = $(this).data('id');
