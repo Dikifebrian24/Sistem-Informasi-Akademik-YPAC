@@ -203,6 +203,13 @@ class NilaiSiswaController extends Controller
 
             return DataTables::of($mapel)
                 ->addIndexColumn()
+                ->editColumn('jumlah_siswa', function ($row) {
+                    $id_kelas = $row->id_kelas;
+
+                    $jml_siswa = DB::table('kelas_siswa')->where('id_kelas', $id_kelas)->count();
+
+                    return $jml_siswa;
+                })
                 ->addColumn('action', function ($row) {
                     return '<button class="btn btn-sm btn-danger" id="input_nilai" data-id_kelas="' . $row->id_kelas . '" data-id_mapel="' . $row->id_mapel . '" data-id="' . $row->id_jadwal . '">Input</button>
                             <button class="btn btn-sm btn-primary" id="show_nilai" data-id_kelas="' . $row->id_kelas . '" data-id_mapel="' . $row->id_mapel . '" data-id="' . $row->id_jadwal . '">Lihat Nilai</button>';

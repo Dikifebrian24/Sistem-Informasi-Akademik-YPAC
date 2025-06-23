@@ -14,11 +14,11 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Admin</h3>
+                        <h3>Kelas</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Applications</a></li>
                             <li class="breadcrumb-item">Data Pengguna</li>
-                            <li class="breadcrumb-item active">Admin</li>
+                            <li class="breadcrumb-item active">Kelas</li>
                         </ol>
                     </div>
                     <div class="col-sm-6">

@@ -35,6 +35,7 @@
                                     <th style="width: 55px">No</th>
                                     <th>Nama Pelajaran</th>
                                     <th>Kelas</th>
+                                    <th>Jumlah Siswa</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>

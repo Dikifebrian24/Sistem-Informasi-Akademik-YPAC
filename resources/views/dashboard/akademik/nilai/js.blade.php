@@ -27,6 +27,7 @@
                     },
                     {data: 'nm_mapel', name: 'nm_mapel'},
                     {data: 'nm_kelas', name: 'nm_kelas'},
+                    {data: 'jumlah_siswa', name: 'jumlah_siswa'},
                     {
                         data: 'action',
                         name: 'action',

@@ -14,7 +14,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Admin</h3>
+                        <h3>Jenis Kelainan</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Applications</a></li>
                             <li class="breadcrumb-item">Data Master</li>
