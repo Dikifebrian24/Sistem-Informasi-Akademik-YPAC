@@ -309,16 +309,18 @@
                                 </li>
                             @endif
 
-                            <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                        data-feather="file-text"></i><span>Laporan Nilai Siswa</span></a>
-                                <ul class="nav-submenu menu-content">
-                                    <li><a href="{{route('laporan_nilai_siswa')}}">Nilai Siswa</a></li>
-                                    {{-- <li><a href="#">Capaian Belajar</a></li> --}}
-                                    {{-- <li><a href="#">Presentasi</a></li> --}}
-                                    {{-- <li><a href="#">Raport UTS</a></li> --}}
-                                    <li><a href="{{ route('raport') }}">Cetak Raport</a></li>
-                                </ul>
-                            </li>
+                            @if(\Illuminate\Support\Facades\Auth::user()->level != 3)
+                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                            data-feather="file-text"></i><span>Laporan Nilai Siswa</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="{{route('laporan_nilai_siswa')}}">Nilai Siswa</a></li>
+                                        {{-- <li><a href="#">Capaian Belajar</a></li> --}}
+                                        {{-- <li><a href="#">Presentasi</a></li> --}}
+                                        {{-- <li><a href="#">Raport UTS</a></li> --}}
+                                        <li><a href="{{ route('raport') }}">Cetak Raport</a></li>
+                                    </ul>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                     <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
