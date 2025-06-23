@@ -22,10 +22,13 @@ class MapelController extends Controller
             ->select('kelas.*', 'gurus.nm_guru')
             ->get();
 
+        $kelas = Kelas::all();
+
         $params = [
             'title' => 'Mata Pelajaran',
+            'kelas' => $kelas,
         ];
-        return view('dashboard.master.mapel.index', compact('data'));
+        return view('dashboard.master.mapel.index', compact('data', 'params'));
     }
 
     public function getDatatables(Request $request) {
