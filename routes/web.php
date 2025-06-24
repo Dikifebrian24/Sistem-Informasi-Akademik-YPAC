@@ -111,6 +111,7 @@ Route::prefix('master')->group(function () {
         Route::get('', 'index')->name('kelas_siswa');
 //        Route::get('add', 'add')->name('kelas_siswa/add_kelas_siswa');
         Route::get('data', 'getDatatables')->name('kelas_siswa/data');
+        Route::get('list_siswa', 'getDatatablesListSiswa')->name('kelas_siswa/list_siswa');
         Route::get('get_kelas_siswa', 'getKelasSiswa')->name('kelas_siswa/get_kelas_siswa');
         Route::get('{id}/edit', 'edit')->name('kelas_siswa/edit');
         Route::post('store', 'store')->name('kelas_siswa/store');
@@ -302,6 +303,7 @@ Route::prefix('master')->group(function () {
     Route::controller(MapelController::class)->prefix('mapel')->group(function () {
         Route::get('', 'index')->name('mapel');
         Route::get('data', 'getDatatables')->name('mapel/data');
+        Route::get('data_kelas', 'getDatatablesKelas')->name('mapel/data_kelas');
         Route::get('add', 'add')->name('mapel/add');
         Route::post('save', 'store')->name('mapel/save');
         Route::post('store', 'store')->name('mapel/store');
@@ -309,6 +311,9 @@ Route::prefix('master')->group(function () {
         Route::get('edit/{id}', 'edit')->name('mapel/edit');
         Route::put('update/{id}', 'update')->name('mapel/update');
         Route::delete('delete/{id}', 'destroy')->name('mapel/delete');
+
+
+        Route::get('/kelas/{id}', 'detail_mapel_kelas')->name('mapel.detail');
     });
 
     Route::controller(ProgressSiswaController::class)->prefix('data_progress')->group(function () {

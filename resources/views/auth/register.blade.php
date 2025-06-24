@@ -40,17 +40,17 @@
   <body>
     <!-- Loader starts-->
     <div class="loader-wrapper">
-      <div class="theme-loader">    
+      <div class="theme-loader">
         <div class="loader-p"></div>
       </div>
     </div>
     <!-- Loader ends-->
     <!-- page-wrapper Start-->
-    <section>         
-      <div class="container-fluid p-0"> 
+    <section>
+      <div class="container-fluid p-0">
         <div class="row m-0">
-          <div class="col-xl-7 order-1"><img class="bg-img-cover bg-center" src="../assets/images/login/1.jpg" alt="looginpage"></div>
-          <div class="col-xl-5 p-0"> 
+          <div class="col-xl-7 order-1"><img class="bg-img-cover bg-center" src="../assets/images/login/1.png" alt="looginpage"></div>
+          <div class="col-xl-5 p-0">
             <div class="login-card">
               <form class="theme-form login-form needs-validation" method="POST" action="{{ route('register') }}">
                 @csrf
@@ -112,7 +112,7 @@
                 <div class="form-group">
                   <button class="btn btn-primary btn-block" type="submit">Create Account</button>
                 </div>
-                <div class="login-social-title">                
+                <div class="login-social-title">
                   <h5>Or</h5>
                 </div>
                 <p>Already have an account?<a class="ms-2" href="{{  route('login') }}">Sign in</a></p>

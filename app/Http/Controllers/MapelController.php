@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
+use App\Models\Jadwal;
 use App\Models\Mapel;
 use App\Models\Kelas;
 use Dflydev\DotAccessData\Data;
@@ -32,20 +34,61 @@ class MapelController extends Controller
         return view('dashboard.master.mapel.index', compact('data', 'params'));
     }
 
+    public function detail_mapel_kelas($id)
+    {
+        $id_kelas = $id;
+
+        $kelas = DB::table('kelas')->where('id_kelas', $id)->first();
+
+
+        $params = [
+            'title' => 'Mapel',
+            'id_kelas' => $id_kelas,
+            'kelas' => $kelas->nm_kelas,
+        ];
+
+        return view('dashboard.master.mapel.detail', compact('params'));
+    }
+
     public function getDatatables(Request $request) {
         if ($request->ajax()) {
             $mapel = DB::table("mapels")
-                ->join('kelas', 'mapels.id_kelas', '=', 'kelas.id_kelas');
+                ->join('kelas', 'mapels.id_kelas', '=', 'kelas.id_kelas')
+                ->where('mapels.id_kelas', $request->kelas)->get();
 
-            if ($request->has('kelas') && $request->kelas != '') {
-                $mapel->where('mapels.id_kelas', $request->kelas); // Sesuaikan fieldnya
-            }
+//            dd($mapel);
+
 
             return DataTables::of($mapel)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     return '<button class="btn btn-sm btn-warning edit" data-id="'.$row->id.'">Edit</button>
                         <button class="btn btn-sm btn-danger delete" data-id="'.$row->id.'">Delete</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function getDatatablesKelas(Request $request)
+    {
+        if ($request->ajax()) {
+            $data_kelas = Kelas::select([
+                'kelas.id_kelas',
+                'kelas.kd_kelas',
+                'kelas.nm_kelas',
+                'gurus.id_guru as guru_id'
+            ])
+                ->join('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
+                ->where('kelas.stts_kelas', 'Active')
+                ->get();
+
+//            dd($data_kelas);
+
+            return DataTables::of($data_kelas)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-sm btn-danger show" id="show" data-id="' . $row->id_kelas . '">Lihat</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -76,16 +119,14 @@ class MapelController extends Controller
     {
         $this->validate($request, [
             'nm_mapel' => 'required',
-            'kelas' => 'required',
 
         ], [
             'nm_mapel.required' => 'Silahkan isi Nama Mapel terlebih dahulu!',
-            'kelas.required'   => 'Kode kelas Wajib Di isi!',
         ]);
 
         //create post
         Mapel::create([
-            'id_kelas'     => $request->kelas,
+            'id_kelas'     => $request->id_kelas,
             'nm_mapel'     => $request->nm_mapel,
         ]);
 

@@ -40,7 +40,7 @@ class KelasSiswaController extends Controller
             return DataTables::of($data_kelas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-danger edit-btn" data-id="'.$row->id_kelas.'">Edit</button>';
+                    return '<button class="btn btn-sm btn-danger edit-btn" data-id="' . $row->id_kelas . '">Edit</button>';
                 })
                 ->addColumn('jumlah_siswa', function ($row) {
                     return $row->jumlah_siswa;
@@ -51,6 +51,23 @@ class KelasSiswaController extends Controller
     }
 
 
+    public function getDatatablesListSiswa(Request $request)
+    {
+        if ($request->ajax()) {
+            $kelas = DB::table('kelas')
+                ->get();
+
+//            dd($kelas);
+
+            return DataTables::of($kelas)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-sm btn-danger edit-btn" data-id="' . $row->id_kelas . '">Edit</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
 
     public function add(Request $request)
     {

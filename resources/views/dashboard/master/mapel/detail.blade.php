@@ -27,15 +27,24 @@
         <div class="container-fluid">
             <div class="col-sm-12">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-2">
+                                <button class="btn btn-primary add" type="button" id="openModalBtn">Add Mapel</button>
+                            </div>
+                        </div>
+
+
+                    </div>
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="display datatables table table-bordered" id="data_kelas">
+                            <table class="display datatables table table-bordered" id="data">
                                 <thead>
                                 <tr style="text-align: center">
                                     <th style="width: 55px">No</th>
-                                    <th>Kode Kelas</th>
-                                    <th>Kelas</th>
+                                    <th>Nama Mapel</th>
+                                    <th>Gol Kelas</th>
                                     <th style="width: 120px;">Action</th>
                                 </tr>
                                 </thead>

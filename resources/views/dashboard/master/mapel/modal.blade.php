@@ -13,15 +13,15 @@
                             <div class="col-md-6">
                                 <label class="form-label">Nama Mapel</label>
                                 <input class="form-control" type="text" name="nm_mapel" id="nm_mapel" required>
+                                <input type="hidden" id="id_kelas" name="id_kelas" value="{{ isset($params['id_kelas']) ? $params['id_kelas'] : '' }}">
+
                                 @error('nm_mapel')
                                 <div class="valid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Golongan Kelas</label>
-                                <select class="form-select" id="kelas" name="kelas" required>
-                                    <option value="">-- Pilih Kelas --</option>
-                                </select>
+                                <input type="text" value="{{ isset($params['kelas']) ? $params['kelas'] : '' }}" disabled class="form-control">
                                 @error('id_kelas')
                                 <div class="valid-feedback">{{ $message }}</div>
                                 @enderror

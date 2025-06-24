@@ -37,19 +37,12 @@
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Kelas</label>
                                 <input class="form-control" id="exampleInputEmail1" type="text"
                                        value="{{ $params['kelas']->nm_kelas }}" disabled>
-                                <input class="form-control" id="id_kelas" name="id_kelas" type="hidden"
+                                <input class="form-control" id="id_kelas" name="id_kelas" type="text"
                                        value="{{ $params['kelas']->id_kelas }}">
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="siswaSelect">Nama Siswa</label>
-{{--                                <select class="form-control" id="siswaSelect" name="siswa[]" multiple>--}}
-{{--                                    @foreach($params['siswa'] as $s)--}}
-{{--                                        <option value="{{ $s->id_siswa }}"--}}
-{{--                                            {{ in_array($s->id_siswa, $params['assigned']) ? 'disabled selected' : '' }}>--}}
-{{--                                            {{ $s->nm_siswa }}--}}
-{{--                                        </option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
+
                                 <select class="form-control" id="siswaSelect" name="siswa[]" multiple>
                                     @foreach($params['siswa'] as $s)
                                         <option value="{{ $s->id_siswa }}">{{ $s->nm_siswa }} - {{ $s->nisn }}</option>
@@ -65,18 +58,83 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>List Siswa</h5>
+                        <hr>
+                    </div>
+                    <div class="card-body">
+                        <table class="display datatables table table-bordered" id="list_siswa">
+                            <thead>
+                            <tr style="text-align: center">
+                                <th style="width: 55px">No</th>
+                                <th>Nama Siswa</th>
+                                <th>NISN</th>
+                                <th>Jenis Kelamin</th>
+                                <th>No Telp</th>
+                                <th style="width: 120px;">Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+{{--    @include('dashboard.akademik.kelas_siswa.js')--}}
+
+
 
     @pushOnce('js')
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
 
         <script>
             $(document).ready(function () {
                 $('#siswaSelect').select2({
                     placeholder: "Pilih siswa",
                     allowClear: true
+                });
+            });
+
+            $(document).ready(function () {
+                var id_kelas = $('#id_kelas').val();
+
+                console.log(id_kelas);
+
+                $('#list_siswa').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route("kelas_siswa/list_siswa") }}',
+                        data: function (d) {
+                            d.id_kelas = kelasId;
+                        }
+                    },
+                    columns: [
+                        {
+                            data: null,
+                            name: 'id',
+                            orderable: false,
+                            searchable: false,
+                            className: 'text-center',
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        },
+                        {data: 'nm_guru', name: 'nm_guru'},
+                        {data: 'nm_mapel', name: 'nm_mapel'},
+                        {data: 'materi', name: 'materi'},
+                        {data: 'tanggal', name: 'tanggal'},
+                        {data: 'waktu_mulai', name: 'waktu_mulai'},
+                        {data: 'waktu_selesai', name: 'waktu_selesai'},
+                        {data: 'action', name: 'action'}
+                    ]
                 });
             });
 

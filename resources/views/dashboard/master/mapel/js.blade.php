@@ -42,13 +42,52 @@
 
 
         $(document).ready(function () {
+            var table =  $('#data_kelas').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('mapel/data_kelas') }}',
+                    data: function (d) {
+                        d.kelas = $('#filterKelas').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: null,
+                        name: 'id',
+                        className: 'text-center',
+                        orderable: false,
+                        searchable: false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { data: 'kd_kelas', name: 'kd_kelas' },
+                    { data: 'nm_kelas', name: 'nm_kelas' },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                ]
+            });
+
+            $(document).on('click', '#show', function () {
+                var id = $(this).data('id');
+                window.location.href = 'mapel/kelas/' + id;
+            });
+
+            let kelasId = window.location.pathname.split("/").pop();
+
             var table =  $('#data').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
                     url: '{{ route('mapel/data') }}',
                     data: function (d) {
-                        d.kelas = $('#filterKelas').val();
+                        d.kelas = kelasId;
                     }
                 },
                 columns: [
@@ -79,6 +118,7 @@
                 table.ajax.reload();
             });
         });
+
 
 
 
