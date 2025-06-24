@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-sm-4 font-weight-bold">Kelas</div>
-                                    <div class="col-sm-8">XII IPA 1</div>
+                                    <div class="col-sm-8">{{ $kelas }}</div>
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-sm-4 font-weight-bold">Tempat, Tanggal Lahir</div>

@@ -37,8 +37,7 @@ class HomeController extends Controller
         $level_login = DB::table('users')->where('id', Auth::id())->first()->level;
 
 
-
-        if ($level_login ==  2) {
+        if ($level_login == 2) {
             $disabilitasData = DB::table('siswas as s')
                 ->join('data_kelainans as dk', 's.id_kelainan', '=', 'dk.id')
                 ->join('kelas_siswa as ks', 's.id_siswa', '=', 'ks.id_siswa')
@@ -59,7 +58,15 @@ class HomeController extends Controller
             ->where('siswas.id_user', Auth::user()->id)
             ->get()->first();
 
-        return view('dashboard.home', compact('disabilitasData', 'siswa'));
+//        dd($siswa);
+
+        $id_kelas_siswa = DB::table('kelas_siswa')->where('id_siswa', $siswa->id_siswa)->first()->id_kelas;
+
+
+        $kelas = DB::table('kelas')->where('id_kelas', $id_kelas_siswa)->first()->nm_kelas;
+
+
+        return view('dashboard.home', compact('disabilitasData', 'siswa', 'kelas'));
     }
 
 
