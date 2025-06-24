@@ -42,10 +42,15 @@
 
 
         $(document).ready(function () {
-            $('#data').DataTable({
+            var table =  $('#data').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('mapel/data') }}',
+                ajax: {
+                    url: '{{ route('mapel/data') }}',
+                    data: function (d) {
+                        d.kelas = $('#filterKelas').val();
+                    }
+                },
                 columns: [
                     {
                         data: null,
@@ -68,7 +73,13 @@
                     },
                 ]
             });
+
+            $('#filterKelas').change(function () {
+                console.log('jaklsdjlkasd')
+                table.ajax.reload();
+            });
         });
+
 
 
         $('#saveMapel').on('submit', function(e) {

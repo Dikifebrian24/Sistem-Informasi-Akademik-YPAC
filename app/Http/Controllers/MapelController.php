@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mapel;
 use App\Models\Kelas;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -33,7 +34,12 @@ class MapelController extends Controller
 
     public function getDatatables(Request $request) {
         if ($request->ajax()) {
-            $mapel = Mapel::select(['id', 'kelas.nm_kelas', 'nm_mapel'])->join('kelas', 'mapels.id_kelas', '=', 'kelas.id_kelas');
+            $mapel = DB::table("mapels")
+                ->join('kelas', 'mapels.id_kelas', '=', 'kelas.id_kelas');
+
+            if ($request->has('kelas') && $request->kelas != '') {
+                $mapel->where('mapels.id_kelas', $request->kelas); // Sesuaikan fieldnya
+            }
 
             return DataTables::of($mapel)
                 ->addIndexColumn()
