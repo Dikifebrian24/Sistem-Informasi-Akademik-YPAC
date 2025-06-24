@@ -52,7 +52,7 @@
 {{--                                </select>--}}
                                 <select class="form-control" id="siswaSelect" name="siswa[]" multiple>
                                     @foreach($params['siswa'] as $s)
-                                        <option value="{{ $s->id_siswa }}">{{ $s->nm_siswa }}</option>
+                                        <option value="{{ $s->id_siswa }}">{{ $s->nm_siswa }} - {{ $s->nisn }}</option>
                                     @endforeach
                                 </select>
                             </div>
