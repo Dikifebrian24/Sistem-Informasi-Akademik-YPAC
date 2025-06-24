@@ -127,17 +127,14 @@ class JadwalController extends Controller
 
     public function detail($id)
     {
-//        $kelas = Kelas::findOrFail($id);
         $jadwal = Jadwal::where('id_kelas', $id);
 
         $data_guru = DB::table('users')->where('level', 2)->get();
-//        if (request()->ajax()) {
-//            return datatables()->of($data_guru)
-//                ->addIndexColumn()
-//                ->make(true);
-//        }
 
-        $mapel = Mapel::all();
+        $mapel = DB::table('mapels')->where('id_kelas', $id)->get();
+
+        $kelas = DB::table('kelas')->where('id_kelas', $id)->first()->nm_kelas;
+
         $guru = Guru::all();
 
         $params = [
@@ -146,6 +143,7 @@ class JadwalController extends Controller
             'guru' => $guru,
             'mapel' => $mapel,
             'jadwal' => $jadwal,
+            'kelas' => $kelas,
         ];
 
         return view('dashboard.master.jadwal.detail', compact('params'));

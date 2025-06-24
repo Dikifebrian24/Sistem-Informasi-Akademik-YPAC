@@ -45,7 +45,7 @@
                         <select name="mapel" id="mapel" class="form-control">
                             <option value="">-- Pilih Mapel --</option>
                             @foreach($params['mapel'] as $item)
-                                <option value="{{ $item->id }}">{{ $item->nm_mapel }}</option>
+                                <option value="{{ $item->id }}">{{ $item->nm_mapel }} - {{ $params['kelas'] }}</option>
                             @endforeach
                         </select>
                     </div>
