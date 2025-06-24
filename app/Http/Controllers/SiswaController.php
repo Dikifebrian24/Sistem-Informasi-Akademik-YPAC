@@ -244,12 +244,14 @@ class SiswaController extends Controller
     {
         // Hapus data siswa terlebih dahulu
         $siswa = Siswa::where('id_user', $id)->first();
+
+        $id_user = $siswa->id_user;
         if ($siswa) {
             $siswa->delete();
         }
 
         // Hapus data user
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($id_user);
         $user->delete();
 
         return response()->json(['success' => true, 'message' => 'User dan data siswa berhasil dihapus']);
