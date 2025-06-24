@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-md-12 box-col-12">
+                    <div class="col-xl-12 col-md-12 box-col-12">
                         <div class="card">
                             <div class="card-header pb-0">
                                 <h5>Penyandang disabilitast</h5>

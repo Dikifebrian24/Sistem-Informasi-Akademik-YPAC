@@ -60,11 +60,13 @@ class HomeController extends Controller
 
 //        dd($siswa);
 
-        $id_kelas_siswa = DB::table('kelas_siswa')->where('id_siswa', $siswa->id_siswa)->first()->id_kelas;
+        $id_kelas_siswa = isset($siswa->id_siswa)
+            ? optional(DB::table('kelas_siswa')->where('id_siswa', $siswa->id_siswa)->first())->id_kelas
+            : null;
 
-
-        $kelas = DB::table('kelas')->where('id_kelas', $id_kelas_siswa)->first()->nm_kelas;
-
+        $kelas = isset($id_kelas_siswa)
+            ? optional(DB::table('kelas')->where('id_kelas', $id_kelas_siswa)->first())->nm_kelas
+            : null;
 
         return view('dashboard.home', compact('disabilitasData', 'siswa', 'kelas'));
     }
