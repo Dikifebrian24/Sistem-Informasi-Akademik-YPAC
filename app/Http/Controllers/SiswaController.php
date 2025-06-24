@@ -61,8 +61,11 @@ class SiswaController extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-warning edit" data-id="' . $row->id . '">Edit</button>
-                        <button class="btn btn-sm btn-danger delete" data-id="' . $row->id . '">Delete</button>';
+//                    return '<button class="btn btn-primary btn-xs m-r-5 edit" data-id="' . $row->id . '"><i class="fa fa-edit"></button>
+//                        <button class="btn btn-danger btn-xs delete" data-id="' . $row->id . '"><i class="fa fa-trash"></i></button>';
+
+                    return '<a class="btn btn-primary btn-xs m-r-5 edit" data-id="' . $row->id . '"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-danger btn-xs delete" data-id="' . $row->id . '"><i class="fa fa-trash"></i></a>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);

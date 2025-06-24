@@ -43,8 +43,7 @@ class GuruController extends Controller
         if (request()->ajax()) {
             return datatables()->of($data)
                 ->addColumn('action', function ($row) {
-                    return '<a class="btn btn-info btn-xs m-r-5" data-id="'.$row->id_guru.'"><i class="fa fa-eye"></i></a>
-                        <a class="btn btn-primary btn-xs m-r-5" data-id="'.$row->id_guru.'"><i class="fa fa-edit"></i></a>
+                    return '<a class="btn btn-primary btn-xs m-r-5" data-id="'.$row->id_guru.'"><i class="fa fa-edit"></i></a>
                         <a class="btn btn-danger btn-xs" data-id="'.$row->id_guru.'"><i class="fa fa-trash"></i></a>';
                 })
                 ->rawColumns(['action'])
