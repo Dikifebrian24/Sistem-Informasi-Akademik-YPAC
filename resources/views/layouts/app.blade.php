@@ -301,7 +301,7 @@
                                             data-feather="calendar"></i><span>Rekap Akademik Siswa</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="{{ route('rekap_akademik_nilai') }}">Rekap Nilai</a></li>
-                                        <li><a href="{{ route('data_nilai') }}">Rekap Progress</a></li>
+                                        <li><a href="{{ route('rekap_akademik_progress') }}">Rekap Progress</a></li>
                                     </ul>
                                 </li>
                             @endif

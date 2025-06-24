@@ -26,6 +26,15 @@ class RekapAkademikController extends Controller
         return view('dashboard.akademik.rekap_akademik.nilai', compact('params'));
     }
 
+    public function progressRekap()
+    {
+
+        $params = [
+            'title' => 'Rekap Progress Akademik',
+        ];
+        return view('dashboard.akademik.rekap_akademik.progress', compact('params'));
+    }
+
     public function getDatatablesNilai(Request $request)
     {
         if ($request->ajax()) {

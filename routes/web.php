@@ -74,6 +74,13 @@ Route::get('/rekap_akademik_nilai', [RekapAkademikController::class, 'index'])->
 Route::get('/rekap_nilai_data', [RekapAkademikController::class, 'getDatatablesNilai'])->name('rekap_nilai_data');
 Route::get('/get_detail_nilai', [RekapAkademikController::class, 'get_detail_nilai'])->name('get_detail_nilai');
 
+
+//siswa view (rekap progress)
+Route::get('/rekap_akademik_progress', [RekapAkademikController::class, 'progressRekap'])->name('rekap_akademik_progress');
+Route::get('/rekap_progress_data', [RekapAkademikController::class, 'getDatatablesProgress'])->name('rekap_progress_data');
+Route::get('/get_detail_progress', [RekapAkademikController::class, 'get_detail_progress'])->name('get_detail_progress');
+
+
 //jadwal Pelajaran Siswa
 Route::get('/jadwal_siswa', [JadwalController::class, 'jadwal_siswa'])->name('jadwal_siswa');
 Route::get('/jadwal_siswa_data', [JadwalController::class, 'getDatatablesJadwalSiswa'])->name('jadwal_siswa/getData');
