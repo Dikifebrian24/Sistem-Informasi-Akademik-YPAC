@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+
 class JadwalController extends Controller
 {
 
@@ -76,6 +77,18 @@ class JadwalController extends Controller
         return view('dashboard.master.jadwal.jadwal_mengajar', compact('params'));
     }
 
+    public function jadwal_siswa()
+    {
+        $id_user = Auth::id();
+
+        $id_siswa = DB::table('siswas')->where('id_user', $id_user)->value('id_siswa');
+
+        $params = [
+            'title' => 'Jadwal Mengajar',
+            'kelas' => Kelas::all(),
+        ];
+        return view('dashboard.master.jadwal.jadwal_siswa', compact('params'));
+    }
 
 
     public function getDatatables(Request $request)
@@ -97,6 +110,7 @@ class JadwalController extends Controller
 
     public function getDatatablesMengajar(Request $request)
     {
+
         if ($request->ajax()) {
 //            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id', 'nm_kelas'])
 //                ->leftjoin('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
@@ -107,6 +121,45 @@ class JadwalController extends Controller
                 ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
                 ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
                 ->where('gurus.id_user', Auth::user()->id)
+                ->orderBy('jadwals.tanggal', 'asc')
+                ->get();
+
+            return DataTables::of($mengajar)
+                ->addIndexColumn()
+                ->editColumn('hari', function ($row) {
+                    return $this->getHari($row->tanggal);
+                })
+                ->editColumn('tanggal', function ($row) {
+                    $date = Carbon::parse($row->tanggal);
+                    return $date->translatedFormat('d F Y'); // Contoh: 12 Juni 2025
+                    // Kalau ingin format lengkap: return $date->translatedFormat('l, d F Y');
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function getDatatablesJadwalSiswa(Request $request)
+    {
+        $id_user = Auth::id();
+
+        $id_siswa = DB::table('siswas')->where('id_user', $id_user)->value('id_siswa');
+
+        $id_kelas = DB::table('kelas_siswa')->where('id_siswa', $id_siswa)->value('id_kelas');
+
+//        dd($id_kelas);
+
+
+        if ($request->ajax()) {
+//            $data_kelas = Kelas::select(['id_kelas', 'gurus.id_guru as guru_id', 'nm_kelas'])
+//                ->leftjoin('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
+//                ->where('stts_kelas', 'Active')->get();
+
+            $mengajar = DB::table('jadwals')
+                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+                ->where('jadwals.id_kelas', $id_kelas)
                 ->orderBy('jadwals.tanggal', 'asc')
                 ->get();
 
@@ -300,7 +353,8 @@ class JadwalController extends Controller
         return response()->json(['message' => 'Jadwal added successfully!']);
     }
 
-    public function getHari($tanggal) {
+    public function getHari($tanggal)
+    {
         $carbon = Carbon::parse($tanggal);
         $englishDay = $carbon->format('l'); // contoh: 'Tuesday'
 

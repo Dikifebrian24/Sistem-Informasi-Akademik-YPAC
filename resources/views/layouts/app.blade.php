@@ -290,6 +290,14 @@
 
                             @if(\Illuminate\Support\Facades\Auth::user()->level == 3)
                                 <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                            data-feather="calendar"></i><span>Akadekmik</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="{{ route('jadwal_siswa') }}">Jadwal Pelajaran Siswa</a></li>
+                                    </ul>
+                                </li>
+
+
+                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
                                             data-feather="calendar"></i><span>Rekap Akademik Siswa</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="{{ route('rekap_akademik_nilai') }}">Rekap Nilai</a></li>

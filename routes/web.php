@@ -74,7 +74,9 @@ Route::get('/rekap_akademik_nilai', [RekapAkademikController::class, 'index'])->
 Route::get('/rekap_nilai_data', [RekapAkademikController::class, 'getDatatablesNilai'])->name('rekap_nilai_data');
 Route::get('/get_detail_nilai', [RekapAkademikController::class, 'get_detail_nilai'])->name('get_detail_nilai');
 
-
+//jadwal Pelajaran Siswa
+Route::get('/jadwal_siswa', [JadwalController::class, 'jadwal_siswa'])->name('jadwal_siswa');
+Route::get('/jadwal_siswa_data', [JadwalController::class, 'getDatatablesJadwalSiswa'])->name('jadwal_siswa/getData');
 
 
 Route::prefix('master')->group(function () {
