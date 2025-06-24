@@ -60,14 +60,18 @@ class KelasSiswaController extends Controller
         $kelas_info = Kelas::findOrFail($id_kelas);
 
         // Get the list of all siswa
-        $siswa = Siswa::all();
+//        $siswa = Siswa::all();
 
-        // Get the assigned siswa IDs for this kelas
-        $assignedSiswaIds = DB::table('kelas_siswa')
-            ->where('id_kelas', $id_kelas)
+
+        $assignedSiswaIds = DB::table('siswas')
+            ->whereIn('id_siswa', function ($query) {
+                $query->select('id_siswa')
+                    ->from('kelas_siswa');
+            })
             ->pluck('id_siswa')
             ->toArray();
 
+        $siswa = Siswa::whereNotIn('id_siswa', $assignedSiswaIds)->get();
 
         $params = [
             'title' => 'Tambah Pembagian Kelas',
@@ -75,6 +79,8 @@ class KelasSiswaController extends Controller
             'siswa' => $siswa,
             'assigned' => $assignedSiswaIds, // List of already assigned siswa IDs
         ];
+
+//        dd($params['assigned']);
 
         return view('dashboard.master.kelas_siswa.detail', compact('params'));
     }

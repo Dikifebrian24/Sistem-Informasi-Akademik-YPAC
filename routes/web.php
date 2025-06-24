@@ -299,7 +299,6 @@ Route::prefix('master')->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('kelainan/delete');
     });
 
-
     Route::controller(MapelController::class)->prefix('mapel')->group(function () {
         Route::get('', 'index')->name('mapel');
         Route::get('data', 'getDatatables')->name('mapel/data');

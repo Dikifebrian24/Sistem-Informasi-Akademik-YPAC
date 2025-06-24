@@ -42,12 +42,17 @@
                             </div>
                             <div class="mb-3">
                                 <label class="col-form-label pt-0" for="siswaSelect">Nama Siswa</label>
+{{--                                <select class="form-control" id="siswaSelect" name="siswa[]" multiple>--}}
+{{--                                    @foreach($params['siswa'] as $s)--}}
+{{--                                        <option value="{{ $s->id_siswa }}"--}}
+{{--                                            {{ in_array($s->id_siswa, $params['assigned']) ? 'disabled selected' : '' }}>--}}
+{{--                                            {{ $s->nm_siswa }}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
                                 <select class="form-control" id="siswaSelect" name="siswa[]" multiple>
                                     @foreach($params['siswa'] as $s)
-                                        <option value="{{ $s->id_siswa }}"
-                                            {{ in_array($s->id_siswa, $params['assigned']) ? 'disabled selected' : '' }}>
-                                            {{ $s->nm_siswa }}
-                                        </option>
+                                        <option value="{{ $s->id_siswa }}">{{ $s->nm_siswa }}</option>
                                     @endforeach
                                 </select>
                             </div>
