@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AdminExport;
+use App\Exports\KepsekExport;
 use App\Models\Admin;
 use App\Models\Kelas;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class AdminController extends Controller
@@ -59,14 +63,7 @@ class AdminController extends Controller
                 ->addColumn('nama', function ($row) {
                     return $row->first_name . ' ' . $row->last_name;
                 })
-                ->editColumn('level', function ($row) {
-                    switch ($row->level) {
-                        case 1: return 'Kepala Sekolah';
-                        case 2: return 'Guru';
-                        case 3: return 'Siswa';
-                        default: return '-';
-                    }
-                })
+
                 ->addColumn('action', function ($row) {
                     return '<button class="btn btn-sm btn-warning edit" data-id="'.$row->id.'">Edit</button>
                         <button class="btn btn-sm btn-danger delete" data-id="'.$row->id.'">Delete</button>';
@@ -103,6 +100,14 @@ class AdminController extends Controller
         ]);
 
         return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
+    }
+
+    public function export()
+    {
+        $timestamp = Carbon::now()->format('Ymd_His');
+        $filename = "data_admin_{$timestamp}.xlsx";
+
+        return Excel::download(new AdminExport(), $filename);
     }
 
 //hkjhkhk

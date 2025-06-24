@@ -287,6 +287,8 @@ Route::prefix('master')->group(function () {
         Route::post('save', 'store')->name('admin/save');
         Route::put('update/{id}', 'update')->name('admin/update');
         Route::delete('delete/{id}', 'destroy')->name('admin/delete');
+
+        Route::get('export', 'export')->name('admin/export');
     });
 
     Route::controller(KelainanController::class)->prefix('kelainan')->group(function () {

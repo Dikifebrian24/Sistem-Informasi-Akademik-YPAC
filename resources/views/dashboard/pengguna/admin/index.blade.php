@@ -52,6 +52,8 @@
                 <div class="card">
                     <div class="card-header">
                         <button class="btn btn-primary add" type="button" id="openModalBtn">Add Admin</button>
+
+                        <button class="btn export" type="button" style="background-color: green; color: white" id="exportAdminBtn">Export</button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -61,7 +63,6 @@
                                     <th style="width: 55px">No</th>
                                     <th>Nama</th>
                                     <th>Email</th>
-                                    <th>Level</th>
                                     <th style="width: 120px;">Action</th>
                                 </tr>
                                 </thead>

@@ -59,7 +59,6 @@
                     },
                     { data: 'nama', name: 'nama' },
                     { data: 'email', name: 'email' },
-                    { data: 'level', name: 'level', className: 'text-center' },
                     {
                         data: 'action',
                         name: 'action',
@@ -69,6 +68,12 @@
                     },
                 ]
             });
+        });
+
+
+        $('#exportAdminBtn').on("click", function (e) {
+            e.preventDefault();
+            window.location.href = "/master/admin/export";
         });
 
 
