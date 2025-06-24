@@ -36,7 +36,6 @@ class NilaiSiswaController extends Controller
                 ->make(true);
         }
 
-
         $mapel = Mapel::all();
 
         $siswa = Siswa::all();
@@ -182,6 +181,23 @@ class NilaiSiswaController extends Controller
 //                ->select('gurus.nm_guru', 'mapels.nm_mapel', 'jadwals.id as id_jadwal', 'nm_kelas', 'jadwals.*')
 //                ->get();
 
+//            $mapel = DB::table('jadwals')
+//                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+//                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+//                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+//                ->where('gurus.id_user', '=', Auth::user()->id)
+//                ->select(
+//                    'mapels.id as id_mapel',
+//                    'mapels.nm_mapel',
+//                    DB::raw('MIN(jadwals.id) as id_jadwal'),
+//                    DB::raw('MIN(jadwals.tanggal) as tanggal'),
+//                    DB::raw('MIN(kelas.nm_kelas) as nm_kelas'),
+//                    DB::raw('MIN(gurus.nm_guru) as nm_guru'),
+//                    'jadwals.id_kelas'
+//                )
+//                ->groupBy('mapels.nm_mapel', 'mapels.id_kelas', 'jadwals.id')
+//                ->get();
+
             $mapel = DB::table('jadwals')
                 ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
                 ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
@@ -194,12 +210,12 @@ class NilaiSiswaController extends Controller
                     DB::raw('MIN(jadwals.tanggal) as tanggal'),
                     DB::raw('MIN(kelas.nm_kelas) as nm_kelas'),
                     DB::raw('MIN(gurus.nm_guru) as nm_guru'),
-                    'mapels.id_kelas'
+                    'jadwals.id_kelas'
                 )
-                ->groupBy('mapels.nm_mapel', 'mapels.id_kelas', 'mapels.id')
+                ->groupBy('mapels.id', 'mapels.nm_mapel', 'jadwals.id_kelas')
                 ->get();
 
-
+//                dd($mapel);
 
             return DataTables::of($mapel)
                 ->addIndexColumn()

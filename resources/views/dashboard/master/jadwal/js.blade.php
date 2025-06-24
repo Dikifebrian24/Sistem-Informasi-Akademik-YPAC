@@ -262,6 +262,8 @@
         $('#f_import').on('submit', function (e) {
             e.preventDefault();
 
+            $('#btnSave').prop('disabled', true).text('Menyimpan...');
+
             let currentIdKelas = window.location.pathname.split("/").pop();
 
             let formData = new FormData(this);
@@ -293,6 +295,8 @@
 
                     $('#importJadwalModal').modal('hide');
                     $('#jadwalTable').DataTable().ajax.reload();
+
+                    $('#btnSave').prop('disabled', false).text('Save Jadwal');
                 },
                 error: function (xhr) {
                     if (xhr.responseJSON && xhr.responseJSON.message) {
@@ -300,6 +304,8 @@
                     } else {
                         alert("Terjadi kesalahan saat upload.");
                     }
+
+                    $('#btnSave').prop('disabled', false).text('Save Jadwal');
                 }
             });
         });

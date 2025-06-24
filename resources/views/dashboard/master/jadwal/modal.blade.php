@@ -102,7 +102,7 @@
                         <input type="file" class="form-control" id="import_data" name="import_data" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Save Jadwal</button>
+                    <button type="submit" id="btnSave" class="btn btn-primary">Save Jadwal</button>
                 </form>
             </div>
         </div>
