@@ -174,7 +174,7 @@ class SiswaController extends Controller
                 ->join('kelas', 'kelas.id_kelas', '=', 'kelas_siswa.id_kelas')
                 ->join('siswas', 'siswas.id_siswa', '=', 'kelas_siswa.id_siswa')
                 ->join('gurus', 'gurus.id_guru', '=', 'kelas.id_guru')
-                ->select('siswas.id_siswa as id', 'siswas.nm_siswa as nama', 'siswas.jenkel')
+                ->select('siswas.id_siswa as id', 'siswas.nm_siswa as nama', 'siswas.jenkel', 'nm_kelas')
                 ->where('gurus.id_user', '=', Auth::user()->id)->get();
 
             return \Yajra\DataTables\DataTables::of($kelas_siswa)

@@ -24,6 +24,7 @@
                     },
                     { data: 'nama', name: 'nama' },
                     { data: 'jenkel', name: 'jenkel' },
+                    { data: 'nm_kelas', name: 'nm_kelas' },
                 ]
             });
         });

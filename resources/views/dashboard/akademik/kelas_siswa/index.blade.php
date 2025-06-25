@@ -36,6 +36,7 @@
                                     <th style="width: 55px">No</th>
                                     <th>Nama Siswa</th>
                                     <th>Jenis Kelamin</th>
+                                    <th>Kelas</th>
                                 </tr>
                                 </thead>
                             </table>
