@@ -26,14 +26,7 @@
                                 <h5>Welcome back, {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h5>
                             </div>
                             <div class="card-body">
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                    It has survived not only five centuries, but also the leap into electronic
-                                    typesetting, remaining essentially unchanged. It was popularised in the 1960s with
-                                    the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                    with desktop publishing software like Aldus PageMaker including versions of Lorem
-                                    Ipsum.</p>
+                                <p>Selamat datang di Sistem Informasi Akademik (SIAKAD). Melalui halaman ini, Anda dapat mengakses berbagai fitur administrasi akademik seperti pengelolaan data siswa, jadwal pelajaran, nilai, dan informasi penting lainnya. Pastikan untuk selalu memperbarui data dan memanfaatkan sistem ini dengan bijak demi kelancaran proses akademik.</p>
                             </div>
                         </div>
                     </div>
@@ -115,14 +108,7 @@
                                 <h5>Welcome back, {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h5>
                             </div>
                             <div class="card-body">
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                    It has survived not only five centuries, but also the leap into electronic
-                                    typesetting, remaining essentially unchanged. It was popularised in the 1960s with
-                                    the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                    with desktop publishing software like Aldus PageMaker including versions of Lorem
-                                    Ipsum.</p>
+                                <p>Selamat datang di Sistem Informasi Akademik (SIAKAD). Di halaman ini, Anda dapat melihat jadwal pelajaran, nilai, informasi progress siswa dari sekolah. Pastikan untuk selalu memeriksa informasi terbaru secara rutin.</p>
                             </div>
                         </div>
                     </div>

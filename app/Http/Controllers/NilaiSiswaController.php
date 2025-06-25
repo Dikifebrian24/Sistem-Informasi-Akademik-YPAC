@@ -55,9 +55,13 @@ class NilaiSiswaController extends Controller
     public function laporan_nilai_index()
     {
 
-        $id_guru = DB::table('gurus')->where('id_user', Auth::user()->id)->first()->id_guru;
+        if(Auth::user()->level == 2){
+            $id_guru = DB::table('gurus')->where('id_user', Auth::user()->id)->first()->id_guru;
 
-        $kelas = DB::table('kelas')->where('id_guru', $id_guru)->get();
+            $kelas = DB::table('kelas')->where('id_guru', $id_guru)->get();
+        } else {
+            $kelas = DB::table('kelas')->get();
+        }
 
         $params = [
             'kelas' => $kelas,

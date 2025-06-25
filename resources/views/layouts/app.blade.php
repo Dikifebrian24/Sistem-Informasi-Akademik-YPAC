@@ -349,7 +349,7 @@
         </footer>
     </div>
 </div>
-<script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
+{{--<script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>--}}
 <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
 <script src="{{ asset('assets/js/icons/feather-icon/feather.min.js') }}"></script>
 <script src="{{ asset('assets/js/icons/feather-icon/feather-icon.js') }}"></script>
