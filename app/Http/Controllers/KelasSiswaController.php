@@ -115,7 +115,7 @@ class KelasSiswaController extends Controller
         $siswa_ids = $request->input('siswa');
 
         // Remove existing assignments if needed
-        DB::table('kelas_siswa')->where('id_kelas', $id_kelas)->delete();
+//        DB::table('kelas_siswa')->where('id_kelas', $id_kelas)->delete();
 
         // Insert new records
         foreach ($siswa_ids as $id_siswa) {
