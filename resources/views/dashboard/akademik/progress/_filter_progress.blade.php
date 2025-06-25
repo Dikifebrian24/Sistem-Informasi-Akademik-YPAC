@@ -165,60 +165,60 @@
         }
     </script>
 
-    <div class="container">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5>Rekap Data Progress Semua Siswa</h5>
-            </div>
-            <div class="card-body">
+{{--    <div class="container">--}}
+{{--        <div class="card mb-4">--}}
+{{--            <div class="card-header">--}}
+{{--                <h5>Rekap Data Progress Semua Siswa</h5>--}}
+{{--            </div>--}}
+{{--            <div class="card-body">--}}
 
-                @if($data->count())
-                    {{-- Rata-rata nilai --}}
-                    @php
-                        $avgNilai = round($data->avg('nilai'), 2);
-                    @endphp
+{{--                @if($data->count())--}}
+{{--                    --}}{{-- Rata-rata nilai --}}
+{{--                    @php--}}
+{{--                        $avgNilai = round($data->avg('nilai'), 2);--}}
+{{--                    @endphp--}}
 
-                    <div class="mb-3">
-                        <strong>Rata-rata Nilai Keseluruhan: </strong> {{ $avgNilai }} / 10
-                    </div>
+{{--                    <div class="mb-3">--}}
+{{--                        <strong>Rata-rata Nilai Keseluruhan: </strong> {{ $avgNilai }} / 10--}}
+{{--                    </div>--}}
 
-                    <table id="rekapTable" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>Nama Siswa</th>
-                            <th>Mata Pelajaran</th>
-                            <th>Nilai (Bintang)</th>
-                            <th>Keterangan</th>
-                            <th>Lampiran</th>
-                            <th>Tanggal Progress</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($data as $item)
-                            <tr>
-                                <td>{{ $item->siswa->nama ?? '-' }}</td>
-                                <td>{{ $item->mapel->nama ?? '-' }}</td>
-                                <td>{{ $item->nilai }}</td>
-                                <td>{{ $item->desc_nilai ?? '-' }}</td>
-                                <td>
-                                    @if($item->lampiran)
-                                        <a href="{{ asset('storage/' . $item->lampiran) }}" target="_blank">Lihat File</a>
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td>{{ \Carbon\Carbon::parse($item->tgl_progress)->format('d M Y') }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="alert alert-warning">Belum ada data progress.</div>
-                @endif
+{{--                    <table id="rekapTable" class="table table-bordered table-striped">--}}
+{{--                        <thead>--}}
+{{--                        <tr>--}}
+{{--                            <th>Nama Siswa</th>--}}
+{{--                            <th>Mata Pelajaran</th>--}}
+{{--                            <th>Nilai (Bintang)</th>--}}
+{{--                            <th>Keterangan</th>--}}
+{{--                            <th>Lampiran</th>--}}
+{{--                            <th>Tanggal Progress</th>--}}
+{{--                        </tr>--}}
+{{--                        </thead>--}}
+{{--                        <tbody>--}}
+{{--                        @foreach($data as $item)--}}
+{{--                            <tr>--}}
+{{--                                <td>{{ $item->siswa->nm_siswa ?? '-' }}</td>--}}
+{{--                                <td>{{ $item->mapel->nama ?? '-' }}</td>--}}
+{{--                                <td>{{ $item->nilai }}</td>--}}
+{{--                                <td>{{ $item->desc_nilai ?? '-' }}</td>--}}
+{{--                                <td>--}}
+{{--                                    @if($item->lampiran)--}}
+{{--                                        <a href="{{ asset('storage/' . $item->lampiran) }}" target="_blank">Lihat File</a>--}}
+{{--                                    @else--}}
+{{--                                        ---}}
+{{--                                    @endif--}}
+{{--                                </td>--}}
+{{--                                <td>{{ \Carbon\Carbon::parse($item->tgl_progress)->format('d M Y') }}</td>--}}
+{{--                            </tr>--}}
+{{--                        @endforeach--}}
+{{--                        </tbody>--}}
+{{--                    </table>--}}
+{{--                @else--}}
+{{--                    <div class="alert alert-warning">Belum ada data progress.</div>--}}
+{{--                @endif--}}
 
-            </div>
-        </div>
-    </div>
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     {{-- Include jQuery dan DataTables --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">

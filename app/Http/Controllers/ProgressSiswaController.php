@@ -68,16 +68,51 @@ class ProgressSiswaController extends Controller
     public function getMapelDatatables(Request $request)
     {
         if ($request->ajax()) {
+//            $mapel = DB::table('jadwals')
+//                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+//                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+//                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+//                ->where('gurus.id_user', '=', Auth::user()->id)
+//                ->select('gurus.nm_guru', 'mapels.nm_mapel', 'jadwals.id as id_jadwal', 'nm_kelas', 'jadwals.*')
+//                ->get();
+//
+//            return DataTables::of($mapel)
+//                ->addIndexColumn()
+//                ->addColumn('action', function ($row) {
+//                    return '<button class="btn btn-sm btn-danger" id="input_progress" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Input</button>
+//                            <button class="btn btn-sm btn-primary" id="show_progress" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Lihat Nilai</button>';
+//                })
+//                ->rawColumns(['action'])
+//                ->make(true);
+
             $mapel = DB::table('jadwals')
                 ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
                 ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
                 ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
                 ->where('gurus.id_user', '=', Auth::user()->id)
-                ->select('gurus.nm_guru', 'mapels.nm_mapel', 'jadwals.id as id_jadwal', 'nm_kelas', 'jadwals.*')
+                ->select(
+                    'mapels.id as id_mapel',
+                    'mapels.nm_mapel',
+                    DB::raw('MIN(jadwals.id) as id_jadwal'),
+                    DB::raw('MIN(jadwals.tanggal) as tanggal'),
+                    DB::raw('MIN(kelas.nm_kelas) as nm_kelas'),
+                    DB::raw('MIN(gurus.nm_guru) as nm_guru'),
+                    'jadwals.id_kelas'
+                )
+                ->groupBy('mapels.id', 'mapels.nm_mapel', 'jadwals.id_kelas')
                 ->get();
+
+//                dd($mapel);
 
             return DataTables::of($mapel)
                 ->addIndexColumn()
+                ->editColumn('jumlah_siswa', function ($row) {
+                    $id_kelas = $row->id_kelas;
+
+                    $jml_siswa = DB::table('kelas_siswa')->where('id_kelas', $id_kelas)->count();
+
+                    return $jml_siswa;
+                })
                 ->addColumn('action', function ($row) {
                     return '<button class="btn btn-sm btn-danger" id="input_progress" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Input</button>
                             <button class="btn btn-sm btn-primary" id="show_progress" data-id_kelas="'.$row->id_kelas.'" data-id_mapel="'.$row->id_mapel.'" data-id="'.$row->id_jadwal.'">Lihat Nilai</button>';

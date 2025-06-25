@@ -30,6 +30,7 @@ class NilaiSiswaController extends Controller
     public function index()
     {
         $data_guru = DB::table('users')->where('level', 2)->get();
+
         if (request()->ajax()) {
             return datatables()->of($data_guru)
                 ->addIndexColumn()
