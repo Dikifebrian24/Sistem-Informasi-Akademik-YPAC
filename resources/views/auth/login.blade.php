@@ -93,9 +93,7 @@
                 <div class="form-group">
                   <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                 </div>
-                <div class="login-social-title">
-                  <h5>Or</h5>
-                </div>
+
 {{--                <p>Don't have account?<a class="ms-2" href="{{ route('register') }}">Create Account</a></p>--}}
               </form>
             </div>
