@@ -94,15 +94,13 @@
             </div>
         </div>
     </div>
-    @php--}}
-    {{--        $dataSorted = $data->sortBy('tgl_progress');--}}
-    {{--    @endphp
-    {{--   --}}
 
     <script>
+        window.addEventListener('DOMContentLoaded', renderChart);
+
         function renderChart() {
-            const labels = {!! json_encode($data->pluck('tgl_progress')->map(fn($tgl) => \Carbon\Carbon::parse($tgl)->format('d M'))) !!};
-            const nilai = {!! json_encode($data->pluck('nilai')) !!};
+            const labels = {!! json_encode($data_tgl->map(fn($tgl) => \Carbon\Carbon::parse($tgl)->format('d M'))) !!};
+            const nilai = {!! json_encode($data_nilai) !!};
 
             const ctx = document.getElementById('progressChart').getContext('2d');
             new Chart(ctx, {
@@ -139,6 +137,7 @@
                         x: {
                             title: {
                                 display: true,
+                                text: 'Tanggal'
                             }
                         }
                     }

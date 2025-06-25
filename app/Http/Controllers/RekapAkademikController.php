@@ -173,8 +173,20 @@ class RekapAkademikController extends Controller
             ->orderBy('tgl_progress', 'asc')
             ->get();
 
+        $data_tgl = DB::table('progress_nilais')
+            ->where('id_mapel', $id_mapel)
+            ->where('id_siswa', '=', $id_siswa->id_siswa)
+            ->orderBy('tgl_progress', 'asc')
+            ->get()->pluck('tgl_progress');
+
+        $data_nilai = DB::table('progress_nilais')
+            ->where('id_mapel', $id_mapel)
+            ->where('id_siswa', '=', $id_siswa->id_siswa)
+            ->orderBy('tgl_progress', 'asc')
+            ->get()->pluck('nilai');
+
         // Kirim ke view baru
-        return view('dashboard.akademik.rekap_akademik.detail_progress', compact('nilai', 'data'));
+        return view('dashboard.akademik.rekap_akademik.detail_progress', compact('nilai', 'data', 'data_tgl', 'data_nilai'))->render();
     }
 
     public function detail($id)
