@@ -52,6 +52,21 @@ class GuruController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+//        dd($id);
+        $user = DB::table('gurus')
+            ->join('users', 'gurus.id_user', '=', 'users.id')
+            ->where('gurus.id_guru', $id)->first();
+
+//        dd($user);
+
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ]);
+    }
+
     public function destroy($id)
     {
         // Hapus data siswa terlebih dahulu

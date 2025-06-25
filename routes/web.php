@@ -63,6 +63,7 @@ Route::put('jadwal/{id}', [JadwalController::class, 'update'])->name('jadwal.upd
 Route::get('laporan_nilai_siswa', [\App\Http\Controllers\NilaiSiswaController::class, 'laporan_nilai_index'])->name('laporan_nilai_siswa');
 
 Route::get('/siswa/edit/{id}', [SiswaController::class, 'edit']);
+Route::get('/guru/edit/{id}', [GuruController::class, 'edit']);
 Route::put('/siswa/update/{id}', [SiswaController::class, 'update']);
 
 
