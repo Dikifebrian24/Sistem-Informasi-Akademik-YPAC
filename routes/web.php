@@ -72,7 +72,9 @@ Route::delete('/nilai/delete/{id}', [NilaiSiswaController::class, 'destroy'])->n
 //siswa view (rekap akademik)
 Route::get('/rekap_akademik_nilai', [RekapAkademikController::class, 'index'])->name('rekap_akademik_nilai');
 Route::get('/rekap_nilai_data', [RekapAkademikController::class, 'getDatatablesNilai'])->name('rekap_nilai_data');
+Route::get('/rekap_nilai_data_progress', [RekapAkademikController::class, 'getDatatablesNilaiProgress'])->name('rekap_nilai_data_progress');
 Route::get('/get_detail_nilai', [RekapAkademikController::class, 'get_detail_nilai'])->name('get_detail_nilai');
+Route::get('/get_detail_progress', [RekapAkademikController::class, 'get_detail_progress'])->name('get_detail_progress');
 
 
 //siswa view (rekap progress)

@@ -39,21 +39,78 @@ class RekapAkademikController extends Controller
     {
         if ($request->ajax()) {
             $id_user = Auth::user()->id;
-            $kelas = DB::table('mapels')
-                ->select('mapels.nm_mapel', 'kelas.nm_kelas', 'mapels.id as id_mapel')
-                ->join('kelas', 'kelas.id_kelas', '=', 'mapels.id_kelas')
-                ->join('kelas_siswa', 'kelas_siswa.id_kelas', '=', 'kelas.id_kelas')
-                ->join('siswas','kelas_siswa.id_siswa','=','siswas.id_siswa')
-                ->join('users','users.id','=','siswas.id_user')
-                ->where('users.id', $id_user)
-                ->get();
+//            $kelas = DB::table('mapels')
+//                ->select('mapels.nm_mapel', 'kelas.nm_kelas', 'mapels.id as id_mapel', 'kelas.id_kelas as id_kelas')
+//                ->join('kelas', 'kelas.id_kelas', '=', 'mapels.id_kelas')
+//                ->join('kelas_siswa', 'kelas_siswa.id_kelas', '=', 'kelas.id_kelas')
+//                ->join('siswas','kelas_siswa.id_siswa','=','siswas.id_siswa')
+//                ->join('users','users.id','=','siswas.id_user')
+//                ->join('jadwals', 'jadwals.id_mapel', '=', 'mapels.id')
+//                ->where('users.id', $id_user)
+//                ->get();
 
 //            dd($kelas);
 
+
+
+            $kelas = DB::table('jadwals')
+                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+//                ->where('gurus.id_user', '=', Auth::user()->id)
+                ->select(
+                    'mapels.id as id_mapel',
+                    'mapels.nm_mapel'
+                )
+                ->groupBy('mapels.id', 'mapels.nm_mapel', 'jadwals.id_kelas')
+                ->get();
+
+//            dd($kelas);
             return DataTables::of($kelas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) use ($id_user) {
                     return '<button class="btn btn-sm btn-primary" data-id_mapel="'. $row->id_mapel.'" data-id_user="'.$id_user.'" id="get_detail_nilai">Lihat</button>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function getDatatablesNilaiProgress(Request $request)
+    {
+        if ($request->ajax()) {
+            $id_user = Auth::user()->id;
+//            $kelas = DB::table('mapels')
+//                ->select('mapels.nm_mapel', 'kelas.nm_kelas', 'mapels.id as id_mapel', 'kelas.id_kelas as id_kelas')
+//                ->join('kelas', 'kelas.id_kelas', '=', 'mapels.id_kelas')
+//                ->join('kelas_siswa', 'kelas_siswa.id_kelas', '=', 'kelas.id_kelas')
+//                ->join('siswas','kelas_siswa.id_siswa','=','siswas.id_siswa')
+//                ->join('users','users.id','=','siswas.id_user')
+//                ->join('jadwals', 'jadwals.id_mapel', '=', 'mapels.id')
+//                ->where('users.id', $id_user)
+//                ->get();
+
+//            dd($kelas);
+
+
+
+            $kelas = DB::table('jadwals')
+                ->join('gurus', 'gurus.id_guru', '=', 'jadwals.id_guru')
+                ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+                ->join('kelas', 'kelas.id_kelas', '=', 'jadwals.id_kelas')
+//                ->where('gurus.id_user', '=', Auth::user()->id)
+                ->select(
+                    'mapels.id as id_mapel',
+                    'mapels.nm_mapel'
+                )
+                ->groupBy('mapels.id', 'mapels.nm_mapel', 'jadwals.id_kelas')
+                ->get();
+
+//            dd($kelas);
+            return DataTables::of($kelas)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) use ($id_user) {
+                    return '<button class="btn btn-sm btn-primary" data-id_mapel="'. $row->id_mapel.'" data-id_user="'.$id_user.'" id="get_detail_nilai_progress">Lihat</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -65,6 +122,7 @@ class RekapAkademikController extends Controller
     {
         $id_mapel = $request->id_mapel;
         $id_user = Auth::user()->id;
+        $id_kelas = $request->id_kelas;
 
         $id_siswa = DB::table('siswas')
             ->join('users', 'users.id', '=', 'siswas.id_user')
@@ -77,11 +135,42 @@ class RekapAkademikController extends Controller
             ->join('users', 'users.id', '=', 'siswas.id_user')
             ->where('nilais.id_mapel', $id_mapel)
             ->where('nilais.id_siswa', '=', "$id_siswa->id_siswa")
+//            ->where('nilais.id_kelas', '=', "$id_kelas")
             ->select('nilais.*', 'kategori_nilai', 'siswas.nm_siswa as nama_siswa')
             ->get();
 
+//        dd($nilai);
+
         // Kirim ke view baru
         return view('dashboard.akademik.rekap_akademik.detail_nilai', compact('nilai'))->render();
+    }
+
+
+    public function get_detail_progress(Request $request)
+    {
+        $id_mapel = $request->id_mapel;
+        $id_user = Auth::user()->id;
+        $id_kelas = $request->id_kelas;
+
+        $id_siswa = DB::table('siswas')
+            ->join('users', 'users.id', '=', 'siswas.id_user')
+            ->where('users.id', $id_user)
+            ->get()->first();
+
+        $nilai = DB::table('progress_nilais')
+            ->join('mapels', 'mapels.id', '=', 'progress_nilais.id_mapel')
+            ->join('siswas', 'siswas.id_siswa', '=', 'progress_nilais.id_siswa')
+            ->join('users', 'users.id', '=', 'siswas.id_user')
+            ->where('progress_nilais.id_mapel', $id_mapel)
+            ->where('progress_nilais.id_siswa', '=', "$id_siswa->id_siswa")
+//            ->where('progress_nilais.id_kelas', '=', "$id_kelas")
+            ->select('progress_nilais.*', 'siswas.nm_siswa as nama_siswa')
+            ->get();
+
+//        dd($nilai);
+
+        // Kirim ke view baru
+        return view('dashboard.akademik.rekap_akademik.detail_progress', compact('nilai'))->render();
     }
 
     public function detail($id)

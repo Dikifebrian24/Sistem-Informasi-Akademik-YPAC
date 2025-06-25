@@ -29,12 +29,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="display datatables table table-bordered" id="rekap_akademik_nilai">
+                            <table class="display datatables table table-bordered" id="rekap_akademik_nilai_progress">
                                 <thead>
                                 <tr style="text-align: center">
                                     <th style="width: 55px">No</th>
                                     <th>Nama Pelajaran</th>
-                                    <th>Kelas</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>

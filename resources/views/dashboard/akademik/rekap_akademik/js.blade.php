@@ -26,7 +26,32 @@
                         }
                     },
                     {data: 'nm_mapel', name: 'nm_mapel'},
-                    {data: 'nm_kelas', name: 'nm_kelas'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                ]
+            });
+
+            var siswa_kelas = $('#rekap_akademik_nilai_progress').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('rekap_nilai_data_progress') }}',
+                columns: [
+                    {
+                        data: null,
+                        name: 'id',
+                        className: 'text-center',
+                        orderable: false,
+                        searchable: false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {data: 'nm_mapel', name: 'nm_mapel'},
                     {
                         data: 'action',
                         name: 'action',
@@ -77,6 +102,22 @@
 
             // Redirect ke route dengan parameter query string
             window.location.href = `/get_detail_nilai?id_mapel=${id_mapel}&id_kelas=${id_kelas}`;
+        });
+
+        $(document).on('click', '#get_detail_nilai_progress', function(e) {
+            e.preventDefault();
+
+            // Ambil data dari tombol yang diklik
+            let id_mapel = $(this).data('id_mapel');
+            let id_kelas = $(this).data('id_kelas');
+            let id_jadwal = $(this).data('id');
+
+            console.log('id_mapel:', id_mapel);
+            console.log('id_kelas:', id_kelas);
+            console.log('id_jadwal:', id_jadwal);
+
+            // Redirect ke route dengan parameter query string
+            window.location.href = `/get_detail_progress?id_mapel=${id_mapel}&id_kelas=${id_kelas}`;
         });
 
         $('#editForm').submit(function(e){
