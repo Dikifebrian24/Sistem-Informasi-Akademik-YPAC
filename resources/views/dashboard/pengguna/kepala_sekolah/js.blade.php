@@ -88,6 +88,84 @@
             });
         });
 
+        $(document).on('click', '.edit', function () {
+            let id = $(this).data('id');
+
+            $.ajax({
+                url: `/guru/edit/${id}`,
+                type: 'GET',
+                success: function (response) {
+                    if (response.success) {
+                        let user = response.data;
+                        let siswa = user.guru;
+
+                        console.log(user)
+
+                        $('#edit_id_user').val(user.id_user); // atau id siswa yang sesuai
+                        $('#edit_first_name').val(user.first_name);
+                        $('#edit_last_name').val(user.last_name);
+                        $('#edit_nip').val(user.nip);
+                        $('#edit_nik').val(user.nik);
+                        $('#edit_email').val(user.email);
+                        $('#edit_npwp').val(user.npwp);
+                        $('#edit_jenkel').val(user.jenkel);
+                        $('#edit_tmpt_lahir').val(user.tmpt_lahir);
+                        $('#edit_tgl_lahir').val(user.tgl_lahir);
+                        $('#edit_agama').val(user.agama);
+                        $('#edit_almt_jalan').val(user.almt_jalan);
+                        $('#edit_no_hp').val(user.no_hp);
+                        $('#edit_level_guru').val(user.edit_level_guru);
+
+                        $('#guruModalEdit').modal('show');
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', '.delete', function () {
+            let id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: "Data ini akan dihapus secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'guru/delete/' + id,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                            // Reload DataTable
+                            $('#data').DataTable().ajax.reload();
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan saat menghapus data.'
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
         $('#saveGuru').on('submit', function(e) {
             e.preventDefault();
 
