@@ -167,10 +167,14 @@ class RekapAkademikController extends Controller
             ->select('progress_nilais.*', 'siswas.nm_siswa as nama_siswa')
             ->get();
 
-//        dd($nilai);
+        $data = DB::table('progress_nilais')
+            ->where('id_mapel', $id_mapel)
+            ->where('id_siswa', '=', $id_siswa->id_siswa)
+            ->orderBy('tgl_progress', 'asc')
+            ->get();
 
         // Kirim ke view baru
-        return view('dashboard.akademik.rekap_akademik.detail_progress', compact('nilai'))->render();
+        return view('dashboard.akademik.rekap_akademik.detail_progress', compact('nilai', 'data'));
     }
 
     public function detail($id)
@@ -180,8 +184,11 @@ class RekapAkademikController extends Controller
             ->where('id_kelas', '=', $id)
             ->select('kelas.*', 'gurus.nm_guru', 'gurus.foto')
             ->get();
+
+
         return response()->json($data);
     }
+
 
     public function add()
     {

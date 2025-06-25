@@ -61,36 +61,9 @@
         <div class="col-12 p-0">
           <div class="login-card">
             <div class="login-main">
-              <div class="theme-form login-form">
-                @if (session('status'))
-                  <?php
-                  toastr()->success('We have sent mail reset password to your email', 'Reset password has been sent!');
-                  ?>
-                @endif
-                <h4 class="mb-3">Reset Your Password</h4>
-                <form method="POST" action="{{ route('password.email') }}">
-                  @csrf
-
-                  <div class="form-group">
-                    <label>Email Address</label>
-
-                    <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
-                      <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                      @error('email')
-                        <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <button class="btn btn-primary btn-block" type="submit">Send</button>
-                  </div>
-                </form>
-              </div>
+                <div class="theme-form login-form">
+                    <h3 class="text-center mt-3">Jika lupa password, silahkan hubungi Admin</h3>
+                </div>
             </div>
           </div>
         </div>

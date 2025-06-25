@@ -88,6 +88,7 @@
         //     });
         // });
 
+
         $(document).on('click', '#get_detail_nilai', function(e) {
             e.preventDefault();
 
