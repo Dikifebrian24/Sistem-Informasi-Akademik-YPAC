@@ -75,6 +75,7 @@
                                     <th style="width: 55px">No</th>
                                     <th>Deskripsi</th>
                                     <th>Value (1-10)</th>
+                                    <th>Lampiran Guru</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -83,6 +84,13 @@
                                         <td style="text-align: center">{{ $index + 1 }}</td>
                                         <td>{{ $data->desc_nilai }}</td>
                                         <td style="text-align: center">{{ $data->nilai ?? '-' }}</td>
+                                        <td style="text-align: center">
+                                            @if ($data->lampiran)
+                                                <a href="{{ asset('storage/' . $data->lampiran) }}" target="_blank">Download</a>
+                                            @else
+                                                Tidak ada lampiran
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

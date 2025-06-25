@@ -35,6 +35,7 @@
                                     <th style="width: 55px">No</th>
                                     <th>Nama Materi</th>
                                     <th>Nilai</th>
+                                    <th>Lampiran</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -43,6 +44,13 @@
                                         <td style="text-align: center">{{ $index + 1 }}</td>
                                         <td>{{ $data->kategori_nilai }}</td>
                                         <td style="text-align: center">{{ $data->nilai ?? '-' }}</td>
+                                        <td style="text-align: center">
+                                            @if ($data->lampiran)
+                                                <a href="{{ asset('storage/' . $data->lampiran) }}" target="_blank">Download</a>
+                                            @else
+                                                Tidak ada lampiran
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
