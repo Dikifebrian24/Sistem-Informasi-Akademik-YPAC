@@ -263,12 +263,16 @@ class NilaiSiswaController extends Controller
         $mapel = Mapel::where('id', $id_mapel)->get()->first()->nm_mapel;
         $mapel_id = Mapel::where('id', $id_mapel)->get()->first()->id;
 
+
+        $jadwal = DB::table('jadwals')->where('id_mapel', $id_mapel)->get();
+
         $data = [
             'mapel' => $mapel,
             'id_mapel' => $id_mapel,
             'id_kelas' => $id_kelas,
             'id_jadwal' => $id_jadwal,
             'siswa' => $siswa,
+            'jadwal' => $jadwal,
         ];
 
         return view('dashboard.akademik.nilai.nilai', $data);
@@ -374,6 +378,7 @@ class NilaiSiswaController extends Controller
             'kategori_nilai' => 'required|in:Harian,UTS,UAS',
             'nilai_value' => 'required|integer|min:1|max:100',
             'lampiran' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
+            'jadwal' => 'required|exists:jadwals,id',
         ]);
 
         $lampiran = null;
@@ -388,6 +393,7 @@ class NilaiSiswaController extends Controller
             'nilai' => $request->nilai_value,
             'desc_nilai' => $request->desc_nilai,
             'lampiran' => $lampiran,
+            'id_jadwal' => $request->jadwal
         ]);
 
         return response()->json(['message' => 'Data nilai berhasil disimpan.']);
@@ -427,7 +433,11 @@ class NilaiSiswaController extends Controller
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
             'id_kelas' => 'required|exists:kelas,id_kelas',
             'mapel' => 'required|exists:mapels,id',
+            'jadwal' => 'required|exists:jadwals,id',
         ]);
+
+
+//        dd($validated);
 
         // Store the new jadwal in the database
         Jadwal::create([
@@ -437,6 +447,7 @@ class NilaiSiswaController extends Controller
             'waktu_mulai' => $validated['waktu_mulai'],
             'waktu_selesai' => $validated['waktu_selesai'],
             'id_kelas' => $validated['id_kelas'],
+            'id_jadwal' => $request->jadwal,
         ]);
 
         // Return response or redirect as needed

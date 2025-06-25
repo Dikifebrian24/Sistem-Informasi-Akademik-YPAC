@@ -48,6 +48,16 @@
                                         </div>
 
                                         <div class="mb-3">
+                                            <label class="col-form-label pt-0" for="jadwal">Pertemuan</label>
+                                            <select class="form-control select2" name="jadwal" id="jadwal" required>
+                                                <option value="Harian">-- Pilih Materi --</option>
+                                                @foreach($jadwal as $data)
+                                                    <option value="{{ $data->id }}">{{ $data->materi }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
                                             <label class="col-form-label pt-0" for="nilai_value">Nilai</label>
                                             <small>( 1-100 )</small>
                                             <input class="form-control" id="nilai_value" name="nilai_value" type="number" min="1" max="100" placeholder="Masukkan Nilai Siswa" required>
