@@ -5,32 +5,7 @@
     <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="text/javascript">
-        $('.show_confirm').click(function (e) {
-            var form = $(this).closest("form");
-            e.preventDefault();
-            swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Poof! Your imaginary file has been deleted!", {
-                            icon: "success",
-                            // timer: 3000
-                        });
-                        form.submit();
-                    } else {
-                        swal("Your imaginary file is safe!", {
-                            icon: "info"
-                        });
-                    }
-                })
-        });
-    </script>
+
     <script>
         @if (session()->has('success'))
         toastr.success('{{ session('success') }}', 'Wohoooo!');
@@ -125,6 +100,50 @@
         $('#exportGuruBtn').on("click", function (e) {
             e.preventDefault();
             window.location.href = "/master/guru/export";
+        });
+
+        $(document).on('click', '.delete', function () {
+            let id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: "Data ini akan dihapus secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'guru/delete/' + id,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                            // Reload DataTable
+                            $('#data').DataTable().ajax.reload();
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan saat menghapus data.'
+                            });
+                        }
+                    });
+                }
+            });
         });
 
         $('#openModalBtn').on("click", function (e) {

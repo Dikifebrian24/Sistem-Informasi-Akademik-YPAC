@@ -43,13 +43,32 @@ class GuruController extends Controller
         if (request()->ajax()) {
             return datatables()->of($data)
                 ->addColumn('action', function ($row) {
-                    return '<a class="btn btn-primary btn-xs m-r-5" data-id="'.$row->id_guru.'"><i class="fa fa-edit"></i></a>
-                        <a class="btn btn-danger btn-xs" data-id="'.$row->id_guru.'"><i class="fa fa-trash"></i></a>';
+                    return '<a class="btn btn-primary btn-xs m-r-5 edit" data-id="'.$row->id_guru.'"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-danger btn-xs delete" data-id="'.$row->id_guru.'"><i class="fa fa-trash"></i></a>';
                 })
                 ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
         }
+    }
+
+    public function destroy($id)
+    {
+        // Hapus data siswa terlebih dahulu
+        $siswa = Guru::where('id_guru', $id)->first();
+
+//        dd($siswa);
+
+        $id_user = $siswa->id_user;
+        if ($siswa) {
+            $siswa->delete();
+        }
+
+        // Hapus data user
+        $user = User::findOrFail($id_user);
+        $user->delete();
+
+        return response()->json(['success' => true, 'message' => 'User dan data siswa berhasil dihapus']);
     }
 
     public function import(Request $request)
