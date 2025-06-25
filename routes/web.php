@@ -47,6 +47,9 @@ Auth::routes(['verify' => true]);
 Route::get('/raport/{id}', [RaportController::class, 'cetak'])->name('raport.cetak');
 Route::get('/nilai/{id}', [\App\Http\Controllers\NilaiSiswaController::class, 'cetak'])->name('laporan.cetak');
 
+Route::delete('/kelas/{id_kelas}/siswa/{id_siswa}', [KelasController::class, 'hapusSiswa'])->name('kelas.siswa.hapus');
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home_siswa', [App\Http\Controllers\HomeController::class, 'home_siswa'])->name('home_siswa');
 Route::get('/mapel/{id}/edit', [MapelController::class, 'edit']);

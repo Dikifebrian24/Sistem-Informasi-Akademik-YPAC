@@ -57,7 +57,7 @@ class KelasSiswaController extends Controller
             $kelas = DB::table('kelas')
                 ->get();
 
-//            dd($kelas);
+            dd($kelas);
 
             return DataTables::of($kelas)
                 ->addIndexColumn()
@@ -90,11 +90,19 @@ class KelasSiswaController extends Controller
 
         $siswa = Siswa::whereNotIn('id_siswa', $assignedSiswaIds)->get();
 
+        $siswaInKelas = DB::table('kelas_siswa')
+            ->join('siswas', 'kelas_siswa.id_siswa', '=', 'siswas.id_siswa')
+            ->where('kelas_siswa.id_kelas', $id_kelas)
+            ->get();
+
+//        dd($siswaInKelas);
+
         $params = [
             'title' => 'Tambah Pembagian Kelas',
             'kelas' => $kelas_info,
             'siswa' => $siswa,
             'assigned' => $assignedSiswaIds, // List of already assigned siswa IDs
+            'siswaInKelas' => $siswaInKelas,
         ];
 
 //        dd($params['assigned']);

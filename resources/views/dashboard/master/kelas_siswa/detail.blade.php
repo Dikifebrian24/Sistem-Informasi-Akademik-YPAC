@@ -37,7 +37,7 @@
                                 <label class="col-form-label pt-0" for="exampleInputEmail1">Kelas</label>
                                 <input class="form-control" id="exampleInputEmail1" type="text"
                                        value="{{ $params['kelas']->nm_kelas }}" disabled>
-                                <input class="form-control" id="id_kelas" name="id_kelas" type="text"
+                                <input class="form-control" id="id_kelas" name="id_kelas" type="hidden"
                                        value="{{ $params['kelas']->id_kelas }}">
                             </div>
                             <div class="mb-3">
@@ -66,7 +66,7 @@
                         <hr>
                     </div>
                     <div class="card-body">
-                        <table class="display datatables table table-bordered" id="list_siswa">
+                        <table class="display datatables table table-bordered">
                             <thead>
                             <tr style="text-align: center">
                                 <th style="width: 55px">No</th>
@@ -77,6 +77,24 @@
                                 <th style="width: 120px;">Action</th>
                             </tr>
                             </thead>
+                            <tbody>
+                            @foreach ($params['siswaInKelas'] as $index => $siswa)
+                                <tr>
+                                    <td style="text-align: center">{{ $index + 1 }}</td>
+                                    <td>{{ $siswa->nm_siswa }}</td>
+                                    <td>{{ $siswa->nisn }}</td>
+                                    <td>{{ $siswa->jenkel }}</td>
+                                    <td>{{ $siswa->no_hp }}</td>
+                                    <td style="text-align: center">
+                                        <form action="{{ route('kelas.siswa.hapus', ['id_kelas' => $siswa->id_kelas, 'id_siswa' => $siswa->id_siswa]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus siswa ini dari kelas?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
                         </table>
 
                     </div>
@@ -113,7 +131,7 @@
                     ajax: {
                         url: '{{ route("kelas_siswa/list_siswa") }}',
                         data: function (d) {
-                            d.id_kelas = kelasId;
+                            d.id_kelas = id_kelas;
                         }
                     },
                     columns: [

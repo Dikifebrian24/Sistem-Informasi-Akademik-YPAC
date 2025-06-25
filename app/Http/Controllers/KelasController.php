@@ -30,6 +30,15 @@ class KelasController extends Controller
         return view('dashboard.master.kelas.index', compact('params', 'data'));
     }
 
+    public function hapusSiswa($id_kelas, $id_siswa)
+    {
+        DB::table('kelas_siswa')
+            ->where('id_kelas', $id_kelas)
+            ->where('id_siswa', $id_siswa)
+            ->delete();
+
+        return redirect()->back()->with('success', 'Siswa berhasil dihapus dari kelas.');
+    }
     public function getDatatables(Request $request)
     {
         if ($request->ajax()) {
