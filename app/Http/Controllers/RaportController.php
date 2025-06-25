@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Response;
@@ -25,8 +26,9 @@ class RaportController extends Controller
             ->select('kelas.*', 'gurus.nm_guru')
             ->get();
 
-        $kelas = Kelas::all();
+        $id_guru = DB::table('gurus')->where('id_user', Auth::user()->id)->first()->id_guru;
 
+        $kelas = DB::table('kelas')->where('id_guru', $id_guru)->get();
         $params = [
             'title' => 'Kelas',
             'kelas' => $kelas,

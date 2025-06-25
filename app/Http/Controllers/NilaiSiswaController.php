@@ -53,7 +53,6 @@ class NilaiSiswaController extends Controller
 
     public function laporan_nilai_index()
     {
-        $kelas = Kelas::all();
 
         $id_guru = DB::table('gurus')->where('id_user', Auth::user()->id)->first()->id_guru;
 
