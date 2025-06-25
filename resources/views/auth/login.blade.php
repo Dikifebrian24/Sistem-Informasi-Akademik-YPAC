@@ -96,7 +96,7 @@
                 <div class="login-social-title">
                   <h5>Or</h5>
                 </div>
-                <p>Don't have account?<a class="ms-2" href="{{ route('register') }}">Create Account</a></p>
+{{--                <p>Don't have account?<a class="ms-2" href="{{ route('register') }}">Create Account</a></p>--}}
               </form>
             </div>
           </div>
