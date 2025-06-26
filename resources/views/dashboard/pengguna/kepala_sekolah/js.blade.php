@@ -88,6 +88,47 @@
             });
         });
 
+        $('#editGuru').on('submit', function (e) {
+            e.preventDefault();
+
+            let id = $('#edit_id_guru').val();
+
+            $.ajax({
+                url: `/guru/update/${id}`,
+                type: 'PUT',
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        $('#data').DataTable().ajax.reload();
+                        $('#guruModalEdit').modal('hide');
+                        $('#editGuru')[0].reset();
+                    }
+                },
+                error: function (xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorMsg = '';
+
+                    $.each(errors, function (key, value) {
+                        errorMsg += value + '<br>';
+                    });
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        html: errorMsg
+                    });
+                }
+            });
+        });
+
         $(document).on('click', '.edit', function () {
             let id = $(this).data('id');
 
@@ -101,7 +142,7 @@
 
                         console.log(user)
 
-                        $('#edit_id_user').val(user.id_user); // atau id siswa yang sesuai
+                        $('#edit_id_user').val(user.id_guru); // atau id siswa yang sesuai
                         $('#edit_first_name').val(user.first_name);
                         $('#edit_last_name').val(user.last_name);
                         $('#edit_nip').val(user.nip);
