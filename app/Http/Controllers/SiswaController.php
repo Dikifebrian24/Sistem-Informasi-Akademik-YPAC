@@ -162,7 +162,7 @@ class SiswaController extends Controller
     public function kelas_siswa()
     {
         $params = [
-            'title' => 'Data Bimbingan Siswa'
+            'title' => 'Data Siswa'
         ];
         return view('dashboard.akademik.kelas_siswa.index', compact('params'));
     }
