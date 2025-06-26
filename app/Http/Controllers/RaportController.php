@@ -26,9 +26,14 @@ class RaportController extends Controller
             ->select('kelas.*', 'gurus.nm_guru')
             ->get();
 
-        $id_guru = DB::table('gurus')->where('id_user', Auth::user()->id)->first()->id_guru;
+        if(Auth::user()->level == 2){
+            $id_guru = DB::table('gurus')->where('id_user', Auth::user()->id)->first()->id_guru;
 
-        $kelas = DB::table('kelas')->where('id_guru', $id_guru)->get();
+            $kelas = DB::table('kelas')->where('id_guru', $id_guru)->get();
+        } else {
+            $kelas = DB::table('kelas')->get();
+        }
+
         $params = [
             'title' => 'Kelas',
             'kelas' => $kelas,
@@ -39,6 +44,7 @@ class RaportController extends Controller
     public function filter(Request $request)
     {
         $id_kelas = $request->id_kelas;
+
 
         $data = DB::table('kelas_siswa')
             ->join('kelas', 'kelas_siswa.id_kelas', '=', 'kelas.id_kelas')
