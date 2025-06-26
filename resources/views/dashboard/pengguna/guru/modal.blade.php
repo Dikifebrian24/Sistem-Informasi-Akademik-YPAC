@@ -102,12 +102,12 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="needs-validation" id="editGuru" method="POST">
+                <form class="needs-validation" id="editGuru">
                     @csrf
+                    <input type="hidden" id="edit_id_guru" name="edit_id_guru">
                     <div class="row g-2">
                         <div class="col-md-6">
                             <label class="form-label">Nama Depan</label>
-                            <input class="form-control" type="text" name="edit_id_user" id="edit_id_user" required>
                             <input class="form-control" type="text" name="edit_first_name" id="edit_first_name" required>
                         </div>
                         <div class="col-md-6">

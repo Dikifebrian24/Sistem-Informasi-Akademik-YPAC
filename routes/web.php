@@ -66,6 +66,8 @@ Route::get('/siswa/edit/{id}', [SiswaController::class, 'edit']);
 Route::get('/guru/edit/{id}', [GuruController::class, 'edit']);
 Route::put('/siswa/update/{id}', [SiswaController::class, 'update']);
 
+Route::put('/guru/update/{id}', [GuruController::class, 'update']);
+
 
 //jadwal mengajar
 Route::get('/jadwal_mengajar', [JadwalController::class, 'jadwal_mengajar'])->name('jadwal_mengajar');

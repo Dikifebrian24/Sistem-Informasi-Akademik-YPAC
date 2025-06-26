@@ -166,4 +166,68 @@ class GuruController extends Controller
 
         return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
     }
+
+    public function update(Request $request, $id)
+    {
+        // Update data user
+
+//        dd($request);
+//        $user = User::findOrFail($id);
+//        $user->first_name = $request->edit_first_name;
+//        $user->last_name = $request->edit_last_name;
+//        $user->email = $request->edit_email;
+//        $user->save();
+//
+//        // Update data siswa
+//        $siswa = Siswa::where('id_user', $id)->first();
+//        if ($siswa) {
+//            $siswa->nik = $request->edit_nik;
+//            $siswa->jenkel = $request->edit_jenkel;
+//            $siswa->tmpt_lahir = $request->edit_tmpt_lahir;
+//            $siswa->tgl_lahir = $request->edit_tgl_lahir;
+//            $siswa->agama = $request->edit_agama;
+//            $siswa->almt_rumah = $request->edit_almt_rumah;
+//            $siswa->angkatan = $request->edit_angkatan;
+//            $siswa->nm_wali = $request->edit_nm_wali;
+//            $siswa->tgl_lahir_wali = $request->edit_tgl_lahir_wali;
+//            $siswa->no_telp_wali = $request->edit_no_telp_wali;
+//            $siswa->id_kelainan = $request->edit_kelainan;
+//            $siswa->no_hp = $request->edit_no_hp;
+//            $siswa->save();
+//        }
+
+        $id_user = DB::table('gurus')->where('id_guru', $id)->first()->id_user;
+
+
+        $user = User::findOrFail($id_user);
+
+//        dd($user);
+        $user->first_name = $request->edit_first_name;
+        $user->last_name = $request->edit_last_name;
+        $user->email = $request->edit_email;
+
+        if ($request->filled('edit_password')) {
+            $user->password = bcrypt($request->edit_password);
+        }
+
+        $user->save();
+
+        $siswa = Guru::where('id_guru', $id)->first();
+        if ($siswa) {
+            $siswa->nm_guru = $request->edit_first_name . ' ' . $request->edit_last_name;
+            $siswa->nik = $request->edit_nik;
+            $siswa->jenkel = $request->edit_jenkel;
+            $siswa->tmpt_lahir = $request->edit_tmpt_lahir;
+            $siswa->tgl_lahir = $request->edit_tgl_lahir;
+            $siswa->agama = $request->edit_agama;
+            $siswa->almt_jalan = $request->edit_almt_jalan;
+            $siswa->no_hp = $request->edit_no_hp;
+            $siswa->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diupdate'
+        ]);
+    }
 }

@@ -183,7 +183,7 @@
                 <form class="needs-validation" id="editSiswa">
                     @csrf
                     @method('PUT') {{-- atau input hidden jika pakai HTML murni --}}
-                    <input type="text" id="edit_siswa_id" name="edit_siswa_id">
+                    <input type="hidden" id="edit_siswa_id" name="edit_siswa_id">
                     <div>
                         <div class="row g-2">
                             <div class="col-md-6  mb-3">
