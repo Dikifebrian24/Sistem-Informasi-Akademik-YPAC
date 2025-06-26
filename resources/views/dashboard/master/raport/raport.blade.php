@@ -18,7 +18,7 @@
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h5>Filter</h5>
+                                    <h5>Cetak raport siswa</h5>
                                 </div>
                                 <div class="card-body">
                                     <form class="needs-validation" id="f_filter" novalidate>
