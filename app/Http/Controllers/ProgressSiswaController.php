@@ -38,7 +38,7 @@ class ProgressSiswaController extends Controller
         $siswa = Siswa::all();
 
         $params = [
-            'title' => 'Nilai Siswa',
+            'title' => 'Data Progress Siswa',
             'kelas' => Kelas::all(),
             'guru' => $data_guru,
             'mapel' => $mapel,
