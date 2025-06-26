@@ -49,8 +49,8 @@ class KelasController extends Controller
             return DataTables::of($kelas)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-sm btn-warning edit" data-id="'.$row->id_kelas.'">Edit</button>
-                        <button class="btn btn-sm btn-danger delete" data-id="'.$row->id_kelas.'">Delete</button>';
+                    return '<a class="btn btn-primary btn-xs m-r-5 edit" data-id="'.$row->id_kelas.'"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-danger btn-xs m-r-5 delete" data-id="'.$row->id_kelas.'"><i class="fa fa-trash"></i></a>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);

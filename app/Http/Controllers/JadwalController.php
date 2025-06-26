@@ -235,9 +235,11 @@ class JadwalController extends Controller
             return DataTables::of($query)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
+
+//                    <a class="btn btn-primary btn-xs m-r-5 edit" data-id="'.$row->id_guru.'"><i class="fa fa-edit"></i></a>
                     return '
-            <button class="btn btn-sm btn-warning edit" data-id="' . $row->jadwal_id . '">Edit</button>
-            <button class="btn btn-sm btn-danger delete" data-id="' . $row->jadwal_id . '">Delete</button>
+            <a class="btn btn-primary btn-xs m-r-5 edit" data-id="' . $row->jadwal_id . '"><i class="fa fa-edit"></i></a>
+            <a class="btn btn-danger btn-xs m-r-5 delete" data-id="' . $row->jadwal_id . '"><i class="fa fa-trash"></i></a>
         ';
                 })
                 ->rawColumns(['action'])
