@@ -322,6 +322,7 @@
                                             data-feather="file-text"></i><span>Laporan Nilai Siswa</span></a>
                                     <ul class="nav-submenu menu-content">
                                         <li><a href="{{route('laporan_nilai_siswa')}}">Nilai Siswa</a></li>
+                                        <li><a href="{{route('laporan_progress_siswa')}}">Laporan Progress</a></li>
                                         {{-- <li><a href="#">Capaian Belajar</a></li> --}}
                                         {{-- <li><a href="#">Presentasi</a></li> --}}
                                         {{-- <li><a href="#">Raport UTS</a></li> --}}

@@ -61,6 +61,7 @@ Route::get('/jadwal/edit/{id}', [JadwalController::class, 'edit']);
 Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy']);
 Route::put('jadwal/{id}', [JadwalController::class, 'update'])->name('jadwal.update');
 Route::get('laporan_nilai_siswa', [\App\Http\Controllers\NilaiSiswaController::class, 'laporan_nilai_index'])->name('laporan_nilai_siswa');
+Route::get('laporan_progress_siswa', [\App\Http\Controllers\ProgressSiswaController::class, 'laporan_progress_index'])->name('laporan_progress_siswa');
 
 Route::get('/siswa/edit/{id}', [SiswaController::class, 'edit']);
 Route::get('/guru/edit/{id}', [GuruController::class, 'edit']);

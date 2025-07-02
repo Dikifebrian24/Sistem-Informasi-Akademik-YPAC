@@ -116,6 +116,33 @@
             });
         });
 
+        $(document).ready(function () {
+            $('#f_filter_kelas').on('submit', function (e) {
+                e.preventDefault();
+
+                let form = $(this);
+                let url = "{{ route('laporan.kelas') }}";
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(),
+                    beforeSend: function () {
+                        // Optional: tambahkan loader
+                        $('#hasil_filter_card').hide();
+                    },
+                    success: function (response) {
+                        $('#hasil_filter').html(response);
+                        $('#hasil_filter_card').show();
+                    },
+                    error: function () {
+                        alert("Terjadi kesalahan. Coba lagi.");
+                    }
+                });
+            });
+        });
+
+
         {{--$('#f_progress').on('submit', function(e) {--}}
         {{--    e.preventDefault();--}}
 
