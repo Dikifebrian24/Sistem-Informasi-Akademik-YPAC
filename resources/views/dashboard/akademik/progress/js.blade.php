@@ -121,7 +121,7 @@
                 e.preventDefault();
 
                 let form = $(this);
-                let url = "{{ route('laporan.kelas') }}";
+                let url = "{{ route('progress.kelas') }}";
 
                 $.ajax({
                     type: "POST",

@@ -66,6 +66,82 @@ class ProgressSiswaController extends Controller
         return view('dashboard.akademik.progress.laporan_progress', compact('params'));
     }
 
+    public function filterLaporan(Request $request)
+    {
+        $id_kelas = $request->id_kelas;
+
+        $data = DB::table('kelas_siswa')
+            ->join('kelas', 'kelas_siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('siswas', 'siswas.id_siswa', '=', 'kelas_siswa.id_siswa')
+            ->where('kelas_siswa.id_kelas', $id_kelas)
+            ->get();
+
+//        dd($data);
+
+        return view('dashboard.akademik.progress._filter_laporan', compact('data'));
+    }
+
+    public function cetak($id)
+    {
+
+//        $id_mapel = $request->id_mapel;
+        $id_siswa = $id;
+
+//        $id_siswa = DB::table('siswas')
+//            ->join('users', 'users.id', '=', 'siswas.id_user')
+//            ->where('users.id', $id_user)
+//            ->get()->first();
+
+        $nilai = DB::table('progress_nilais')
+            ->join('mapels', 'mapels.id', '=', 'progress_nilais.id_mapel')
+            ->join('siswas', 'siswas.id_siswa', '=', 'progress_nilais.id_siswa')
+            ->join('users', 'users.id', '=', 'siswas.id_user')
+            ->where('progress_nilais.id_siswa', '=', "$id_siswa")
+//            ->where('progress_nilais.id_kelas', '=', "$id_kelas")
+            ->select('progress_nilais.*', 'siswas.nm_siswa as nama_siswa', 'mapels.*')
+            ->get();
+
+        $data = DB::table('progress_nilais')
+            ->where('id_siswa', '=', $id_siswa)
+            ->orderBy('tgl_progress', 'asc')
+            ->get();
+
+        $data_tgl = DB::table('progress_nilais')
+            ->where('id_siswa', '=', $id_siswa)
+            ->orderBy('tgl_progress', 'asc')
+            ->get()->pluck('tgl_progress');
+
+        $data_nilai = DB::table('progress_nilais')
+            ->where('id_siswa', '=', $id_siswa)
+            ->orderBy('tgl_progress', 'asc')
+            ->get()->pluck('nilai');
+//
+//        //pemisah
+//
+//        $nilai = DB::table('nilais')
+//            ->join('jadwals', 'jadwals.id', '=', 'nilais.id_jadwal')
+//            ->join('mapels', 'mapels.id', '=', 'jadwals.id_mapel')
+//            ->join('siswas', 'siswas.id_siswa', '=', 'nilais.id_siswa')
+//            ->select('siswas.nm_siswa','jadwals.materi','mapels.nm_mapel', 'nilais.nilai')
+//            ->where('nilais.id_siswa', $id)
+//            ->orderBy('jadwals.created_at', 'asc')
+//            ->get();
+
+        $siswa = DB::table('siswas')
+            ->where('id_siswa', $id)
+            ->get()->first();
+
+        // Untuk export ke Word
+        $html = view('dashboard.akademik.progress.template', compact('siswa', 'nilai'))->render();
+
+        $filename = 'Laporan_Progress_' . $siswa->nm_siswa . '.doc';
+
+        return response($html)
+            ->header('Content-Type', 'application/msword')
+            ->header('Content-Disposition', "attachment; filename=$filename");
+    }
+
+
     public function getDatatables(Request $request)
     {
         if ($request->ajax()) {

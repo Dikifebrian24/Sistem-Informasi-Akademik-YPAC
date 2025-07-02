@@ -46,6 +46,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/raport/{id}', [RaportController::class, 'cetak'])->name('raport.cetak');
 Route::get('/nilai/{id}', [\App\Http\Controllers\NilaiSiswaController::class, 'cetak'])->name('laporan.cetak');
+Route::get('/progress/{id}', [\App\Http\Controllers\ProgressSiswaController::class, 'cetak'])->name('progress.cetak');
 
 Route::delete('/kelas/{id_kelas}/siswa/{id_siswa}', [KelasController::class, 'hapusSiswa'])->name('kelas.siswa.hapus');
 
@@ -346,6 +347,8 @@ Route::prefix('master')->group(function () {
         Route::get('edit/{id}', 'edit')->name('data_progress/edit');
         Route::put('update/{id}', 'update')->name('data_progress/update');
         Route::delete('delete/{id}', 'destroy')->name('data_progress/delete');
+
+        Route::post('filterLaporan', 'filterLaporan')->name('progress.kelas');
 
 
         Route::get('data_kelas', 'getMapelDatatables')->name('progress_jadwal/data');

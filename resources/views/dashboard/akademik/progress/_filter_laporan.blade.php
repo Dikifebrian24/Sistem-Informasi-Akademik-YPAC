@@ -19,8 +19,8 @@
                             <td>{{ $item->nm_siswa }}</td>
                             <td>{{ $item->nm_kelas }}</td>
                             <td>
-                                <a href="{{ route('laporan.cetak', $item->id_siswa) }}" class="btn btn-primary btn-sm" target="_blank">
-                                    Cetak Laporan
+                                <a href="{{ route('progress.cetak', $item->id_siswa) }}" class="btn btn-primary btn-sm" target="_blank">
+                                    Cetak Progress
                                 </a>
                             </td>
                         </tr>
